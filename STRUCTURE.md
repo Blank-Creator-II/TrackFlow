@@ -78,7 +78,7 @@ TrackFlow/
 
 ### Important clarification (read this before adding files)
 
-- `** and **`\*\* are core entry files\*\* and should not be duplicated or casually restructured.
+- `Program.cs, MainForm.cs and MainForm.Designer.cs` are core entry files and should not be duplicated or casually restructured.
 - The folder names (`Models/`, `Services/`, `Utils/`, `Forms/`, `Data/`) define **responsibility boundaries**, not a fixed file count.
 
 This means:
