@@ -294,7 +294,7 @@ using TrackFlow.Services;
 
 If `ExpenseService` is in the `TrackFlow.Services` namespace and `Expense` in `TrackFlow.Models`, you can instantiate and use them as shown earlier.
 
-**Alias example (like Python import customtkinter ************************************as ctk************************************):**
+**Alias example (like Python import customtkinter as ctk):**
 
 ```csharp
 using ES = TrackFlow.Services.ExpenseService;
@@ -471,17 +471,141 @@ public class ExpenseService
 
 ## Git workflow and branch rules
 
-**Branches**:
+## Branches
 
-- `main` — production / final deliverable. No direct commits.
-- `develop` — integration branch where features land after review.
-- `feature/<name>` — branches for each feature.
+1. **main**
 
-**Rules**:
+   * The production-ready branch.
+   * Only updated when features in `develop` are complete and tested.
 
-- Never push to `main` directly.
-- Keep commits small and focused.
-- Use meaningful commit messages.
-- Create PRs (pull requests) to merge feature branches into `develop`. At least one teammate must approve.
+2. **develop**
+
+   * Active development branch.
+   * All completed features are merged here first before going to `main`.
+
+3. **feature/<name>**
+
+   * Short-lived branches for individual features.
+   * Created from `develop`.
+   * Example: `feature/expense-form`.
+
+---
+
+## Step-by-Step Workflow
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Blank-Creator-II/TrackFlow
+cd TrackFlow
+```
+
+### 2. Check out `develop`
+
+```bash
+git checkout develop
+git pull
+```
+
+* If you haven’t set tracking, run:
+
+```bash
+git branch --set-upstream-to=origin/develop develop
+```
+
+### 3. Create a feature branch
+
+```bash
+git checkout -b feature/<feature-name>
+```
+
+* Replace `<feature-name>` with a descriptive name.
+
+### 4. Work locally
+
+* Make changes in the correct folders (`Models/`, `Services/`, `Forms/`, `Utils/`).
+* Stage and commit your changes:
+
+```bash
+git add .
+git commit -m "Add <description of feature>"
+```
+
+### 5. Push your feature branch
+
+```bash
+git push -u origin feature/<feature-name>
+```
+
+* The `-u` flag sets upstream tracking for easier future pushes.
+
+### 6. Keep your branch updated
+
+Before merging your feature, sync with `develop`:
+
+```bash
+git checkout develop
+git pull
+git checkout feature/<feature-name>
+git merge develop
+```
+
+* Resolve any conflicts if they arise, then push the updated branch.
+
+### 7. Merge feature into `develop`
+
+Once the feature is complete and tested:
+
+```bash
+git checkout develop
+git merge feature/<feature-name>
+git push
+```
+
+### 8. Merge `develop` into `main` (Release)
+
+When `develop` contains stable and complete features:
+
+```bash
+git checkout main
+git merge develop
+git push
+```
+
+---
+
+## Rules for the Team
+
+1. Only `main` and `develop` are long-lived branches.
+2. Every new feature must have its own `feature/<name>` branch.
+3. Never commit directly to `main` or `develop`.
+4. Always resolve conflicts locally before pushing.
+5. Keep commits clear and descriptive.
+
+---
+
+## Summary Diagram
+
+```
+            +----------------+
+            |      main      |
+            +----------------+
+                    ^
+                    |
+                  merge
+                    |
+            +----------------+
+            |    develop     |
+            +----------------+
+              ^          ^
+              |          |
+            merge      merge
+              |          |
+     feature/<name>  feature/<name>
+```
+
+* `feature/<name>` branches are merged into `develop`
+* `develop` is merged into `main` when ready for release
+
 
 **NOTE: the folder structure should not be CHANGED but inside code files except main codes (Program.cs, FileStorageService.cs, MainForm.cs, and MainForm.Designer.cs) can be added and changed the above code snippets are just examples.**  
