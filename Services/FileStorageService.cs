@@ -12,7 +12,7 @@ public class FileStorageService
         var expense_data = new List<string> // format the data in the correct way
         {
             "[EXPENSE]",
-            $"Id={e.Id}",
+            $"Id={e.Id.PID}",
             $"Amount={e.Amount}",
             $"Date={e.Date:O}",
             $"Mode={e.Mode}",
@@ -92,9 +92,17 @@ public class FileStorageService
         }
 
         // Now it will build the Expense class as given in the example
+        // it will first rebuild the ID from the stored PID
+        string[] id_parts = expenseData["Id"].Split('-', 2); // splits the PID into type and value
+        var build_id = new ID
+        {
+            Type = id_parts[0],
+            Value= Convert.ToInt32(id_parts[1])
+        };
+        // after the ID is rebuilt the expense will be rebuild from the data
         var expense = new Expense
         {
-            Id = expenseData["Id"],
+            Id = build_id,
             Amount = Convert.ToDouble(expenseData["Amount"]),
             Date = Convert.ToDateTime(expenseData["Date"]),
             Mode = expenseData["Mode"],

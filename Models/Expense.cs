@@ -3,7 +3,7 @@ using System;
 namespace TrackFlow.Models;
 public class Expense
 {
-    public required string Id {get; set;} // stores the transaction history ID for search purposes
+    public required ID Id {get; set;} // stores the transaction history ID for search purposes
     public required double Amount {get; set;} // stores the expesnse ammount
     public required DateTime Date {get; set;} // stores the date of the transaction
     public required string Mode {get; set;} // stores the mode of the transaction (splited, individual, discounted)
@@ -40,7 +40,7 @@ public class Expense
 
 var expense = new Expense
 {
-    Id = "txn_001",
+    Id = IDGenerator.GenID("Expense") // generate a new ID using the utility helper IDGenerator
     Amount = 50.0,
     Date = DateTime.Now,
     Mode = "Discounted",
