@@ -5,7 +5,7 @@ using TrackFlow.Utils;
 using TrackFlow.Models;
 
 namespace TrackFlow.Service;
-public class ExpenseService
+public static class ExpenseService // it's a tool it doesn't need instance of the same class for every work
 {
     public static bool SaveExpense(Expense e)
     {
@@ -97,7 +97,7 @@ public class ExpenseService
         var build_id = new ID
         {
             Type = id_parts[0],
-            Value= Convert.ToInt32(id_parts[1])
+            Value = Convert.ToInt32(id_parts[1])
         };
         // after the ID is rebuilt the expense will be rebuild from the data
         var expense = new Expense
@@ -134,20 +134,12 @@ public class ExpenseService
     public static List<Expense> LoadExpense() // this function will return a list of Expense class, all the expenses saved in the data folder
     {
         List<Expense> list_of_expenses = new List<Expense>();
+        List<string> location_list = FileHelper.FetchData("Expense"); // it checks and fetches all the locations of valid stored expense data
 
-        string pattern = @"^expense_.*\.txt$"; // a pattern which starts with "expense_", ends with ".txt"
-        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
-
-        string expense_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Expense");
-
-        foreach (string expense_data in Directory.GetFiles(expense_data_location))
+        foreach (string expense_data_path in location_list)
         {
-            string fileName = Path.GetFileName(expense_data); // fetch the name of the expense data
-            if (regex.IsMatch(fileName)) // this method will ensure that we are only reading the correct expense data files
-            {   
-                // It will call the internall _LoadExpense class and then store the returned Expense class instance in a list of the Expense format
-                list_of_expenses.Add(_LoadExpense(FileHelper.ReadFile(expense_data)));
-            }
+            // It will call the internall _LoadExpense class and then store the returned Expense class instance in a list of the Expense format
+            list_of_expenses.Add(_LoadExpense(FileHelper.ReadFile(expense_data_path)));
         }
 
         return list_of_expenses; // it will finnaly return the list of expenses to the caller

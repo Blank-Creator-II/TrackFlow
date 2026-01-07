@@ -1,8 +1,9 @@
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace TrackFlow.Utils;
-public class FileHelper
+public static class FileHelper
 {
     public static readonly string BASE_DIR = AppContext.BaseDirectory; // This is a relative path to the main path
 
@@ -47,5 +48,34 @@ public class FileHelper
             Console.WriteLine($"[Failed to write into the file.]\n{er}");
             return false;  // returns a false boolean for safty check
         }
+    }
+
+    public static List<string> FetchData(string type)
+    {
+        List<string> list_of_stored_data = new List<string>();
+
+        string pattern = $@"^{type.ToLower()}_.*\.txt$"; // a pattern which starts with the type like "expense_" and ends with ".txt"
+        Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
+        string CapitalizeFirst(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+
+            return char.ToUpper(text[0]) + text.Substring(1).ToLower();
+        }
+
+        string stored_data_location = Path.Combine(FileHelper.BASE_DIR,"Data",CapitalizeFirst(type));
+
+        foreach (string stored_data in Directory.EnumerateFiles(stored_data_location))
+        {
+            string fileName = Path.GetFileName(stored_data); // fetch the name of the given data
+            if (regex.IsMatch(fileName)) // this method will ensure that we are only reading the correct given data files
+            {   
+                list_of_stored_data.Add(stored_data); // stores the correct data location for the given type
+            }
+        }
+
+        return list_of_stored_data; // it will finnaly return a list of location based on the given data to the caller
     }
 }
