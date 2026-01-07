@@ -19,5 +19,7 @@ static class Program
 
         ApplicationConfiguration.Initialize();
         Application.Run(new MainForm());
+
+        // Verification test for my commits nothing relevent
     }
 }
