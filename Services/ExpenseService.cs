@@ -5,7 +5,7 @@ using TrackFlow.Utils;
 using TrackFlow.Models;
 
 namespace TrackFlow.Service;
-public class FileStorageService
+public class ExpenseService
 {
     public static bool SaveExpense(Expense e)
     {
