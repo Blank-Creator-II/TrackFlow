@@ -1,0 +1,7 @@
+[REMINDER]
+Id=Reminder-1
+SavedDate=2026-01-08T01:15:19.4507700-08:00
+ReminderDate=2026-01-08T02:15:19.4658865-08:00
+State=True
+ReminderNote=Test reminder note
+[END]

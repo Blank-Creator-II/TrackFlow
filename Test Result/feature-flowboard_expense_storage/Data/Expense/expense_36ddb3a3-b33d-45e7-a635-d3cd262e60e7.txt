@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-1
+Amount=123.45
+Date=2026-01-08T01:15:20.0927990-08:00
+Mode=Individual
+Receiver=John Doe
+Category=Grocery
+Currency=USD
+
+[COUPON]
+Code=DISCOUNT10
+Description=10% off
+Store=Supermart
+ExpirationDate=2026-02-08T01:15:20.0934477-08:00
+
+[BANK]
+Name=CBE
+AccountType=Checking
+AccountId=12345678
+Balance=1000
+LinkDate=2025-01-08T01:15:20.0939196-08:00
+[END]

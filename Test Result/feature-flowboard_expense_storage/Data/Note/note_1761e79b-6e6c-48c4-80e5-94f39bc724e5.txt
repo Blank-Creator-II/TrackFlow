@@ -1,0 +1,13 @@
+[METADATA]
+Id=Note-2
+Date=2026-01-08T01:30:19.2187478-08:00
+
+[NOTE]
+I really don't know why I am writing real things
+just like if I would this app or so...
+well even without UI and barebone backend
+it's still working so... it's great for real!
+
+i don't know what to write anymore.
+oh yeah Merry christmas or happy new year based on where you live :)
+[END]

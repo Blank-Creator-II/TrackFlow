@@ -1,0 +1,9 @@
+[METADATA]
+Id=Note-1
+Date=2026-01-08T01:15:20.2090513-08:00
+
+[NOTE]
+This is line 1 of the note.
+This is line 2.
+End of note.
+[END]

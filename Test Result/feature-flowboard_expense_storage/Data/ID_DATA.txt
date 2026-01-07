@@ -1,0 +1,4 @@
+Reminder=5
+Todo=2
+Expense=2
+Note=2

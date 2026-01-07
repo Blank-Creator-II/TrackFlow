@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-2
+Amount=400
+Date=2026-01-08T01:30:19.1088858-08:00
+Mode=Splited
+Receiver=Kroni
+Category=Entertainment
+Currency=USD
+
+[COUPON]
+Code=CYPERPUNK50
+Description=50% off for cyberpunk genre games!
+Store=Steam Valve
+ExpirationDate=2026-02-08T01:30:19.1096171-08:00
+
+[BANK]
+Name=Bank of America
+AccountType=Saving
+AccountId=9000127981876
+Balance=10000
+LinkDate=2025-01-08T01:30:19.1102648-08:00
+[END]
