@@ -14,11 +14,11 @@ public static class ReminderService // this is basically the easiest out of the 
             $"SavedDate={r.SavedDate:O}",
             $"ReminderDate={r.ReminderDate:O}",
             $"State={r.State}",
-            $"ReminderNote={r.ReminderNote}",
+            $"ReminderNote={r.ReminderNote ?? "<null>"}", // if the variable is null hard code <null> so it can be reconstacted later as null
             $"[END]"
         };
 
-        string reminder_data_location = Path.Combine(FileHelper.BASE_DIR,"Reminder",$"reminder_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+        string reminder_data_location = Path.Combine(FileHelper.BASE_DIR,"Reminder",$"reminder_{Guid.NewGuid()}.txt");
         return FileHelper.WriteFile(reminder_data_location,reminder_data);
     }
 
@@ -26,7 +26,7 @@ public static class ReminderService // this is basically the easiest out of the 
     {
         bool start_reminder_fetch = false;
 
-        Dictionary<string, string> reminderData = new Dictionary<string, string>();
+        Dictionary<string, string?> reminderData = new Dictionary<string, string?>();
 
         foreach (string line in raw_reminder_data)
         {
@@ -43,11 +43,11 @@ public static class ReminderService // this is basically the easiest out of the 
                 string[] parts = line.Split("=",2);
                 if (parts.Length != 2) continue;
 
-                reminderData[parts[0]] = parts[1];
+                reminderData[parts[0]] = parts[1] == "<null>" ? null : parts[1]; // if the value of the stored data is hard codded <null> it will recreate in to null data
             }
         }
 
-        string[] id_parts = reminderData["Id"].Split("-",2);
+        string[] id_parts = reminderData["Id"]!.Split("-",2); // the symbol "!" stops the compiler from spitting out warnings it means "I know better trust me" to the compiler
         var build_id = new ID
         {
             Type = id_parts[0],

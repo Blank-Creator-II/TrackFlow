@@ -35,7 +35,7 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
             "[END]" 
         };
 
-        string expense_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Expense",$"expense_{DateTime.Now:yyyyMMdd_HHmmss}.txt"); // creates a sanitized unique data file to store at
+        string expense_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Expense",$"expense_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at
         return FileHelper.WriteFile(expense_data_location,expense_data); // when this function is called to store data it returns a bool to show if it was successfull opreation or not
     }
 
