@@ -1,7 +1,7 @@
 using System;
 
 namespace TrackFlow.Models;
-public class To_do 
+public class Todo 
 {
     public required ID Id {get; set;} // stores id for search and linking purposes
     public required DateTime Date {get; set;} // the creation date of the to-do list
