@@ -70,9 +70,13 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
                 start_coupon_fetch = false;
                 start_bank_fetch = true;
             }
-            else if (line == "[END]" || string.IsNullOrWhiteSpace(line))
+            else if (line == "[END]")
             {
-                // skip
+                break;
+            }
+            else if (line == "")
+            {
+                // Skip
             }
             else
             {
