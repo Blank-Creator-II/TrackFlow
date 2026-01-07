@@ -18,7 +18,7 @@ public static class ReminderService // this is basically the easiest out of the 
             $"[END]"
         };
 
-        string reminder_data_location = Path.Combine(FileHelper.BASE_DIR,"Reminder",$"reminder_{Guid.NewGuid()}.txt");
+        string reminder_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Reminder",$"reminder_{Guid.NewGuid()}.txt");
         return FileHelper.WriteFile(reminder_data_location,reminder_data);
     }
 

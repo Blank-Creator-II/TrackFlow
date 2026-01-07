@@ -33,7 +33,7 @@ public static class TodoService
         }
         todo_data.Add("[END]");
 
-        string todo_data_location = Path.Combine(FileHelper.BASE_DIR,"Todo",$"todo_{Guid.NewGuid()}.txt");
+        string todo_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Todo",$"todo_{Guid.NewGuid()}.txt");
         return FileHelper.WriteFile(todo_data_location,todo_data);
     }
 

@@ -72,6 +72,24 @@ TrackFlow/
 │   ├── tasks.txt
 │   └── notes.txt
 │
+├── Test Result/
+│   ├── feature-expense/
+│   │   ├── Data/
+│   │   └── Screenshot/
+│   │
+│   ├── feature-calculat/er/
+│   │   ├── Data/
+│   │   └── Screenshot/
+│   │
+│   ├── feature-gui-1/
+│   │   ├── Data/
+│   │   └── Screenshot/
+│   │
+│   └── feature-gui-2/
+│       ├── Data/
+│       └── Screenshot/
+│   
+│
 ├── STRUCTURE.md
 └── README.md
 ```
@@ -79,7 +97,7 @@ TrackFlow/
 ### Important clarification (read this before adding files)
 
 - `Program.cs, MainForm.cs and MainForm.Designer.cs` are core entry files and should not be duplicated or casually restructured.
-- The folder names (`Models/`, `Services/`, `Utils/`, `Forms/`, `Data/`) define **responsibility boundaries**, not a fixed file count.
+- The folder names (`Models/`, `Services/`, `Utils/`, `Forms/`, `Data/`, `Test Result/`) define **responsibility boundaries**, not a fixed file count.
 
 This means:
 
@@ -126,8 +144,9 @@ This rule also ensures that AI-assisted coding tools understand the project layo
 - **Utils/**: Small, reusable helper functions used by several services.
 - **Forms/**: Windows Forms UI files. They only call `Services` and render results.
 - **Data/**: Store `.txt` files (human readable). Services read/write here.
+- **Test Result/**: Store screenshots of the project's feature when working and copy of the `Data/` folder
 
-Design rule: **UI → Services → Utils → Data**. Forms must not access files directly and should not contain heavy logic.
+Design rule: **UI → Services → Utils → Data → Test Result**. Forms must not access files directly and should not contain heavy logic.
 
 ---
 
@@ -280,6 +299,19 @@ t1|Prepare report|2025-12-30|u1|Open|report,finance|Draft due end of month
 Simple format where each note is a block separated by `---` or one per line with ID and content.
 
 **Rule:** Keep formats stable. If you change a format, update `FileStorageService` and commit a migration note in README.
+
+---
+
+### `Test Result/`
+
+**Purpose:** Contains screenshots of working features per features developed and copy of `Data/` folder that holded the saved data when the feature was developed.
+
+**Files and recommended formats:**
+
+#### `Folders per feature`
+
+every feature branch should have a folder designated in the `Test Result/` folder with it's own screenshots and copy of `Data/`.
+> NOTE: the copy of `Data/` should be copied from the `bin` folder since C# puts the folder in the actual runtime!
 
 ---
 

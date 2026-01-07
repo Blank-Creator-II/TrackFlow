@@ -23,7 +23,7 @@ public static class NoteService
         }
         note_data.Add("[END]"); // after all the lines of the note is added a closer tag [END] s used to help when reconstracting fro data
 
-        string note_data_location = Path.Combine(FileHelper.BASE_DIR,"Note",$"note_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at just like expense and others
+        string note_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Note",$"note_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at just like expense and others
         return FileHelper.WriteFile(note_data_location,note_data); // returns bool usefull for GUI nothing else
     }
 
