@@ -14,12 +14,11 @@ static class Program
         static extern bool AllocConsole();
         AllocConsole(); // this is for debuging only; it allows the use of console even if the app is GUI so we can print stuff
 
-        Task.Run(() => Tester.Start()); // starts test for services, it's a debug feature we will rmove this line!
+        //Task.Run(() => Tester.Start()); // starts test for services, it's a debug feature we will rmove this line!
         // ------------ DEBUG ---------------
 
         ApplicationConfiguration.Initialize();
-        Application.Run(new MainForm());
+        Application.Run(new MainForm()); // creats an instance of MainForm which is the stating point of the GUI
 
-        // Verification test for my commits nothing relevent
     }
 }
