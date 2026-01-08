@@ -6,17 +6,23 @@ namespace TrackFlow.Forms;
 public class MainForm : MaterialForm // inherents from MaterialSkin Framework
 {
     private readonly MaterialSkinManager skinManager; // creates a variable to store a skin manger for the app
+    
+    public static Color PrimaryDark = ColorTranslator.FromHtml("#212121"); // Top app bar background, drawer top, header bars
+    public static Color PrimaryMid = ColorTranslator.FromHtml("#424242"); // Secondary surfaces, some buttons, sliders
+    public static Color PrimaryLight = ColorTranslator.FromHtml("#BDBDBD"); // Cards, raised surfaces, panels
+    public static Color PrimaryAccent = ColorTranslator.FromHtml("#87CEEB"); // Action highlights, checkboxes, selected items, FABs
+    
     public MainForm() // a constactor called when the app launches it sets up some needed stuff before the app opens
     {
         skinManager = MaterialSkinManager.Instance; // creates skin manager instance to use for the app
         skinManager.AddFormToManage(this); // the skin manager is going to mange "this" app this refers to the object of this class just like "self"
         skinManager.Theme = MaterialSkinManager.Themes.DARK; // set the whole theme to dark mode
         skinManager.ColorScheme = new ColorScheme( // creates a color scheme aka a theme for the app
-            ColorTranslator.FromHtml("#212121"), // PrimaryDark
-            ColorTranslator.FromHtml("#424242"), // PrimaryMid
-            ColorTranslator.FromHtml("#BDBDBD"), // PrimaryLight
-            ColorTranslator.FromHtml("#1ee9c4ff"), // Accent (aqua leaning to green)
-            TextShade.WHITE                      // Text color either WHITE or BLACK only!
+            PrimaryDark,
+            PrimaryMid, 
+            PrimaryLight,
+            PrimaryAccent,
+            TextShade.WHITE
         );
 
         InitializeWindow(); // calls the actual function that draws or creats the app itself
@@ -34,5 +40,74 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
 
         this.Sizable = true; // the app will be resizable
         this.MaximizeBox = true; // creats a maximize button
+
+        InitializeLayout();
+    }
+
+    private void InitializeLayout()
+    {
+        /*
+        This Drawer thing is super weird I admit in python you hard code it
+        but this is custom made for us (I used to pray for times like this)
+        anyways the drawer and tabs are intalized:
+        */
+        var sidebar = new MaterialTabControl
+        {
+            Depth = 0,
+            MouseState = MouseState.HOVER,
+            Dock = DockStyle.Left
+        };
+
+        var homePage = new TabPage("Home"); // each page will be created in the UI/ folder
+        var settingsPage = new TabPage("Settings"); // the names are just placeholders!
+
+        sidebar.TabPages.Add("Home");
+        sidebar.TabPages.Add("Settings");
+        
+        this.DrawerTabControl = sidebar;
+        this.Controls.Add(sidebar);
+
+        this.DrawerShowIconsWhenHidden = true; // this make the drawer (the sidebar) smaller with only icons
+        this.DrawerWidth = 200;
+        
+        /* 
+        This is how we are gona load our own icons
+        for now it's commented since we don't have icons:
+
+
+        ImageList menuIcons = new ImageList();
+        menuIcons.ImageSize = new Size(24, 24);
+        menuIcons.Images.Add("home_icon", Image.FromFile(iconPath));
+
+        sidebar.ImageList = menuIcons;
+        sidebar.TabPages[0].ImageKey = "home_icon"; // First tab
+        */
+
+        sidebar.SelectedIndexChanged += (sender,e) => {SwitchPage(sidebar);}; // when the event "tabs have been switched" occurs it calls SwitchPage function using lambda aka "() => {};"
+    }
+
+    private void SwitchPage(MaterialTabControl sidebar)
+    {
+        switch (sidebar.SelectedIndex)
+        {
+            case 0:
+                InitHome();
+                break;
+            case 1:
+                InitSettings();
+                break;
+            default:
+                break; // just for safty I don't know
+        }
+    }
+
+    private void InitHome()
+    {
+        MaterialMessageBox.Show("Home opened!");
+    }
+
+    private void InitSettings()
+    {
+        MaterialMessageBox.Show("Settings opened!");
     }
 }
