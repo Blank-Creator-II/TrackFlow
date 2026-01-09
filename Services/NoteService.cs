@@ -6,7 +6,7 @@ using TrackFlow.Utils;
 namespace TrackFlow.Service;
 public static class NoteService
 {
-    public static bool SaveNote(Note n)
+    public static (bool s, string f) SaveNote(Note n)
     {
         var note_data = new List<string> // coverts the Note object into storable data
         {
@@ -24,7 +24,7 @@ public static class NoteService
         note_data.Add("[END]"); // after all the lines of the note is added a closer tag [END] s used to help when reconstracting fro data
 
         string note_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Note",$"note_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at just like expense and others
-        return FileHelper.WriteFile(note_data_location,note_data); // returns bool usefull for GUI nothing else
+        return (FileHelper.WriteFile(note_data_location,note_data),note_data_location); // returns bool usefull for GUI nothing else
     }
 
     // everything below is more or less the same style as the expense service read that to understand if you don't get it... pray I don't know

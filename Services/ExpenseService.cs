@@ -7,7 +7,7 @@ using TrackFlow.Models;
 namespace TrackFlow.Service;
 public static class ExpenseService // it's a tool it doesn't need instance of the same class for every work
 {
-    public static bool SaveExpense(Expense e)
+    public static (bool s, string f) SaveExpense(Expense e)
     {
         var expense_data = new List<string> // format the data in the correct way
         {
@@ -36,7 +36,7 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
         };
 
         string expense_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Expense",$"expense_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at
-        return FileHelper.WriteFile(expense_data_location,expense_data); // when this function is called to store data it returns a bool to show if it was successfull opreation or not
+        return (FileHelper.WriteFile(expense_data_location,expense_data),expense_data_location); // when this function is called to store data it returns a bool to show if it was successfull opreation or not
     }
 
     private static Expense _LoadExpense(string[] raw_expense_data)

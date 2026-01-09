@@ -5,7 +5,7 @@ using TrackFlow.Utils;
 namespace TrackFlow.Service;
 public static class TodoService
 {
-    public static bool SaveTodo(Todo t)
+    public static (bool s, string f) SaveTodo(Todo t)
     {
         var todo_data = new List<string>
         {
@@ -34,7 +34,7 @@ public static class TodoService
         todo_data.Add("[END]");
 
         string todo_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Todo",$"todo_{Guid.NewGuid()}.txt");
-        return FileHelper.WriteFile(todo_data_location,todo_data);
+        return (FileHelper.WriteFile(todo_data_location,todo_data),todo_data_location);
     }
 
     private static Todo _LoadTodo(string[] raw_todo_data)

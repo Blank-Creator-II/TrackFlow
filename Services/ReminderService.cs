@@ -5,7 +5,7 @@ using TrackFlow.Utils;
 namespace TrackFlow.Service;
 public static class ReminderService // this is basically the easiest out of the bunch so if you read the other coments you will clearly understand this I am not writting comments
 {
-    public static bool SaveReminder(Reminder r)
+    public static (bool s, string f) SaveReminder(Reminder r)
     {
         var reminder_data = new List<string>
         {
@@ -19,7 +19,7 @@ public static class ReminderService // this is basically the easiest out of the 
         };
 
         string reminder_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Reminder",$"reminder_{Guid.NewGuid()}.txt");
-        return FileHelper.WriteFile(reminder_data_location,reminder_data);
+        return (FileHelper.WriteFile(reminder_data_location,reminder_data),reminder_data_location);
     }
 
     private static Reminder _LoadReminder(string[] raw_reminder_data)

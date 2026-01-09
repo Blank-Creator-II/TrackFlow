@@ -1,8 +1,8 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
+using TrackFlow.Utils;
 
 namespace TrackFlow.Forms;
-
 public class MainForm : MaterialForm // inherents from MaterialSkin Framework
 {
     private readonly MaterialSkinManager skinManager; // creates a variable to store a skin manger for the app
@@ -47,7 +47,7 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
     private void InitializeLayout()
     {
         /*
-        This Drawer thing is super weird I admit in python you hard code it
+        This Drawer thing is super weird I admit, in python you hard code it
         but this is custom made for us (I used to pray for times like this)
         anyways the drawer and tabs are intalized:
         */
@@ -55,59 +55,58 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         {
             Depth = 0,
             MouseState = MouseState.HOVER,
-            Dock = DockStyle.Left
+            Dock = DockStyle.Fill
         };
 
-        var homePage = new TabPage("Home"); // each page will be created in the UI/ folder
-        var settingsPage = new TabPage("Settings"); // the names are just placeholders!
+        // each page will be created in the UI/ folder this is just initalizing and hooking
+        var homePage = new TabPage("Home");
+        homePage.Controls.Add(new HomePage()); // the tab will call the class HomePage from the UI/ folder
+        var expensePage = new TabPage("Expenses");
+        expensePage.Controls.Add(new ExpensesPage()); // the tab will call the class ExpensesPage from the UI/ folder
+        var plannerPage = new TabPage("Planner");
+        plannerPage.Controls.Add(new PlannerPage()); // the tab will call the class PlannerPage from the UI/ folder
+        var toolsPage = new TabPage("Tools");
+        toolsPage.Controls.Add(new ToolsPage()); // the tab will call the class ToolsPage from the UI/ folder
+        var settingsPage = new TabPage("Settings");
+        settingsPage.Controls.Add(new SettingsPage()); // the tab will call the class SettingsPage from the UI/ folder
 
-        sidebar.TabPages.Add("Home");
-        sidebar.TabPages.Add("Settings");
+        sidebar.TabPages.Add(homePage);
+        sidebar.TabPages.Add(expensePage);
+        sidebar.TabPages.Add(plannerPage);
+        sidebar.TabPages.Add(toolsPage);
+        sidebar.TabPages.Add(settingsPage);
         
-        this.DrawerTabControl = sidebar;
         this.Controls.Add(sidebar);
+        this.DrawerTabControl = sidebar;
 
         this.DrawerShowIconsWhenHidden = true; // this make the drawer (the sidebar) smaller with only icons
         this.DrawerWidth = 200;
         
-        /* 
-        This is how we are gona load our own icons
-        for now it's commented since we don't have icons:
-
-
-        ImageList menuIcons = new ImageList();
-        menuIcons.ImageSize = new Size(24, 24);
-        menuIcons.Images.Add("home_icon", Image.FromFile(iconPath));
-
-        sidebar.ImageList = menuIcons;
-        sidebar.TabPages[0].ImageKey = "home_icon"; // First tab
-        */
-
-        sidebar.SelectedIndexChanged += (sender,e) => {SwitchPage(sidebar);}; // when the event "tabs have been switched" occurs it calls SwitchPage function using lambda aka "() => {};"
-    }
-
-    private void SwitchPage(MaterialTabControl sidebar)
-    {
-        switch (sidebar.SelectedIndex)
+        // Load Icons:
+        ImageList IconList = new ImageList
         {
-            case 0:
-                InitHome();
-                break;
-            case 1:
-                InitSettings();
-                break;
-            default:
-                break; // just for safty I don't know
-        }
-    }
+            ImageSize = new Size(24,24),
+            ColorDepth = ColorDepth.Depth32Bit // we need all 4,294,967,296 possible color combinations!
+        };
 
-    private void InitHome()
-    {
-        MaterialMessageBox.Show("Home opened!");
-    }
+        // now we add all of our images to the list; and let's not forget to convert them
+        IconList.Images.Add("home_ico",
+            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","home.svg"), 24, PrimaryAccent));
+        IconList.Images.Add("expense_ico",
+            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","expense.svg"), 24, PrimaryAccent));
+        IconList.Images.Add("planner_ico",
+            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","planner.svg"), 24, PrimaryAccent));
+        IconList.Images.Add("tools_ico",
+            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","tools.svg"), 24, PrimaryAccent));
+        IconList.Images.Add("settings_ico",
+            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","settings.svg"), 24, PrimaryAccent));
 
-    private void InitSettings()
-    {
-        MaterialMessageBox.Show("Settings opened!");
+        // we attach our icons to the tab controler
+        sidebar.ImageList = IconList;
+        sidebar.TabPages[0].ImageKey = "home_ico"; // First tab
+        sidebar.TabPages[1].ImageKey = "expense_ico"; // Second tab
+        sidebar.TabPages[2].ImageKey = "planner_ico"; // Third tab
+        sidebar.TabPages[3].ImageKey = "tools_ico"; // Forth tab
+        sidebar.TabPages[4].ImageKey = "settings_ico"; // Fifth tab
     }
 }

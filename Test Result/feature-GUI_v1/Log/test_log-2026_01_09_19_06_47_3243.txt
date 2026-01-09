@@ -1,0 +1,63 @@
+=== TrackFlow Service Tester ===
+
+>> Testing ReminderService
+Saved: True
+Path : Z:\TrackFlow\bin-Windows_NT\Debug\net10.0-windows\Data\Reminder\reminder_7a416536-e3a6-4809-ad40-839048f6c963.txt
+
+Loaded Reminders: 1
+  Reminder ID : Reminder-9
+    Note      : Read the new released mangas
+    State     : True
+    Saved     : 1/9/2026 7:06:46 PM
+    Remind At : 1/9/2026 8:06:46 PM
+
+>> Testing TodoService
+Saved: True
+Path : Z:\TrackFlow\bin-Windows_NT\Debug\net10.0-windows\Data\Todo\todo_f6e10135-7af3-45df-affe-5d09354d1eb6.txt
+
+Loaded Todos: 1
+  Todo ID : Todo-5
+  Date    : 1/9/2026 7:06:47 PM
+    - [ ] listen to Ado's new release
+    - [X] finish watching anime
+    - [ ] check if Marine is still no 1 (Link: Reminder-10)
+    - [X] buy fast food
+    - [ ] catch up on streams
+
+>> Testing ExpenseService
+Saved: True
+Path : Z:\TrackFlow\bin-Windows_NT\Debug\net10.0-windows\Data\Expense\expense_99f0ddf5-bbd9-4679-b58d-68172d7b8221.txt
+
+Loaded Expenses: 1
+  Expense ID : Expense-5
+    Amount   : 400 USD
+    Date     : 1/9/2026 7:06:47 PM
+    Mode     : Splitted
+    Receiver : Kroni
+    Category : Entertainment
+    Coupon:
+      Code        : CYBERPUNK50
+      Description : 50% off cyberpunk games
+      Store       : Steam
+      Expires     : 2/9/2026 7:06:47 PM
+    Bank:
+      Name      : Bank of America
+      Type      : Saving
+      AccountId : 9000127981876
+      Balance   : 10000
+      Linked At : 1/9/2025 7:06:47 PM
+
+>> Testing NoteService
+Saved: True
+Path : Z:\TrackFlow\bin-Windows_NT\Debug\net10.0-windows\Data\Note\note_9ce39645-44f3-4c24-9322-83ea35ee43d7.txt
+
+Loaded Notes: 1
+  Note ID : Note-5
+  Date    : 1/9/2026 7:06:47 PM
+    I really don't know why I am writing real things
+    but the backend works
+    and that makes me happy
+
+
+=== All tests finished ===
+

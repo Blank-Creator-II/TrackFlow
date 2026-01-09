@@ -1,24 +1,44 @@
+using System.Text;
 using TrackFlow.Models;
 using TrackFlow.Utils;
 
 namespace TrackFlow.Service;
+// A simple tester for services, it calls every storage service (read & write) with some features:
 class Tester
 {
-    public static void Start()
+    private static readonly List<string> _log = new List<string>();
+
+    public static void Start(string[] args)
     {
-        Console.WriteLine("=== TrackFlow Service Tester ===\n");
+        Log("=== TrackFlow Service Tester ===\n");
 
-        TestReminder();
-        TestTodo();
-        TestExpense();
-        TestNote();
+        Dictionary<string, string> test_data = new Dictionary<string, string>();
 
-        Console.WriteLine("\n=== All tests finished ===");
+        test_data["reminder"] = TestReminder();
+        test_data["todo"]     = TestTodo();
+        test_data["expense"]  = TestExpense();
+        test_data["note"]     = TestNote();
+
+        Log("\n=== All tests finished ===\n");
+
+	    bool log_choice = args != null && Array.Exists(args, a => a == "-Ls");
+        if (log_choice)
+        {
+            SaveLog();
+        }
+
+        bool delete_choice = args != null && Array.Exists(args, a => a == "-c");
+        if (delete_choice)
+        {
+            CleanData(test_data);
+        }
     }
 
-    static void TestReminder()
+    // ----------------- Reminder -----------------
+
+    static string TestReminder()
     {
-        Console.WriteLine(">> Testing ReminderService");
+        Log(">> Testing ReminderService");
 
         var reminder = new Reminder
         {
@@ -29,21 +49,30 @@ class Tester
             ReminderNote = "Read the new released mangas"
         };
 
-        bool saved = ReminderService.SaveReminder(reminder);
-        Console.WriteLine($"Saved: {saved}");
+        var saved = ReminderService.SaveReminder(reminder);
+        Log($"Saved: {saved.s}");
+        Log($"Path : {saved.f}\n");
 
-        var loadedReminders = ReminderService.LoadReminder();
-        foreach (var r in loadedReminders)
+        var loaded = ReminderService.LoadReminder();
+        Log($"Loaded Reminders: {loaded.Count}");
+
+        foreach (var r in loaded)
         {
-            Console.WriteLine($"Id={r.Id.PID}, Note={r.ReminderNote}, State={r.State}, Saved={r.SavedDate}, Remind={r.ReminderDate}");
+            Log($"  Reminder ID : {r.Id.PID}");
+            Log($"    Note      : {r.ReminderNote}");
+            Log($"    State     : {r.State}");
+            Log($"    Saved     : {r.SavedDate}");
+            Log($"    Remind At : {r.ReminderDate}\n");
         }
 
-        Console.WriteLine();
+        return saved.f;
     }
 
-    static void TestTodo()
+    // ----------------- Todo -----------------
+
+    static string TestTodo()
     {
-        Console.WriteLine(">> Testing TodoService");
+        Log(">> Testing TodoService");
 
         var todo = new Todo
         {
@@ -51,50 +80,58 @@ class Tester
             Date = DateTime.Now,
             Data = new List<Todo.SingleLine>
             {
-                new Todo.SingleLine { Data = "listen to Ado's new realse", State = false },
-                new Todo.SingleLine { Data = "finish watching anime", State = true },
-		new Todo.SingleLine { Data = "check if Marine is still no 1", State = false, Link=IDGenerator.GenID("Reminder") },
-		new Todo.SingleLine { Data = "buy some fastfood at stool for the late night party", State = true, Link=IDGenerator.GenID("Reminder") },
-		new Todo.SingleLine { Data = "check raora back from surgery", State = false },
-		new Todo.SingleLine { Data = "catch up on some streams", State = false },
-		new Todo.SingleLine { Data = "check if Marine is still no 1", State = false, Link=IDGenerator.GenID("Reminder") },
+                new() { Data = "listen to Ado's new release", State = false },
+                new() { Data = "finish watching anime", State = true },
+                new() { Data = "check if Marine is still no 1", State = false, Link = IDGenerator.GenID("Reminder") },
+                new() { Data = "buy fast food", State = true },
+                new() { Data = "catch up on streams", State = false }
             }
         };
 
-        bool saved = TodoService.SaveTodo(todo);
-        Console.WriteLine($"Saved: {saved}");
+        var saved = TodoService.SaveTodo(todo);
+        Log($"Saved: {saved.s}");
+        Log($"Path : {saved.f}\n");
 
-        var loadedTodos = TodoService.LoadTodo();
-        foreach (var t in loadedTodos)
+        var loaded = TodoService.LoadTodo();
+        Log($"Loaded Todos: {loaded.Count}");
+
+        foreach (var t in loaded)
         {
-            Console.WriteLine($"Todo Id={t.Id.PID}, Date={t.Date}");
+            Log($"  Todo ID : {t.Id.PID}");
+            Log($"  Date    : {t.Date}");
+
             foreach (var line in t.Data)
             {
-                Console.WriteLine($"  - [{line.State}] {line.Data}");
+                Log($"    - [{(line.State ? "X" : " ")}] {line.Data}" +
+                    (line.Link != null ? $" (Link: {line.Link.PID})" : ""));
             }
+
+            Log("");
         }
 
-        Console.WriteLine();
+        return saved.f;
     }
 
-    static void TestExpense()
+    // ----------------- Expense -----------------
+
+    static string TestExpense()
     {
-        Console.WriteLine(">> Testing ExpenseService");
+        Log(">> Testing ExpenseService");
 
         var expense = new Expense
         {
             Id = IDGenerator.GenID("Expense"),
             Amount = 400.0,
             Date = DateTime.Now,
-            Mode = "Splited",
+            Mode = "Splitted",
             Receiver = "Kroni",
             Category = "Entertainment",
             Currency = "USD",
             AppliedCoupon = new Expense.Coupon
             {
-                Code = "CYPERPUNK50",
-                Description = "50% off for cyberpunk genre games!",
-                Store = "Steam Valve",
+                Code = "CYBERPUNK50",
+                Description = "50% off cyberpunk games",
+                Store = "Steam",
                 ExpirationDate = DateTime.Now.AddMonths(1)
             },
             LinkedBank = new Expense.Bank
@@ -107,22 +144,52 @@ class Tester
             }
         };
 
-        bool saved = ExpenseService.SaveExpense(expense);
-        Console.WriteLine($"Saved: {saved}");
+        var saved = ExpenseService.SaveExpense(expense);
+        Log($"Saved: {saved.s}");
+        Log($"Path : {saved.f}\n");
 
-        var loadedExpenses = ExpenseService.LoadExpense();
-        foreach (var e in loadedExpenses)
+        var loaded = ExpenseService.LoadExpense();
+        Log($"Loaded Expenses: {loaded.Count}");
+
+        foreach (var e in loaded)
         {
-            Console.WriteLine($"Expense Id={e.Id.PID}, Amount={e.Amount}, Receiver={e.Receiver}, Category={e.Category}");
-            Console.WriteLine($"  Coupon={e.AppliedCoupon.Code}, Bank={e.LinkedBank.Name}");
+            Log($"  Expense ID : {e.Id.PID}");
+            Log($"    Amount   : {e.Amount} {e.Currency}");
+            Log($"    Date     : {e.Date}");
+            Log($"    Mode     : {e.Mode}");
+            Log($"    Receiver : {e.Receiver}");
+            Log($"    Category : {e.Category}");
+
+            if (e.AppliedCoupon != null)
+            {
+                Log($"    Coupon:");
+                Log($"      Code        : {e.AppliedCoupon.Code}");
+                Log($"      Description : {e.AppliedCoupon.Description}");
+                Log($"      Store       : {e.AppliedCoupon.Store}");
+                Log($"      Expires     : {e.AppliedCoupon.ExpirationDate}");
+            }
+
+            if (e.LinkedBank != null)
+            {
+                Log($"    Bank:");
+                Log($"      Name      : {e.LinkedBank.Name}");
+                Log($"      Type      : {e.LinkedBank.AccountType}");
+                Log($"      AccountId : {e.LinkedBank.AccountId}");
+                Log($"      Balance   : {e.LinkedBank.Balance}");
+                Log($"      Linked At : {e.LinkedBank.LinkDate}");
+            }
+
+            Log("");
         }
 
-        Console.WriteLine();
+        return saved.f;
     }
 
-    static void TestNote()
+    // ----------------- Note -----------------
+
+    static string TestNote()
     {
-        Console.WriteLine(">> Testing NoteService");
+        Log(">> Testing NoteService");
 
         var note = new Note
         {
@@ -131,28 +198,59 @@ class Tester
             Data = new List<string>
             {
                 "I really don't know why I am writing real things",
-                "just like if I would this app or so...",
-                "well even without UI and barebone backend",
-		"it's still working so... it's great for real!",
-		"",
-		"i don't know what to write anymore.",
-		"oh yeah Merry christmas or happy new year based on where you live :)"
+                "but the backend works",
+                "and that makes me happy"
             }
         };
 
-        bool saved = NoteService.SaveNote(note);
-        Console.WriteLine($"Saved: {saved}");
+        var saved = NoteService.SaveNote(note);
+        Log($"Saved: {saved.s}");
+        Log($"Path : {saved.f}\n");
 
-        var loadedNotes = NoteService.LoadNote();
-        foreach (var n in loadedNotes)
+        var loaded = NoteService.LoadNote();
+        Log($"Loaded Notes: {loaded.Count}");
+
+        foreach (var n in loaded)
         {
-            Console.WriteLine($"Note Id={n.Id.PID}, Date={n.Date}");
+            Log($"  Note ID : {n.Id.PID}");
+            Log($"  Date    : {n.Date}");
             foreach (var line in n.Data)
             {
-                Console.WriteLine($"  {line}");
+                Log($"    {line}");
             }
+            Log("");
         }
 
-        Console.WriteLine();
+        return saved.f;
+    }
+
+    // ----------------- Utilities -----------------
+
+    static void Log(string message)
+    {
+        Console.WriteLine(message);
+        _log.Add(message);
+    }
+
+    static void SaveLog()
+    {
+        string path = Path.Combine(FileHelper.BASE_DIR, $"test_log-{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}.txt");
+        FileHelper.WriteFile(path, _log);
+        Console.WriteLine($"\n>> Test log saved to: {path}");
+    }
+
+    static void CleanData(Dictionary<string, string> test_data)
+    {
+        Console.WriteLine("\n=== Deleting test data ===\n");
+        foreach (string data in test_data.Values)
+        {
+            if (File.Exists(data))
+            {
+                File.Delete(data);
+                Console.WriteLine($"Deleted test data: {data}");
+            }
+        }
+        Console.WriteLine("\nWARNING: ID_DATA can not be delted since it stores actual ID postion.");
+        Console.WriteLine("\n=== Finished Deleting Data ===\n");
     }
 }

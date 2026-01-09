@@ -16,7 +16,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Imported Libraries -->
     <PackageReference Include="MaterialSkin.2" Version="2.3.1" />
+    <PackageReference Include="SkiaSharp" Version="3.119.1" />
+    <PackageReference Include="Svg.Skia" Version="3.4.0" />
+
+    <!-- Copy Assets folder to output folder otherwise no icons -->
+    <None Include="Assets\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

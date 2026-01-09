@@ -1,0 +1,7 @@
+[REMINDER]
+Id=Reminder-9
+SavedDate=2026-01-09T19:06:46.7971369-08:00
+ReminderDate=2026-01-09T20:06:46.8513368-08:00
+State=True
+ReminderNote=Read the new released mangas
+[END]
