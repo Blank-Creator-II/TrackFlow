@@ -1,6 +1,7 @@
 using MaterialSkin;
 using MaterialSkin.Controls;
 using TrackFlow.Utils;
+using TrackFlow.Models;
 
 namespace TrackFlow.Forms;
 public class MainForm : MaterialForm // inherents from MaterialSkin Framework
@@ -82,31 +83,20 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         this.DrawerShowIconsWhenHidden = true; // this make the drawer (the sidebar) smaller with only icons
         this.DrawerWidth = 200;
         
-        // Load Icons:
-        ImageList IconList = new ImageList
-        {
-            ImageSize = new Size(24,24),
-            ColorDepth = ColorDepth.Depth32Bit // we need all 4,294,967,296 possible color combinations!
-        };
-
-        // now we add all of our images to the list; and let's not forget to convert them
-        IconList.Images.Add("home_ico",
-            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","home.svg"), 24, PrimaryAccent));
-        IconList.Images.Add("expense_ico",
-            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","expense.svg"), 24, PrimaryAccent));
-        IconList.Images.Add("planner_ico",
-            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","planner.svg"), 24, PrimaryAccent));
-        IconList.Images.Add("tools_ico",
-            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","tools.svg"), 24, PrimaryAccent));
-        IconList.Images.Add("settings_ico",
-            IconLoader.Load(Path.Combine("Assets","Icons","Sidebar","settings.svg"), 24, PrimaryAccent));
-
         // we attach our icons to the tab controler
-        sidebar.ImageList = IconList;
-        sidebar.TabPages[0].ImageKey = "home_ico"; // First tab
-        sidebar.TabPages[1].ImageKey = "expense_ico"; // Second tab
-        sidebar.TabPages[2].ImageKey = "planner_ico"; // Third tab
-        sidebar.TabPages[3].ImageKey = "tools_ico"; // Forth tab
-        sidebar.TabPages[4].ImageKey = "settings_ico"; // Fifth tab
+        sidebar.ImageList = IconLibrary.CreateImageList(
+            [   AppIcon.Home,
+                AppIcon.Expense,
+                AppIcon.Planner,
+                AppIcon.Tools,
+                AppIcon.Settings],
+            24, // the size of the icon
+            PrimaryAccent // the color of the icon
+        );
+        sidebar.TabPages[0].ImageKey = AppIcon.Home.ToString(); // First tab
+        sidebar.TabPages[1].ImageKey = AppIcon.Expense.ToString(); // Second tab
+        sidebar.TabPages[2].ImageKey = AppIcon.Planner.ToString(); // Third tab
+        sidebar.TabPages[3].ImageKey = AppIcon.Tools.ToString(); // Forth tab
+        sidebar.TabPages[4].ImageKey = AppIcon.Settings.ToString(); // Fifth tab
     }
 }

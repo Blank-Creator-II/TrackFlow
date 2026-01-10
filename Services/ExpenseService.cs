@@ -7,7 +7,7 @@ using TrackFlow.Models;
 namespace TrackFlow.Service;
 public static class ExpenseService // it's a tool it doesn't need instance of the same class for every work
 {
-    public static (bool s, string f) SaveExpense(Expense e)
+    public static (bool s, ID f) SaveExpense(Expense e)
     {
         var expense_data = new List<string> // format the data in the correct way
         {
@@ -36,7 +36,7 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
         };
 
         string expense_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Expense",$"expense_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at
-        return (FileHelper.WriteFile(expense_data_location,expense_data),expense_data_location); // when this function is called to store data it returns a bool to show if it was successfull opreation or not
+        return (FileHelper.WriteFile(expense_data_location,expense_data),e.Id); // when this function is called to store data it returns a bool to show if it was successfull opreation or not
     }
 
     private static Expense _LoadExpense(string[] raw_expense_data)
@@ -147,5 +147,79 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
         }
 
         return list_of_expenses; // it will finnaly return the list of expenses to the caller
+    }
+
+    public static bool DeleteExpense(ID id)
+    {
+        List<string> expenseFiles = FileHelper.FetchData("Expense");
+
+        foreach (string path in expenseFiles)
+        {
+            string[] rawData = FileHelper.ReadFile(path);
+
+            foreach (string line in rawData)
+            {
+                if (line.StartsWith("Id="))
+                {
+                    if (line.Substring(3) == id.PID)
+                    {
+                        File.Delete(path);
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static List<Expense> SearchExpenses(List<Expense> expenses, object searchValue)
+    {
+        if (searchValue == null)
+            return new List<Expense>();
+
+        string query = searchValue.ToString()!.ToLowerInvariant();
+        var rankedResults = new List<(Expense expense, int score)>();
+
+        foreach (Expense e in expenses)
+        {
+            int score = 0;
+
+            void Match(string? value, int weightExact, int weightPartial)
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                string v = value.ToLowerInvariant();
+                if (v == query) score += weightExact;
+                else if (v.Contains(query)) score += weightPartial;
+            }
+
+            // Expense core fields
+            Match(e.Id.PID, 100, 50);
+            Match(e.Amount.ToString(), 90, 40);
+            Match(e.Date.ToString("O"), 95, 45);
+            Match(e.Mode, 60, 30);
+            Match(e.Receiver, 70, 35);
+            Match(e.Category, 70, 35);
+            Match(e.Currency, 50, 25);
+
+            // Coupon
+            Match(e.AppliedCoupon.Code, 40, 20);
+            Match(e.AppliedCoupon.Store, 40, 20);
+
+            // Bank
+            Match(e.LinkedBank.Name, 80, 40);
+            Match(e.LinkedBank.AccountId, 75, 35);
+            Match(e.LinkedBank.AccountType, 60, 30);
+
+            if (score > 0)
+                rankedResults.Add((e, score));
+        }
+
+        return rankedResults
+            .OrderByDescending(r => r.score)
+            .Select(r => r.expense)
+            .ToList();
     }
 }

@@ -1,4 +1,5 @@
 using System.Text;
+using System.IO;
 using TrackFlow.Models;
 using TrackFlow.Utils;
 
@@ -12,12 +13,20 @@ class Tester
     {
         Log("=== TrackFlow Service Tester ===\n");
 
-        Dictionary<string, string> test_data = new Dictionary<string, string>();
+        Dictionary<string, ID> test_data = new Dictionary<string, ID>();
 
         test_data["reminder"] = TestReminder();
+        TestReminderSearch();
+        TestReminderCleanup(test_data);
         test_data["todo"]     = TestTodo();
+        TestTodoSearch();
+        TestTodoCleanup(test_data);
         test_data["expense"]  = TestExpense();
+        TestExpenseSearch();
+        TestExpenseCleanup(test_data);
         test_data["note"]     = TestNote();
+        TestNoteSearch();
+        TestNoteCleanup(test_data);
 
         Log("\n=== All tests finished ===\n");
 
@@ -26,17 +35,11 @@ class Tester
         {
             SaveLog();
         }
-
-        bool delete_choice = args != null && Array.Exists(args, a => a == "-c");
-        if (delete_choice)
-        {
-            CleanData(test_data);
-        }
     }
 
     // ----------------- Reminder -----------------
 
-    static string TestReminder()
+    static ID TestReminder()
     {
         Log(">> Testing ReminderService");
 
@@ -68,9 +71,32 @@ class Tester
         return saved.f;
     }
 
+    static void TestReminderSearch()
+    {
+        Log(">> Testing ReminderService Search");
+
+        var reminders = ReminderService.LoadReminder();
+
+        var byState = ReminderService.SearchReminders(reminders, true);
+        Log($"Search State=true : {byState.Count}");
+
+        var byNote = ReminderService.SearchReminders(reminders, "manga");
+        Log($"Search 'manga'    : {byNote.Count}\n");
+    }
+
+    static void TestReminderCleanup(Dictionary<string, ID> test_data)
+    {
+        var reminders = ReminderService.LoadReminder();
+        if (reminders.Count > 0)
+        {
+            var res = ReminderService.DeleteReminder(test_data["reminder"]);
+            Log($"Cleanup Reminder: {res}");
+        }
+    }
+
     // ----------------- Todo -----------------
 
-    static string TestTodo()
+    static ID TestTodo()
     {
         Log(">> Testing TodoService");
 
@@ -112,9 +138,32 @@ class Tester
         return saved.f;
     }
 
+    static void TestTodoSearch()
+    {
+        Log(">> Testing TodoService Search");
+
+        var todos = TodoService.LoadTodo();
+
+        var byText = TodoService.SearchTodos(todos, "anime");
+        Log($"Search 'anime' : {byText.Count}");
+
+        var byState = TodoService.SearchTodos(todos, false);
+        Log($"Search State=false : {byState.Count}\n");
+    }
+
+    static void TestTodoCleanup(Dictionary<string, ID> test_data)
+    {
+        var todos = TodoService.LoadTodo();
+        if (todos.Count > 0)
+        {
+            var res = TodoService.DeleteTodo(test_data["todo"]);
+            Log($"Cleanup Todo: {res}");
+        }
+    }
+
     // ----------------- Expense -----------------
 
-    static string TestExpense()
+    static ID TestExpense()
     {
         Log(">> Testing ExpenseService");
 
@@ -185,9 +234,32 @@ class Tester
         return saved.f;
     }
 
+    static void TestExpenseSearch()
+    {
+        Log(">> Testing ExpenseService Search");
+
+        var expenses = ExpenseService.LoadExpense();
+
+        var byReceiver = ExpenseService.SearchExpenses(expenses, "kroni");
+        Log($"Search Receiver 'kroni' : {byReceiver.Count}");
+
+        var byBank = ExpenseService.SearchExpenses(expenses, "bank of america");
+        Log($"Search Bank             : {byBank.Count}\n");
+    }
+
+    static void TestExpenseCleanup(Dictionary<string, ID> test_data)
+    {
+        var expenses = ExpenseService.LoadExpense();
+        if (expenses.Count > 0)
+        {
+            var res = ExpenseService.DeleteExpense(test_data["expense"]);
+            Log($"Cleanup Expense: {res}");
+        }
+    }
+
     // ----------------- Note -----------------
 
-    static string TestNote()
+    static ID TestNote()
     {
         Log(">> Testing NoteService");
 
@@ -224,6 +296,29 @@ class Tester
         return saved.f;
     }
 
+    static void TestNoteSearch()
+    {
+        Log(">> Testing NoteService Search");
+
+        var notes = NoteService.LoadNote();
+
+        var byText = NoteService.SearchNotes(notes, "backend");
+        Log($"Search 'backend' : {byText.Count}");
+
+        var byDate = NoteService.SearchNotes(notes, DateTime.Now.Date);
+        Log($"Search Date      : {byDate.Count}\n");
+    }
+
+    static void TestNoteCleanup(Dictionary<string, ID> test_data)
+    {
+        var notes = NoteService.LoadNote();
+        if (notes.Count > 0)
+        {
+            var res = NoteService.DeleteNote(test_data["note"]);
+            Log($"Cleanup Note: {res}");
+        }
+    }
+
     // ----------------- Utilities -----------------
 
     static void Log(string message)
@@ -237,20 +332,5 @@ class Tester
         string path = Path.Combine(FileHelper.BASE_DIR, $"test_log-{DateTime.Now:yyyy_MM_dd_HH_mm_ss_ffff}.txt");
         FileHelper.WriteFile(path, _log);
         Console.WriteLine($"\n>> Test log saved to: {path}");
-    }
-
-    static void CleanData(Dictionary<string, string> test_data)
-    {
-        Console.WriteLine("\n=== Deleting test data ===\n");
-        foreach (string data in test_data.Values)
-        {
-            if (File.Exists(data))
-            {
-                File.Delete(data);
-                Console.WriteLine($"Deleted test data: {data}");
-            }
-        }
-        Console.WriteLine("\nWARNING: ID_DATA can not be delted since it stores actual ID postion.");
-        Console.WriteLine("\n=== Finished Deleting Data ===\n");
     }
 }

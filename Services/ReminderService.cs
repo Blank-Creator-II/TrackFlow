@@ -1,11 +1,12 @@
 using System;
+using System.IO;
 using TrackFlow.Models;
 using TrackFlow.Utils;
 
 namespace TrackFlow.Service;
 public static class ReminderService // this is basically the easiest out of the bunch so if you read the other coments you will clearly understand this I am not writting comments
 {
-    public static (bool s, string f) SaveReminder(Reminder r)
+    public static (bool s, ID f) SaveReminder(Reminder r)
     {
         var reminder_data = new List<string>
         {
@@ -19,7 +20,7 @@ public static class ReminderService // this is basically the easiest out of the 
         };
 
         string reminder_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Reminder",$"reminder_{Guid.NewGuid()}.txt");
-        return (FileHelper.WriteFile(reminder_data_location,reminder_data),reminder_data_location);
+        return (FileHelper.WriteFile(reminder_data_location,reminder_data),r.Id);
     }
 
     private static Reminder _LoadReminder(string[] raw_reminder_data)
@@ -77,5 +78,70 @@ public static class ReminderService // this is basically the easiest out of the 
         }
 
         return list_of_reminder; 
+    }
+
+    public static bool DeleteReminder(ID id)
+    {
+        List<string> reminderFiles = FileHelper.FetchData("Reminder");
+
+        foreach (string path in reminderFiles)
+        {
+            string[] rawData = FileHelper.ReadFile(path);
+
+            foreach (string line in rawData)
+            {
+                if (line.StartsWith("Id="))
+                {
+                    if (line.Substring(3) == id.PID)
+                    {
+                        File.Delete(path);
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static List<Reminder> SearchReminders(List<Reminder> reminders, object searchValue)
+    {
+        if (searchValue == null)
+            return new List<Reminder>();
+
+        string query = searchValue.ToString()!.ToLowerInvariant();
+        var rankedResults = new List<(Reminder reminder, int score)>();
+
+        foreach (Reminder r in reminders)
+        {
+            int score = 0;
+
+            void Match(string? value, int exact, int partial)
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                string v = value.ToLowerInvariant();
+                if (v == query) score += exact;
+                else if (v.Contains(query)) score += partial;
+            }
+
+            // Core fields
+            Match(r.Id.PID, 100, 50);
+            Match(r.SavedDate.ToString("O"), 90, 45);
+            Match(r.ReminderDate.ToString("O"), 95, 45);
+            Match(r.State.ToString(), 80, 40);
+
+            // Optional note
+            Match(r.ReminderNote, 60, 30);
+
+            if (score > 0)
+                rankedResults.Add((r, score));
+        }
+
+        return rankedResults
+            .OrderByDescending(r => r.score)
+            .Select(r => r.reminder)
+            .ToList();
     }
 }

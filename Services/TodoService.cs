@@ -1,11 +1,12 @@
 using System;
+using System.IO;
 using TrackFlow.Models;
 using TrackFlow.Utils;
 
 namespace TrackFlow.Service;
 public static class TodoService
 {
-    public static (bool s, string f) SaveTodo(Todo t)
+    public static (bool s, ID f) SaveTodo(Todo t)
     {
         var todo_data = new List<string>
         {
@@ -34,7 +35,7 @@ public static class TodoService
         todo_data.Add("[END]");
 
         string todo_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Todo",$"todo_{Guid.NewGuid()}.txt");
-        return (FileHelper.WriteFile(todo_data_location,todo_data),todo_data_location);
+        return (FileHelper.WriteFile(todo_data_location,todo_data),t.Id);
     }
 
     private static Todo _LoadTodo(string[] raw_todo_data)
@@ -155,5 +156,75 @@ public static class TodoService
         }
 
         return list_of_todo; 
+    }
+
+    public static bool DeleteTodo(ID id)
+    {
+        List<string> todoFiles = FileHelper.FetchData("Todo");
+
+        foreach (string path in todoFiles)
+        {
+            string[] rawData = FileHelper.ReadFile(path);
+
+            foreach (string line in rawData)
+            {
+                if (line.StartsWith("Id="))
+                {
+                    if (line.Substring(3) == id.PID)
+                    {
+                        File.Delete(path);
+                        return true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public static List<Todo> SearchTodos(List<Todo> todos, object searchValue)
+    {
+        if (searchValue == null)
+            return new List<Todo>();
+
+        string query = searchValue.ToString()!.ToLowerInvariant();
+        var rankedResults = new List<(Todo todo, int score)>();
+
+        foreach (Todo t in todos)
+        {
+            int score = 0;
+
+            void Match(string? value, int exact, int partial)
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                string v = value.ToLowerInvariant();
+                if (v == query) score += exact;
+                else if (v.Contains(query)) score += partial;
+            }
+
+            // Metadata
+            Match(t.Id.PID, 100, 50);
+            Match(t.Date.ToString("O"), 90, 45);
+
+            // Todo lines
+            foreach (Todo.SingleLine line in t.Data)
+            {
+                Match(line.Data, 70, 35);
+                Match(line.State.ToString(), 60, 30);
+
+                if (line.Link != null)
+                    Match(line.Link.PID, 80, 40);
+            }
+
+            if (score > 0)
+                rankedResults.Add((t, score));
+        }
+
+        return rankedResults
+            .OrderByDescending(r => r.score)
+            .Select(r => r.todo)
+            .ToList();
     }
 }
