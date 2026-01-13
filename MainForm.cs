@@ -10,6 +10,8 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
     
     public static Color PrimaryDark = ColorTranslator.FromHtml("#212121"); // Top app bar background, drawer top, header bars
     public static Color PrimaryMid = ColorTranslator.FromHtml("#424242"); // Secondary surfaces, some buttons, sliders
+    public static Color PrimaryGrey = ColorTranslator.FromHtml("#5e5c5c"); // Secondary+ surfaces, some buttons, sliders
+    public static Color PrimaryAsh = ColorTranslator.FromHtml("#726f6f"); // Secondary++ surfaces, some buttons, sliders
     public static Color PrimaryLight = ColorTranslator.FromHtml("#BDBDBD"); // Cards, raised surfaces, panels
     public static Color PrimaryAccent = ColorTranslator.FromHtml("#87CEEB"); // Action highlights, checkboxes, selected items, FABs
     
