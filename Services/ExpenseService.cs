@@ -21,19 +21,42 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
             $"Currency={e.Currency}",
             "",
             "[COUPON]",
-            $"Code={e.AppliedCoupon.Code}",
-            $"Description={e.AppliedCoupon.Description}",
-            $"Store={e.AppliedCoupon.Store}",
-            $"ExpirationDate={e.AppliedCoupon.ExpirationDate:O}",
-            "",                 
-            "[BANK]",
-            $"Name={e.LinkedBank.Name}",
-            $"AccountType={e.LinkedBank.AccountType}",
-            $"AccountId={e.LinkedBank.AccountId}",
-            $"Balance={e.LinkedBank.Balance}",
-            $"LinkDate={e.LinkedBank.LinkDate:O}",
-            "[END]" 
         };
+        if (e.AppliedCoupon is not null)
+        {
+            if (e.AppliedCoupon.Code != null 
+                && e.AppliedCoupon.Description != null 
+                && e.AppliedCoupon.Store != null 
+                && e.AppliedCoupon.ExpirationDate != null)
+            {
+                expense_data.Add($"Code={e.AppliedCoupon.Code}");
+                expense_data.Add($"Description={e.AppliedCoupon.Description}");
+                expense_data.Add($"Store={e.AppliedCoupon.Store}");
+                expense_data.Add($"ExpirationDate={e.AppliedCoupon.ExpirationDate:O}");   
+            }
+            else
+            {
+                expense_data.Add("Code=<null>");
+                expense_data.Add("Description=<null>");
+                expense_data.Add("Store=<null>");
+                expense_data.Add("ExpirationDate=<null>");                
+            }
+        }
+        else
+        {
+            expense_data.Add("Code=<null>");
+            expense_data.Add("Description=<null>");
+            expense_data.Add("Store=<null>");
+            expense_data.Add("ExpirationDate=<null>");
+        }
+        expense_data.Add("");                 
+        expense_data.Add("[BANK]");
+        expense_data.Add($"Name={e.LinkedBank.Name}");
+        expense_data.Add($"AccountType={e.LinkedBank.AccountType}");
+        expense_data.Add($"AccountId={e.LinkedBank.AccountId}");
+        expense_data.Add($"Balance={e.LinkedBank.Balance}");
+        expense_data.Add($"LinkDate={e.LinkedBank.LinkDate:O}");
+        expense_data.Add("[END]");
 
         string expense_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Expense",$"expense_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at
         return (FileHelper.WriteFile(expense_data_location,expense_data),e.Id); // when this function is called to store data it returns a bool to show if it was successfull opreation or not
@@ -47,7 +70,7 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
 
         // Temporary storage for keys/values
         Dictionary<string, string> expenseData = new Dictionary<string, string>();
-        Dictionary<string, string> couponData = new Dictionary<string, string>();
+        Dictionary<string, string?> couponData = new Dictionary<string, string?>();
         Dictionary<string, string> bankData = new Dictionary<string, string>();
 
         foreach (string line in raw_expense_data)
@@ -89,7 +112,7 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
                 if (start_expense_fetch)
                     expenseData[key] = value;
                 else if (start_coupon_fetch)
-                    couponData[key] = value;
+                    couponData[key] = value == "<null>" ? null : value;
                 else if (start_bank_fetch)
                     bankData[key] = value;
             }
@@ -205,8 +228,11 @@ public static class ExpenseService // it's a tool it doesn't need instance of th
             Match(e.Currency, 50, 25);
 
             // Coupon
-            Match(e.AppliedCoupon.Code, 40, 20);
-            Match(e.AppliedCoupon.Store, 40, 20);
+            if (e.AppliedCoupon is not null)
+            {
+                Match(e.AppliedCoupon.Code, 40, 20);
+                Match(e.AppliedCoupon.Store, 40, 20);  
+            }
 
             // Bank
             Match(e.LinkedBank.Name, 80, 40);

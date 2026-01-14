@@ -12,12 +12,12 @@ public class Expense
     public required string Currency {get; set;} // what currency the transaction ocurs in (Dollar, Yen...) it's the name not the symbol! "$..." 
     public class Coupon // this variable has it's own variables, can be accessed by creating it's own instance like AppliedCoupon = new Expense.Coupon
     {
-        public required string Code {get; set;} // the coupon's code "FREEBOOK10" or stuff like that
-        public required string Description {get; set;} // the coupon's description eg: "get 10% discount on books"
-        public required string Store {get; set;} // the coupon's work area, where it is applied to, this is linked to Receiver var 
-        public required DateTime ExpirationDate {get; set;} // the coupon's expiration date
+        public string? Code {get; set;} // the coupon's code "FREEBOOK10" or stuff like that
+        public string? Description {get; set;} // the coupon's description eg: "get 10% discount on books"
+        public string? Store {get; set;} // the coupon's work area, where it is applied to, this is linked to Receiver var 
+        public DateTime? ExpirationDate {get; set;} // the coupon's expiration date
     }
-    public required Coupon AppliedCoupon {get; set;} // this is where the above Coupon class is stored on you refer this to get the inside vars Expense.AppliedCoupon.Code
+    public Coupon? AppliedCoupon {get; set;} // this is where the above Coupon class is stored on you refer this to get the inside vars Expense.AppliedCoupon.Code
     public class Bank //  this var has it's own vars, can be accessed as the same as the coupon way
     {
         public required string Name {get; set;} // the linked bank name eg: (CBE...)
