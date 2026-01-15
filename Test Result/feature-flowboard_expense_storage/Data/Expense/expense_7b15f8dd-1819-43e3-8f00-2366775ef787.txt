@@ -3,7 +3,7 @@ Id=Expense-2
 Amount=400
 Date=2026-01-08T01:30:19.1088858-08:00
 Mode=Splited
-Receiver=Kroni
+Receiver=Kronii
 Category=Entertainment
 Currency=USD
 

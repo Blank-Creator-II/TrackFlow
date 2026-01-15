@@ -7,6 +7,27 @@ public static class FileHelper
 {
     public static readonly string BASE_DIR = AppContext.BaseDirectory; // This is a relative path to the main path
 
+    public static void CheckDataDirectory()
+    {
+        // Ensures that the data directory is always created even if there is nothing stored
+        var dir = new Dictionary<string,string>();
+        dir["Expense"] = Path.Combine(BASE_DIR,"Data","Expense");
+        dir["Note"] = Path.Combine(BASE_DIR,"Data","Note");
+        dir["Reminder"] = Path.Combine(BASE_DIR,"Data","Reminder");
+        dir["Todo"] = Path.Combine(BASE_DIR,"Data","Todo");
+        dir["Settings"] = Path.Combine(BASE_DIR,"Data","Settings");
+
+        if (!Directory.Exists(dir["Expense"])){Directory.CreateDirectory(dir["Expense"]);}
+
+        if (!Directory.Exists(dir["Note"])){Directory.CreateDirectory(dir["Note"]);}
+
+        if (!Directory.Exists(dir["Reminder"])){Directory.CreateDirectory(dir["Reminder"]);}
+
+        if (!Directory.Exists(dir["Todo"])){Directory.CreateDirectory(dir["Todo"]);}
+
+        if (!Directory.Exists(dir["Settings"])){Directory.CreateDirectory(dir["Settings"]);}
+    }
+
     public static string[] ReadFile(string path)
     {
         if (File.Exists(path)) // It checks if the file you are  quering existis and gives you the raw text
@@ -65,7 +86,7 @@ public static class FileHelper
             return char.ToUpper(text[0]) + text.Substring(1).ToLower();
         }
 
-        string stored_data_location = Path.Combine(FileHelper.BASE_DIR,"Data",CapitalizeFirst(type));
+        string stored_data_location = Path.Combine(BASE_DIR,"Data",CapitalizeFirst(type));
 
         foreach (string stored_data in Directory.EnumerateFiles(stored_data_location))
         {

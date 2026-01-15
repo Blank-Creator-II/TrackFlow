@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrackFlow.Forms;
 using TrackFlow.Service;
+using TrackFlow.Utils;
 
 static class Program
 {
@@ -11,6 +12,7 @@ static class Program
     {
         bool debug = args != null && Array.Exists(args, a => a == "--debug");
         bool testService = args != null && Array.Exists(args, a => a == "--test-service");
+        FileHelper.CheckDataDirectory();
 
         if (debug)
         {
