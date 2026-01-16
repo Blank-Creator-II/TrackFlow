@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-12
+Amount=19.50
+Date=2025-08-02T13:45:12.1230000-07:00
+Mode=Individual
+Receiver=Indie Game Store
+Category=Entertainment
+Currency=USD
+
+[COUPON]
+Code=NEWPLAYER20
+Description=20% off first purchase
+Store=Indie Store
+ExpirationDate=2025-09-01T00:00:00-07:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234568
+Balance=2400.00
+LinkDate=2024-12-01T09:00:00-08:00
+[END]

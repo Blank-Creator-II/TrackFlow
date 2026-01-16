@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-1
+Amount=19.99
+Date=2025-06-02T10:12:05.1234567-07:00
+Mode=Individual
+Receiver=Steam
+Category=Entertainment
+Currency=USD
+
+[COUPON]
+Code=SUMMERGAME5
+Description=5% off summer indie bundle
+Store=Steam
+ExpirationDate=2025-07-02T10:12:05.1234567-07:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234567
+Balance=2560.45
+LinkDate=2024-12-01T09:00:00-08:00
+[END]

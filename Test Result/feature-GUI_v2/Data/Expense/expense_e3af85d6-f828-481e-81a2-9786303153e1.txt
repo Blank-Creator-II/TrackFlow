@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-50
+Amount=420.00
+Date=2026-01-15T12:00:00.0000000+01:00
+Mode=Individual
+Receiver=External Monitor
+Category=Shopping
+Currency=EUR
+
+[COUPON]
+Code=MONITOR50
+Description=50 off select monitors
+Store=ElectroStore
+ExpirationDate=2026-02-28T00:00:00+01:00
+
+[BANK]
+Name=Barclays
+AccountType=Checking
+AccountId=GB00BARC987654321
+Balance=1850.00
+LinkDate=2020-01-01T09:00:00+01:00
+[END]

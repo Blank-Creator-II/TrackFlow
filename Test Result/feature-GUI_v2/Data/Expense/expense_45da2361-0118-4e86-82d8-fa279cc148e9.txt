@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-14
+Amount=9.99
+Date=2025-09-12T11:11:11.0000000+03:00
+Mode=Individual
+Receiver=Sketchbook Cafe
+Category=Shopping
+Currency=Birr
+
+[COUPON]
+Code=SKETCH5
+Description=5% off sketchpads
+Store=Sketchbook Cafe
+ExpirationDate=2025-10-12T00:00:00+03:00
+
+[BANK]
+Name=CBE Business
+AccountType=Checking
+AccountId=CBE-112233
+Balance=600.00
+LinkDate=2023-07-07T08:00:00+03:00
+[END]

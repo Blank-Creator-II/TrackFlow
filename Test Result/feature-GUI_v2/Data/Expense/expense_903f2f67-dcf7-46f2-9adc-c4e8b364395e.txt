@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-44
+Amount=180.00
+Date=2026-01-13T22:00:00.0000000+01:00
+Mode=Splited
+Receiver=Workshop Materials
+Category=Shopping
+Currency=EUR
+
+[COUPON]
+Code=WORKMAT
+Description=15% off materials bundle
+Store=StudioSupply
+ExpirationDate=2026-03-01T00:00:00+01:00
+
+[BANK]
+Name=BNP Paribas
+AccountType=Checking
+AccountId=FR7630006000011234567890190
+Balance=900.00
+LinkDate=2019-09-01T09:00:00+01:00
+[END]

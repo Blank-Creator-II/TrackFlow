@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-6
+Amount=8.50
+Date=2025-06-05T08:02:11.0000000+03:00
+Mode=Individual
+Receiver=Neighborhood Cafe
+Category=Other
+Currency=Birr
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBEX0012345
+Balance=5400.75
+LinkDate=2024-03-12T07:30:00+03:00
+[END]

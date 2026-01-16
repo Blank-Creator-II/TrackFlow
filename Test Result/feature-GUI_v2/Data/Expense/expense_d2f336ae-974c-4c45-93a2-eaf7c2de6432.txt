@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-16
+Amount=35.20
+Date=2025-10-05T13:05:00.0000000-07:00
+Mode=Individual
+Receiver=Pharmacy Plus
+Category=Medicine
+Currency=USD
+
+[COUPON]
+Code=MEDSAVE
+Description=Save 5 on selected OTC meds
+Store=Pharmacy Plus
+ExpirationDate=2026-01-01T00:00:00-07:00
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH-556677
+Balance=780.30
+LinkDate=2022-02-02T10:00:00-08:00
+[END]

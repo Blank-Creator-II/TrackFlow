@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Reflection;
 using System.Windows.Forms;
 using MaterialSkin;
@@ -19,6 +20,9 @@ public partial class ExpensesPage : UserControl
     // made this a field so Reload() can repopulate it
     private FlowLayoutPanel? historyFlow;
 
+    // a reference to the recomendation panel
+    private Panel? recomendationPanel;
+
     // search debounce timer and cache
     private readonly System.Windows.Forms.Timer _searchDebounceTimer;
     private const int SearchDebounceMs = 300;
@@ -26,6 +30,21 @@ public partial class ExpensesPage : UserControl
 
     // keep a reference to the search control so timer handler can read it
     private MaterialTextBox2? _searchBar;
+
+    // summary chart (so we can update it later)
+    private LiveCharts.WinForms.PieChart? _summaryChart;
+
+    // category colors (hex). Add/adjust categories here.
+    private readonly Dictionary<string, string> _categoryColors = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Entertainment"] = "#9B27FF",
+        ["Grocery"]       = "#2ECC71",
+        ["Medicine"]      = "#FF3B30",
+        ["Other"]         = "#7F8C8D",
+        ["Shopping"]      = "#FF2D95",
+        ["Travel"]        = "#00B3FF",
+        ["Utilities"]     = "#FFB000"
+    };
 
     public ExpensesPage()
     {
@@ -88,7 +107,7 @@ public partial class ExpensesPage : UserControl
         }
         catch
         {
-            // If reflection fails for some reason, continue without crash; it's a best-effort optimization.
+            // best-effort
         }
 
         historyPanel.Controls.Add(historyFlow);
@@ -103,7 +122,7 @@ public partial class ExpensesPage : UserControl
         layout.Controls.Add(insightPanel, 1, 1);
 
         // --------- History (initial population via Reload) ---------
-        Reload(); // initial populate
+        Reload(true); // initial populate
 
         // keep resize behaviour
         historyPanel.Resize += (s, e) =>
@@ -125,23 +144,19 @@ public partial class ExpensesPage : UserControl
         topBarPanel.Controls.Add(CreateTopBar(topBarPanel));
 
         // --------- Summery ---------
-        var test_data = new Dictionary<string, double>
-        {
-            ["Food"] = 500.75,
-            ["Rent"] = 1000.25,
-            ["Utilities"] = 500.5
-        };
-        insightPanel.Controls.Add(CreateSummery(test_data));
+        // Create the summary panel and keep the chart instance (so we can UpdateSummary later)
+        var summaryPanel = CreateSummery(BuildSummaryFromExpenses(ExpenseService.LoadExpense()));
+        insightPanel.Controls.Add(summaryPanel);
     }
 
     // Reloads the expenses list UI from the data service.
     // Call this whenever data changes (add / delete / update).
-    public void Reload(List<Expense> list_of_expenses = null!)
+    public void Reload( bool true_reload, bool searching = false, List<Expense> list_of_expenses = null!)
     {
         // clear existing
         if (historyFlow == null) return;
 
-        // If caller did not provide a list, refresh cache from service
+        // If caller did not provide a list or was asked to truly reload, refresh cache from service
         if (list_of_expenses is null)
         {
             try
@@ -182,7 +197,7 @@ public partial class ExpensesPage : UserControl
                             bool ok = ExpenseService.DeleteExpense(expense.Id);
                             if (ok)
                             {
-                                Reload();
+                                Reload(true);
                             }
                             else
                             {
@@ -209,6 +224,25 @@ public partial class ExpensesPage : UserControl
             historyFlow.Refresh();
             historyFlow.Invalidate();
         }
+
+        // Update the summary chart from the cached data (aggregate by category)
+        try
+        {
+            if (true_reload && !searching)
+            {
+            var summary = BuildSummaryFromExpenses(_cachedExpenses);
+            UpdateSummary(summary);
+
+            // create recomendations based on the expense data:
+            recomendationPanel!.Controls.Clear();
+            var recs = BuildRecommendationsPanel(summary, maxRecommendations: 4);
+            recomendationPanel.Controls.Add(recs);
+            }
+        }
+        catch
+        {
+            // silent fail if summary update breaks; so it doesn't block the UI
+        }
     }
 
     private TableLayoutPanel CreateTopBar(Panel master)
@@ -217,11 +251,12 @@ public partial class ExpensesPage : UserControl
         {
             Dock = DockStyle.Fill,
             RowCount = 2,
-            ColumnCount = 3,
+            ColumnCount = 4,
             Padding = new Padding(0)
         };
 
         topBarLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+        topBarLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         topBarLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         topBarLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         topBarLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100f));
@@ -242,6 +277,13 @@ public partial class ExpensesPage : UserControl
             Mini = true
         };
 
+        var reload_btn = new MaterialFloatingActionButton
+        {
+            Icon = IconLibrary.GetBitmap(AppIcon.Reload, 24, MainForm.PrimaryDark),
+            Margin = new Padding(8, 0, 0, 0),
+            Mini = true
+        };
+
         var add_btn = new MaterialFloatingActionButton
         {
             Icon = IconLibrary.GetBitmap(AppIcon.Add, 24, MainForm.PrimaryDark),
@@ -258,7 +300,8 @@ public partial class ExpensesPage : UserControl
 
         topBarLayout.Controls.Add(_searchBar, 0, 0);
         topBarLayout.Controls.Add(search_btn, 1, 0);
-        topBarLayout.Controls.Add(add_btn, 2, 0);
+        topBarLayout.Controls.Add(reload_btn, 2, 0);
+        topBarLayout.Controls.Add(add_btn, 3, 0);
         topBarLayout.Controls.Add(divder, 0, 1);
         topBarLayout.SetColumnSpan(divder, 3);
 
@@ -287,6 +330,12 @@ public partial class ExpensesPage : UserControl
             PerformSearchNow();
         };
 
+        // reload the UI from the expense service
+        reload_btn.Click += (s, e) =>
+        {
+            Reload(true);
+        };
+
         // Show AddExpense modally and reload if it returns OK
         add_btn.Click += (s, e) =>
         {
@@ -294,7 +343,7 @@ public partial class ExpensesPage : UserControl
             var dr = addForm.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                Reload();
+                Reload(true);
             }
         };
 
@@ -311,7 +360,7 @@ public partial class ExpensesPage : UserControl
         if (string.IsNullOrWhiteSpace(q))
         {
             // show full cached list
-            Reload(_cachedExpenses);
+            Reload(false,true,_cachedExpenses);
             return;
         }
 
@@ -327,7 +376,7 @@ public partial class ExpensesPage : UserControl
             results = new List<Expense>();
         }
 
-        Reload(results);
+        Reload(true,true,results);
     }
 
     private Frame CreateExpenseCard(FlowLayoutPanel master, Expense expense)
@@ -337,7 +386,6 @@ public partial class ExpensesPage : UserControl
             Title = $"{expense.Category} ━━━ {expense.Date}",
             Subtitle =  $"\nReceiver: {expense.Receiver}: ━━━ Amount: {expense.Amount} {expense.Currency}\n" +
                         $"Bank: {expense.LinkedBank.Name}: ━━━ Type: {expense.Mode}",
-            Icon = IconLibrary.GetBitmap(AppIcon.Expense,24,MainForm.PrimaryLight),
             TitleFontSize = 14f,
             SubtitleFontSize = 11f,
             IconSize = new Size(24,24),
@@ -351,6 +399,15 @@ public partial class ExpensesPage : UserControl
             Cursor = Cursors.Hand
         };
 
+        // set icon with the correct color
+        if (expense.Category == "Entertainment"){card.Icon = IconLibrary.GetBitmap(AppIcon.Entertainment,24,ColorTranslator.FromHtml(_categoryColors["Entertainment"]));}
+        else if (expense.Category == "Grocery"){card.Icon = IconLibrary.GetBitmap(AppIcon.Grocery,24,ColorTranslator.FromHtml(_categoryColors["Grocery"]));}
+        else if (expense.Category == "Medicine"){card.Icon = IconLibrary.GetBitmap(AppIcon.Medicine,24,ColorTranslator.FromHtml(_categoryColors["Medicine"]));}
+        else if (expense.Category == "Other"){card.Icon = IconLibrary.GetBitmap(AppIcon.Other,24,ColorTranslator.FromHtml(_categoryColors["Other"]));}
+        else if (expense.Category == "Shopping"){card.Icon = IconLibrary.GetBitmap(AppIcon.Shopping,24,ColorTranslator.FromHtml(_categoryColors["Shopping"]));}
+        else if (expense.Category == "Travel"){card.Icon = IconLibrary.GetBitmap(AppIcon.Travel,24,ColorTranslator.FromHtml(_categoryColors["Travel"]));}
+        else if (expense.Category == "Utilities"){card.Icon = IconLibrary.GetBitmap(AppIcon.Utilities,24,ColorTranslator.FromHtml(_categoryColors["Utilities"]));}
+
         // clicking shows more detail
         card.Click += (s, e) => {
             using var viewexp = new ViewExpense(expense);
@@ -360,6 +417,7 @@ public partial class ExpensesPage : UserControl
         return card;
     }
 
+    /// Create the summary panel (pie chart). The created PieChart is stored in _summaryChart so UpdateSummary(...) can modify it later.
     private TableLayoutPanel CreateSummery(Dictionary<string, double> data)
     {
         var summeryPanel = new TableLayoutPanel
@@ -376,20 +434,11 @@ public partial class ExpensesPage : UserControl
         summeryPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 6f));
         summeryPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50f));
 
-        var seriesCollection = new SeriesCollection();
+        // Build initial series collection with colors
+        var seriesCollection = BuildSeriesCollection(data);
 
-        foreach (var item in data)
-        {
-            seriesCollection.Add(new PieSeries
-            {
-                Title = item.Key,
-                Values = new ChartValues<double> { item.Value },
-                DataLabels = true,
-                LabelPoint = chartPoint => string.Format("{1:P0}", chartPoint.SeriesView.Title, chartPoint.Participation)
-            });
-        }
-
-        var chart = new LiveCharts.WinForms.PieChart
+        // Create the chart and store it so we can update later
+        _summaryChart = new LiveCharts.WinForms.PieChart
         {
             Dock = DockStyle.Fill,
             Series = seriesCollection,
@@ -398,7 +447,7 @@ public partial class ExpensesPage : UserControl
             BackColor = System.Drawing.Color.Transparent
         };
 
-        chart.DefaultLegend.Foreground = System.Windows.Media.Brushes.White;
+        _summaryChart.DefaultLegend.Foreground = System.Windows.Media.Brushes.White;
 
         var Hdivider = new MaterialDivider
         {
@@ -414,15 +463,110 @@ public partial class ExpensesPage : UserControl
             BackColor = MainForm.PrimaryDark
         };
 
-        var recomendationPanel = new Panel { Dock = DockStyle.Fill };
+        recomendationPanel = new Panel { Dock = DockStyle.Fill };
 
         summeryPanel.Controls.Add(Vdivider, 0, 0);
         summeryPanel.SetRowSpan(Vdivider, 3);
-        summeryPanel.Controls.Add(chart, 1, 0);
+        summeryPanel.Controls.Add(_summaryChart, 1, 0);
         summeryPanel.Controls.Add(Hdivider, 1, 1);
         summeryPanel.Controls.Add(recomendationPanel, 1, 2);
 
+        // Inital Recomendation
+        recomendationPanel.Controls.Add(BuildRecommendationsPanel(BuildSummaryFromExpenses(ExpenseService.LoadExpense()),4));
+
         return summeryPanel;
     }
-}
 
+    // this will build a SeriesCollection from a data dictionary and apply per-category colors.
+    private SeriesCollection BuildSeriesCollection(Dictionary<string, double> data)
+    {
+        var sc = new SeriesCollection();
+
+        if (data == null || data.Count == 0)
+            return sc;
+
+        double total = data.Values.Sum();
+
+        foreach (var item in data)
+        {
+            // get color hex or fallback to a default (material accent)
+            string hex = _categoryColors.TryGetValue(item.Key, out var h) ? h : "#9E9E9E";
+            
+            // convert hex to System.Windows.Media.Color safely
+            System.Windows.Media.Color mediaColor;
+            try
+            {
+                // allow short/long forms and keep alpha full
+                mediaColor = (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString(hex);
+            }
+            catch
+            {
+                mediaColor = System.Windows.Media.Color.FromRgb(158, 158, 158);
+            }
+
+            var brush = new System.Windows.Media.SolidColorBrush(mediaColor);
+            brush.Freeze(); // freeze for perf (WPF brush)
+
+            double percent = total > 0
+                ? (item.Value / total) * 100
+                : 0;
+
+            var ps = new PieSeries
+            {
+                Title = $"{percent:0}% - {item.Key}", // shows percent and then the category like "16% - Entertainment" 
+                Values = new ChartValues<double> { item.Value },
+                DataLabels = true,
+                Fill = brush,
+                LabelPoint = chartPoint => $"" //$"{chartPoint.Participation:P0}"
+            };
+
+            sc.Add(ps);
+        }
+
+        return sc;
+    }
+
+    // Update the summary chart's series from new data.
+    public void UpdateSummary(Dictionary<string, double> data)
+    {
+        if (_summaryChart == null) return;
+
+        try
+        {
+            var newSeries = BuildSeriesCollection(data);
+            // Replace whole Series collection — LiveCharts will animate/refresh.
+            _summaryChart.Series = newSeries;
+            _summaryChart.Refresh();
+        }
+        catch (Exception ex)
+        {
+            // don't throw the UI into flames if updating fails
+            MessageBox.Show($"Failed to update summary: {ex.Message}");
+        }
+    }
+
+    // Aggregate the expenses by category to produce the data dictionary used by the pie chart.
+    private Dictionary<string, double> BuildSummaryFromExpenses(IEnumerable<Expense> expenses)
+    {
+        var d = new Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
+        foreach (var e in expenses)
+        {
+            var cat = string.IsNullOrWhiteSpace(e.Category) ? "Other" : e.Category;
+            if (!d.TryGetValue(cat, out var cur)) cur = 0.0;
+            d[cat] = cur + e.Amount;
+        }
+
+        Console.WriteLine("==============================");
+        int count = 1;
+        foreach (string key in d.Keys)
+        {
+            Console.WriteLine($"[{count}]");
+            Console.WriteLine($"{key}: {d[key]}");
+            Console.WriteLine("--------------------------");
+            count++;
+        }
+        Console.WriteLine("==============================");
+
+        return d;
+    }
+}

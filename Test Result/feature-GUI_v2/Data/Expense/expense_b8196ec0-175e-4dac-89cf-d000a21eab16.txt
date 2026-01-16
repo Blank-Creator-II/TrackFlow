@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-13
+Amount=320.75
+Date=2025-09-10T17:05:44.0000000+01:00
+Mode=Splited
+Receiver=Concert Tickets
+Category=Entertainment
+Currency=EUR
+
+[COUPON]
+Code=CONCERT5
+Description=5 euro off group tickets
+Store=TicketMaster
+ExpirationDate=2025-12-31T23:59:59+01:00
+
+[BANK]
+Name=HSBC UK
+AccountType=Saving
+AccountId=GB29NWBK60161331926820
+Balance=2200.00
+LinkDate=2021-03-03T10:00:00+01:00
+[END]

@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-41
+Amount=89.00
+Date=2026-01-11T19:00:00.0000000+09:00
+Mode=Individual
+Receiver=Anime Convention Ticket
+Category=Entertainment
+Currency=Yen
+
+[COUPON]
+Code=AC2026
+Description=Early bird discount
+Store=Conventions.jp
+ExpirationDate=2026-02-01T00:00:00+09:00
+
+[BANK]
+Name=Sumitomo Mitsui
+AccountType=Checking
+AccountId=JP1122334455
+Balance=450000
+LinkDate=2016-12-12T00:00:00+09:00
+[END]

@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-40
+Amount=149.99
+Date=2026-01-10T16:45:00.0000000-07:00
+Mode=Individual
+Receiver=Drawing Tablet
+Category=Shopping
+Currency=USD
+
+[COUPON]
+Code=TABLET15
+Description=15% off stylus bundle
+Store=ArtistTech
+ExpirationDate=2026-03-15T00:00:00-07:00
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH-223344
+Balance=540.00
+LinkDate=2022-08-08T10:00:00-07:00
+[END]

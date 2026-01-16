@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-34
+Amount=120.00
+Date=2026-01-04T18:45:00.0000000+09:00
+Mode=Individual
+Receiver=Train Ticket
+Category=Travel
+Currency=Yen
+
+[COUPON]
+Code=RAIL10
+Description=10% off weekend fares
+Store=RailCorp
+ExpirationDate=2026-04-01T00:00:00+09:00
+
+[BANK]
+Name=Japan Post Bank
+AccountType=Checking
+AccountId=JP009988776655
+Balance=120000
+LinkDate=2017-08-08T00:00:00+09:00
+[END]

@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-42
+Amount=16.45
+Date=2026-01-12T08:20:00.0000000+03:00
+Mode=Individual
+Receiver=Grocery Market
+Category=Grocery
+Currency=Birr
+
+[COUPON]
+Code=FRESH10
+Description=10% off vegetables
+Store=Grocery Market
+ExpirationDate=2026-02-15T00:00:00+03:00
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-998811
+Balance=2600.00
+LinkDate=2023-10-10T08:00:00+03:00
+[END]

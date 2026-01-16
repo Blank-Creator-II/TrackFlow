@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-49
+Amount=5.00
+Date=2026-01-15T11:11:11.1111111-08:00
+Mode=Individual
+Receiver=Microtransaction
+Category=Entertainment
+Currency=USD
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234574
+Balance=1012.00
+LinkDate=2024-06-06T09:00:00-08:00
+[END]

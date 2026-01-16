@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-46
+Amount=7.50
+Date=2026-01-14T11:11:11.0000000-07:00
+Mode=Individual
+Receiver=Late-night Noodles
+Category=Grocery
+Currency=USD
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH-554433
+Balance=980.00
+LinkDate=2021-01-01T10:00:00-07:00
+[END]

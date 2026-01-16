@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-25
+Amount=60.00
+Date=2025-11-20T10:10:10.0000000+03:00
+Mode=Individual
+Receiver=Internet Provider
+Category=Utilities
+Currency=Birr
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-554433
+Balance=4120.60
+LinkDate=2020-02-02T08:00:00+03:00
+[END]

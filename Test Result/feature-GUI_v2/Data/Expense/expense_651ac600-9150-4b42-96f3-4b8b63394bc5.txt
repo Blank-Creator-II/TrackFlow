@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-19
+Amount=5.75
+Date=2025-10-15T09:00:00.0000000-07:00
+Mode=Individual
+Receiver=Corner Store
+Category=Grocery
+Currency=USD
+
+[COUPON]
+Code=FREESNACK
+Description=Free coffee with pastry
+Store=Corner Store
+ExpirationDate=2025-11-01T00:00:00-07:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234569
+Balance=1987.50
+LinkDate=2024-12-01T09:00:00-08:00
+[END]

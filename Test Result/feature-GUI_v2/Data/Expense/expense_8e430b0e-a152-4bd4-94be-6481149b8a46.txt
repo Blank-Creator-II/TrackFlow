@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-36
+Amount=18.80
+Date=2026-01-06T13:13:13.0000000-07:00
+Mode=Individual
+Receiver=Game Controller Accessories
+Category=Shopping
+Currency=USD
+
+[COUPON]
+Code=ACC10
+Description=10% off accessories
+Store=GameGear
+ExpirationDate=2026-02-28T00:00:00-07:00
+
+[BANK]
+Name=Chase
+AccountType=Saving
+AccountId=CH-778899
+Balance=800.00
+LinkDate=2020-06-06T10:00:00-07:00
+[END]

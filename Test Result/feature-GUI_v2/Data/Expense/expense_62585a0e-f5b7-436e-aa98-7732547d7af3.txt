@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-32
+Amount=9.99
+Date=2026-01-02T09:00:00.0000000-08:00
+Mode=Individual
+Receiver=Game DLC
+Category=Entertainment
+Currency=USD
+
+[COUPON]
+Code=DLCSALE
+Description=Extra DLC discount 2$
+Store=Platform
+ExpirationDate=2026-02-02T00:00:00-08:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234571
+Balance=1420.00
+LinkDate=2024-12-15T09:00:00-08:00
+[END]

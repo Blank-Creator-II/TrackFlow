@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-15
+Amount=250.00
+Date=2025-10-01T09:00:00.0000000+09:00
+Mode=Individual
+Receiver=Flight - Addis ↔ Tokyo
+Category=Travel
+Currency=USD
+
+[COUPON]
+Code=FLY10
+Description=10% off promo code
+Store=Airline.com
+ExpirationDate=2025-12-31T23:59:59+00:00
+
+[BANK]
+Name=Mizuho Bank
+AccountType=Checking
+AccountId=JP00099887766
+Balance=750000
+LinkDate=2018-08-15T00:00:00+09:00
+[END]

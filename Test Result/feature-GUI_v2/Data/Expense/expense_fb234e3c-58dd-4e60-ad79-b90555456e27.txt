@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-26
+Amount=15.25
+Date=2025-12-01T13:30:00.0000000-08:00
+Mode=Individual
+Receiver=Local Pharmacy
+Category=Medicine
+Currency=USD
+
+[COUPON]
+Code=FREEBAND
+Description=Buy bandage get ointment free
+Store=Local Pharmacy
+ExpirationDate=2026-01-01T00:00:00-08:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234570
+Balance=1840.75
+LinkDate=2023-12-01T09:00:00-08:00
+[END]

@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-39
+Amount=3.00
+Date=2026-01-09T07:30:00.0000000+03:00
+Mode=Individual
+Receiver=Bakery
+Category=Grocery
+Currency=Birr
+
+[COUPON]
+Code=BREAD5
+Description=5% off morning loaf
+Store=Neighborhood Bakery
+ExpirationDate=2026-02-28T00:00:00+03:00
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-112200
+Balance=2899.12
+LinkDate=2021-01-01T08:00:00+03:00
+[END]

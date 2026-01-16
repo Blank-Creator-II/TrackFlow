@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-20
+Amount=430.00
+Date=2025-11-01T16:00:00.0000000+09:00
+Mode=Individual
+Receiver=New GPU Purchase
+Category=Shopping
+Currency=Yen
+
+[COUPON]
+Code=GPUDROP
+Description=Special rebate for partner customers
+Store=ElectroShop
+ExpirationDate=2025-12-01T00:00:00+09:00
+
+[BANK]
+Name=Rakuten Bank
+AccountType=Checking
+AccountId=JP00055443322
+Balance=980000
+LinkDate=2020-01-01T00:00:00+09:00
+[END]

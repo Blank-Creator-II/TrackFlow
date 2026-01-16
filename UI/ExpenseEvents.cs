@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 using System.Globalization;
 using MaterialSkin;
 using MaterialSkin.Controls;
@@ -153,7 +158,7 @@ public partial class ExpensesPage : UserControl
                 Hint = "Chose Category", 
                 DropDownStyle = ComboBoxStyle.DropDownList, 
                 Margin = new Padding(2), Dock = DockStyle.Fill };
-            cmbCategory.Items.AddRange(new object[] { "Travel", "Grocery", "Medicine", "Others" });
+            cmbCategory.Items.AddRange(new object[] { "Entertainment", "Grocery", "Medicine", "Other", "Shopping", "Travel", "Utilities" });
             Table.Controls.Add(cmbCategory, 0, 3);
 
             // Currency (r:3 c:1)
@@ -163,7 +168,16 @@ public partial class ExpensesPage : UserControl
                 DropDownStyle = ComboBoxStyle.DropDownList, 
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill };
-            cmbCurrency.Items.AddRange(new object[] { "Dollar", "Yen", "Euro", "Birr" });
+            cmbCurrency.Items.AddRange(new object[] {
+  "Birr", "Dollar", "Euro", "Pound", "Yen", "Yuan", "Won", "Rupee",
+  "Rand", "Naira", "Peso", "Franc", "Dinar", "Dirham", "Shekel",
+  "Ruble", "Real", "Zloty", "Krona", "Krone", "Baht", "Dong",
+  "Ringgit", "Rupiah", "Taka", "Hryvnia", "Forint", "Cedi",
+  "Shilling", "Pula", "Kwacha", "Metical", "Leu", "Lev",
+  "Kip", "Tugrik", "Manat", "Som", "Lira", "Bolivar",
+  "Sol", "Guarani", "Lempira", "Quetzal", "Balboa",
+  "Tenge", "Dram", "Rial", "Pataca", "Ngultrum"
+});
             Table.Controls.Add(cmbCurrency, 1, 3);
 
             // Divider 2
@@ -695,7 +709,7 @@ public partial class ExpensesPage : UserControl
             {
                 Text = "Copy",
                 Anchor = AnchorStyles.Left,
-                Icon = IconLibrary.GetBitmap(AppIcon.Planner, 24, MainForm.PrimaryLight),
+                Icon = IconLibrary.GetBitmap(AppIcon.Copy, 24, MainForm.PrimaryLight),
                 Type = MaterialButton.MaterialButtonType.Contained,
                 Margin = new Padding(3)
             };
@@ -737,7 +751,7 @@ public partial class ExpensesPage : UserControl
             {
                 Text = "Export",
                 Anchor = AnchorStyles.Top,
-                Icon = IconLibrary.GetBitmap(AppIcon.AddNote, 24, MainForm.PrimaryLight),
+                Icon = IconLibrary.GetBitmap(AppIcon.Export, 24, MainForm.PrimaryLight),
                 Type = MaterialButton.MaterialButtonType.Contained,
                 Margin = new Padding(3)
             };
@@ -798,5 +812,230 @@ public partial class ExpensesPage : UserControl
             };
             header.Controls.Add(line,2,0);
         }
+    }
+
+    private FlowLayoutPanel BuildRecommendationsPanel(Dictionary<string, double> totals, int maxRecommendations = 3)
+    {
+        // Safety
+        if (maxRecommendations <= 0) maxRecommendations = 3;
+        if (totals == null) totals = new Dictionary<string, double>();
+
+        // canonical category list
+        var categories = new[] { "Entertainment", "Grocery", "Medicine", "Other", "Shopping", "Travel", "Utilities" };
+
+        // Ensure all categories present with zero default
+        var values = categories.ToDictionary(c => c, c => totals.ContainsKey(c) ? Math.Max(0.0, totals[c]) : 0.0);
+
+        double total = values.Values.Sum();
+        // percent map (0..1)
+        var pct = values.ToDictionary(kv => kv.Key, kv => total > 0 ? kv.Value / total : 0.0);
+
+        // Sort categories by amount desc
+        var byAmountDesc = values.OrderByDescending(kv => kv.Value).ToList();
+        string topCat = byAmountDesc.First().Key;
+        double topAmt = byAmountDesc.First().Value;
+        double secondAmt = byAmountDesc.Skip(1).FirstOrDefault().Value;
+
+        // store candidates (message, score)
+        var candidates = new List<(string msg, double score)>();
+
+        string FormatPct(double x) => (x * 100).ToString("0.#", CultureInfo.CurrentCulture) + "%";
+
+        // 1) General global signals
+        if (total <= 0)
+        {
+            candidates.Add(("No spending recorded. Try adding transactions to see meaningful recommendations.", 5));
+        }
+        else
+        {
+            // overall spending intensity
+            if (total >= 5000) candidates.Add(( $"Total spending is high ({total:N0}). Consider an audit or monthly budget.", 40 ));
+            if (total >= 2000 && total < 5000) candidates.Add(( $"Overall monthly spending is moderate-high ({total:N0}). A quick audit could reveal savings.", 25 ));
+            if (total < 200) candidates.Add(( $"Low activity detected ({total:N0}). If this is unexpected check that transactions are being tracked.", 8 ));
+        }
+
+        // 2) Top category rules
+        candidates.Add(($"Top spending category: {topCat} — {FormatPct(pct[topCat])} of total.", 100 * pct[topCat] + 10));
+        if (topAmt >= 2 * secondAmt && total > 0)
+        {
+            candidates.Add(($"{topCat} dominates spending (≥2× the next category). Consider setting a hard budget for it.", 80));
+        }
+        if (pct[topCat] >= 0.30) candidates.Add(($"{topCat} is a large share ({FormatPct(pct[topCat])}) — investigate recurring charges or subscriptions.", 70));
+        if (pct[topCat] >= 0.20 && pct[topCat] < 0.30) candidates.Add(($"{topCat} takes a notable share ({FormatPct(pct[topCat])}). A small cap could improve savings.", 40));
+
+        // 3) Per-category threshold recommendations
+        foreach (var c in categories)
+        {
+            double p = pct[c];
+            double amt = values[c];
+
+            // general advices by category
+            if (c == "Grocery")
+            {
+                if (p >= 0.20) candidates.Add(($"Grocery is {FormatPct(p)} of spending — try meal planning, bulk buys or price-tracking apps.", 60));
+                if (p >= 0.12 && p < 0.20) candidates.Add(($"Grocery share ({FormatPct(p)}) is moderate — consider comparing store prices or using weekly lists.", 25));
+            }
+            else if (c == "Entertainment")
+            {
+                if (p >= 0.15) candidates.Add(($"Entertainment is {FormatPct(p)} of spending — cap impulse buys or subscribe to a cheaper plan.", 50));
+                if (p >= 0.05 && p < 0.15) candidates.Add(($"Entertainment spending ({FormatPct(p)}) is reasonable — keep an eye on microtransactions.", 12));
+            }
+            else if (c == "Shopping")
+            {
+                if (p >= 0.15) candidates.Add(($"Shopping is {FormatPct(p)} — consider wishlist delays and watch for seasonal sales instead of impulse buys.", 45));
+            }
+            else if (c == "Travel")
+            {
+                if (p >= 0.15) candidates.Add(($"Travel is {FormatPct(p)} — consider planning trips in advance or using travel deals.", 40));
+            }
+            else if (c == "Utilities")
+            {
+                if (p >= 0.12) candidates.Add(($"Utilities are {FormatPct(p)} — check tariffs and energy-saving changes to cut costs.", 35));
+            }
+            else if (c == "Medicine")
+            {
+                if (p >= 0.10) candidates.Add(($"Medicine costs are {FormatPct(p)} — check for generic options or subscription savings.", 30));
+            }
+            else if (c == "Other")
+            {
+                if (p >= 0.18) candidates.Add(($"Large 'Other' category ({FormatPct(p)}) suggests uncategorized spending. Re-categorize to understand costs.", 65));
+                if (p >= 0.08 && p < 0.18) candidates.Add(($"'Other' is notable ({FormatPct(p)}). Split recurring items into explicit categories.", 25));
+            }
+
+            // low spend suggestions
+            if (p > 0 && p < 0.03) candidates.Add(($"{c} is very low ({FormatPct(p)}). If this is a priority, schedule or automate it; otherwise deprioritize.", 12));
+            if (amt == 0) candidates.Add(($"{c} has no recorded spending. If you expect activity, check transaction sources.", 8));
+        }
+
+        // 4) Pairwise comparisons (directional) - lots of conditions created programmatically
+        for (int i = 0; i < categories.Length; i++)
+        {
+            for (int j = 0; j < categories.Length; j++)
+            {
+                if (i == j) continue;
+                var a = categories[i];
+                var b = categories[j];
+
+                double diff = values[a] - values[b];            // absolute difference
+                double diffPct = total > 0 ? diff / total : 0; // difference as share of total
+
+                // Significant directional difference
+                if (diffPct >= 0.10)
+                {
+                    // "You spend significantly more on A than B (X% of total)"
+                    candidates.Add(($"You spend significantly more on {a} than {b} ({FormatPct(Math.Abs(diffPct))} of total difference). Consider reallocating from {a} to {b} if appropriate.", 20 + 60 * Math.Abs(diffPct)));
+                }
+
+                // small/close competitors
+                if (Math.Abs(pct[a] - pct[b]) <= 0.03 && values[a] > 0 && values[b] > 0)
+                {
+                    candidates.Add(($"{a} and {b} are close in spend ({FormatPct(pct[a])} vs {FormatPct(pct[b])}). Consider combining budgets or prioritizing between them.", 10));
+                }
+
+                // If B is nearly zero and A > small threshold
+                if (values[b] < 1 && values[a] > 100 && total > 0)
+                {
+                    candidates.Add(($"{a} has non-trivial spending while {b} has almost none — check if {b} should be a tracked category or intentionally ignored.", 12));
+                }
+            }
+        }
+
+        // 5) Micro-spend explosion: many small categories each with small % -> suggest micro-tracking
+        int smallCount = values.Values.Count(v => total > 0 ? v / total <= 0.05 && v > 0 : false);
+        if (smallCount >= 3)
+        {
+            candidates.Add(("Multiple small spending buckets detected. Micro-spend tracking or an 'everyday purchases' category could reduce noise.", 30));
+        }
+
+        // 6) Red flags / opportunities
+        // big one-time vs recurring heuristic: if one category is >40% then big red flag
+        if (pct[topCat] >= 0.40) candidates.Add(($"{topCat} is massive ({FormatPct(pct[topCat])}). This looks like either a big one-off or a recurring leak — investigate.", 90));
+        // if many categories have nonzero small spends, propose subscription audit
+        int recurringLikely = values.Values.Count(v => v > 50);
+        if (recurringLikely >= 4) candidates.Add(("Multiple mid-size spends found — run a subscription/bundles audit to spot recurring charges.", 30));
+
+        // 7) Unusual combos: e.g., Entertainment + Shopping combine high -> suggest entertainment-shopping split
+        if (pct["Entertainment"] + pct["Shopping"] > 0.30) candidates.Add(("Entertainment + Shopping together are a big chunk. Consider consolidating impulse buys into a single monthly allowance.", 38));
+
+        // 8) Final guard: prefer actionable suggestions
+        // (no-op here; we already prioritized items by score)
+
+        // Now pick top scoring unique messages
+        var ordered = candidates
+            .Where(c => !string.IsNullOrWhiteSpace(c.msg))
+            .OrderByDescending(c => c.score)
+            .Select(c => (c.msg, score: c.score))
+            .ToList();
+
+        // dedupe but preserve order by score
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var top = new List<string>();
+        foreach (var (msg, score) in ordered)
+        {
+            if (top.Count >= maxRecommendations) break;
+            var trimmed = msg.Trim();
+            if (seen.Add(trimmed))
+            {
+                top.Add(trimmed);
+            }
+        }
+
+        // Build FlowLayoutPanel with Material labels
+        var panel = new FlowLayoutPanel
+        {
+            AutoSize = true,
+            FlowDirection = FlowDirection.TopDown,
+            WrapContents = false,
+            Padding = new Padding(6),
+            Dock = DockStyle.Fill
+        };
+
+        foreach (var recommendation in top)
+        {
+            var lbl = new MaterialLabel
+            {
+                Text = "• " + recommendation,
+                AutoSize = false,
+                Width = (int)Math.Round(2.7 * panel.ClientSize.Width), // sensible label width — the container will adjust anyway
+                Height = 0,
+                Margin = new Padding(3, 4, 3, 4),
+                //TextAlign = ContentAlignment.MiddleLeft
+            };
+
+            // Let the label auto-size vertically to content using MeasureString
+            using (var g = lbl.CreateGraphics())
+            {
+                var sz = g.MeasureString(lbl.Text, lbl.Font, lbl.Width);
+                lbl.Height = (int)Math.Ceiling(sz.Height) + 20;
+            }
+
+            // copy-on-click (handy)
+            lbl.Click += (s, e) =>
+            {
+                try { Clipboard.SetText(recommendation); }
+                catch { /* ignore clipboard issues */ }
+            };
+
+            panel.Controls.Add(lbl);
+            panel.SizeChanged += (s, e) => {lbl.Width = panel.ClientSize.Width;};
+        }
+
+        // If no recommendations found, add a gentle fallback
+        if (top.Count == 0)
+        {
+            var lbl = new MaterialLabel
+            {
+                Text = "No specific recommendations — spending looks balanced or there's not enough data.",
+                AutoSize = false,
+                Width = 320,
+                Height = 40,
+                Margin = new Padding(3, 4, 3, 4),
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleLeft
+            };
+            panel.Controls.Add(lbl);
+        }
+
+        return panel;
     }
 }

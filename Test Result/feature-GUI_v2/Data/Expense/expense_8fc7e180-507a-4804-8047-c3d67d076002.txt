@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-43
+Amount=5.99
+Date=2026-01-12T09:30:00.0000000-08:00
+Mode=Individual
+Receiver=Icon Pack (artist)
+Category=Shopping
+Currency=USD
+
+[COUPON]
+Code=ICONPACK
+Description=20% off icon bundles
+Store=ArtMarket
+ExpirationDate=2026-02-15T00:00:00-08:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234573
+Balance=1120.50
+LinkDate=2024-05-05T09:00:00-08:00
+[END]

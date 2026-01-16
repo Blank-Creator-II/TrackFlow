@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-45
+Amount=60.00
+Date=2026-01-14T07:45:00.0000000+03:00
+Mode=Individual
+Receiver=Water Bill
+Category=Utilities
+Currency=Birr
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-556677
+Balance=2200.00
+LinkDate=2022-12-12T08:00:00+03:00
+[END]

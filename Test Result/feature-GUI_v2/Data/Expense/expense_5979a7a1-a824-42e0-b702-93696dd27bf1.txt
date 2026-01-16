@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-23
+Amount=6.00
+Date=2025-11-10T08:00:00.0000000+01:00
+Mode=Individual
+Receiver=Grocery Corner
+Category=Grocery
+Currency=EUR
+
+[COUPON]
+Code=FRESHFRUIT
+Description=Free fruit with purchase
+Store=Grocery Corner
+ExpirationDate=2025-11-30T23:59:59+01:00
+
+[BANK]
+Name=HSBC UK
+AccountType=Checking
+AccountId=GB29NWBK60161331926821
+Balance=150.00
+LinkDate=2022-05-05T10:00:00+01:00
+[END]

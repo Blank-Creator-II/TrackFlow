@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-4
+Amount=205.6354
+Date=2026-01-15T18:37:17.2171083-08:00
+Mode=Discounted
+Receiver=7Eleven
+Category=Grocery
+Currency=Yen
+
+[COUPON]
+Code=MEAT&DAIRY50
+Description=Every meat & dairy product 50% off
+Store=7Eleven
+ExpirationDate=2026-02-01T00:00:00.0000000+09:00
+
+[BANK]
+Name=Paypal
+AccountType=Checking
+AccountId=89324098230
+Balance=2132984
+LinkDate=2020-09-02T00:00:00.0000000+00:00
+[END]

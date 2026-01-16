@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-48
+Amount=13.60
+Date=2026-01-15T09:10:00.0000000+03:00
+Mode=Individual
+Receiver=Medicine Express
+Category=Medicine
+Currency=Birr
+
+[COUPON]
+Code=MED10
+Description=10% off vitamins
+Store=Medicine Express
+ExpirationDate=2026-02-28T00:00:00+03:00
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-334411
+Balance=3077.77
+LinkDate=2022-02-02T08:00:00+03:00
+[END]

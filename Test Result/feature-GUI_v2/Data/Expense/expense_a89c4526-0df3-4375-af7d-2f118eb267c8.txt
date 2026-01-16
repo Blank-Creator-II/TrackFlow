@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-5
+Amount=1000
+Date=2026-01-15T15:57:18.0910162-08:00
+Mode=Splited
+Receiver=Houshou Marine
+Category=Other
+Currency=Yen
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Comercial Bank of Japan
+AccountType=Checking
+AccountId=100002376487326
+Balance=10000
+LinkDate=1990-10-02T00:00:00.0000000+09:00
+[END]

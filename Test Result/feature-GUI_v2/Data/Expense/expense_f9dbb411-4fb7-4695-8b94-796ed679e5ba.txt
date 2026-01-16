@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-33
+Amount=45.75
+Date=2026-01-03T14:00:00.0000000+01:00
+Mode=Individual
+Receiver=Pharmacy Online
+Category=Medicine
+Currency=EUR
+
+[COUPON]
+Code=MEDSHIP
+Description=Free shipping on meds
+Store=PharmOnline
+ExpirationDate=2026-03-01T00:00:00+01:00
+
+[BANK]
+Name=BNP Paribas
+AccountType=Checking
+AccountId=FR7630006000011234567890189
+Balance=510.20
+LinkDate=2021-02-02T09:00:00+01:00
+[END]

@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-53
+Amount=75.00
+Date=2026-01-15T15:00:00.0000000+09:00
+Mode=Individual
+Receiver=Studio Subscription
+Category=Other
+Currency=Yen
+
+[COUPON]
+Code=STUDIO5
+Description=5% off annual plan
+Store=StudioCloud
+ExpirationDate=2026-02-01T00:00:00+09:00
+
+[BANK]
+Name=Sumitomo Mitsui
+AccountType=Checking
+AccountId=JP5566442211
+Balance=320000
+LinkDate=2014-04-04T00:00:00+09:00
+[END]

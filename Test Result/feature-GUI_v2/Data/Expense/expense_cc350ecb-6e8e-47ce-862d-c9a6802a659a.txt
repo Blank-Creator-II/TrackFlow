@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-47
+Amount=250.00
+Date=2026-01-14T13:00:00.0000000+09:00
+Mode=Individual
+Receiver=Train Pass + Food
+Category=Travel
+Currency=Yen
+
+[COUPON]
+Code=TRIP20
+Description=20% off trip bundle
+Store=Rail & Eat
+ExpirationDate=2026-03-30T00:00:00+09:00
+
+[BANK]
+Name=Japan Post Bank
+AccountType=Saving
+AccountId=JP888777666
+Balance=590000
+LinkDate=2015-05-05T00:00:00+09:00
+[END]

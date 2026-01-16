@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-54
+Amount=250.50
+Date=2026-01-15T16:30:00.0000000-08:00
+Mode=Discounted
+Receiver=Electronics Repair
+Category=Other
+Currency=USD
+
+[COUPON]
+Code=REPAIR20
+Description=20% off service parts
+Store=FixItShop
+ExpirationDate=2026-03-31T00:00:00-08:00
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234575
+Balance=1275.00
+LinkDate=2023-10-10T09:00:00-08:00
+[END]

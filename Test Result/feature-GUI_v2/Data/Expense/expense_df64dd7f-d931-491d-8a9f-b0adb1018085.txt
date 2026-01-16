@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-21
+Amount=75.00
+Date=2025-11-03T19:30:00.0000000+03:00
+Mode=Individual
+Receiver=Anime Merch Store
+Category=Shopping
+Currency=Birr
+
+[COUPON]
+Code=ANIME5
+Description=5% off figurines
+Store=Otaku Hut
+ExpirationDate=2026-02-01T00:00:00+03:00
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-778899
+Balance=6000.00
+LinkDate=2023-01-01T08:00:00+03:00
+[END]

@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-8
+Amount=2300
+Date=2025-07-01T09:00:00.0000000+09:00
+Mode=Individual
+Receiver=Monthly Rent
+Category=Other
+Currency=Yen
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Mizuho Bank
+AccountType=Checking
+AccountId=JP000987654321
+Balance=500000
+LinkDate=2019-02-10T00:00:00+09:00
+[END]

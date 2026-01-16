@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-29
+Amount=2.50
+Date=2025-12-12T07:20:00.0000000+03:00
+Mode=Individual
+Receiver=Bus Fare
+Category=Travel
+Currency=Birr
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-665544
+Balance=2000.00
+LinkDate=2021-07-07T08:00:00+03:00
+[END]

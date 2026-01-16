@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-22
+Amount=120.00
+Date=2025-11-07T12:10:00.0000000-07:00
+Mode=Splited
+Receiver=Co-working rent
+Category=Other
+Currency=USD
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH-998877
+Balance=560.50
+LinkDate=2021-09-09T09:00:00-07:00
+[END]

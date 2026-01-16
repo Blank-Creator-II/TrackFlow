@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-52
+Amount=11.45
+Date=2026-01-15T14:00:00.0000000-07:00
+Mode=Individual
+Receiver=Convenience Store
+Category=Grocery
+Currency=USD
+
+[COUPON]
+Code=SNACKPACK
+Description=Buy 3 snacks, save 2
+Store=Convenience Store
+ExpirationDate=2026-02-15T00:00:00-07:00
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH-889900
+Balance=702.50
+LinkDate=2022-03-03T10:00:00-07:00
+[END]

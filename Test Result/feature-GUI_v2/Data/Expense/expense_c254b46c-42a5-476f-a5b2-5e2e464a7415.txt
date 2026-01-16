@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-38
+Amount=27.50
+Date=2026-01-08T12:00:00.0000000-08:00
+Mode=Individual
+Receiver=Online Music Subscription
+Category=Entertainment
+Currency=USD
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Bank of America
+AccountType=Checking
+AccountId=800100234572
+Balance=1320.10
+LinkDate=2024-11-11T09:00:00-08:00
+[END]

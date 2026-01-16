@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-30
+Amount=350.00
+Date=2025-12-20T20:20:20.0000000-07:00
+Mode=Splited
+Receiver=Group Dinner
+Category=Other
+Currency=USD
+
+[COUPON]
+Code=DINNER20
+Description=20% off group dinners
+Store=Fancy Dine
+ExpirationDate=2026-02-01T00:00:00-07:00
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH-334455
+Balance=1240.00
+LinkDate=2020-10-10T10:00:00-07:00
+[END]

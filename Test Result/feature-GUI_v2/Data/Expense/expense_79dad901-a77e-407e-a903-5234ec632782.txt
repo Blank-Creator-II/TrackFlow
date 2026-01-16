@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-31
+Amount=14.00
+Date=2026-01-01T11:11:11.0000000+03:00
+Mode=Individual
+Receiver=New Year Snack
+Category=Grocery
+Currency=Birr
+
+[COUPON]
+Code=NYSNACK
+Description=New Year snack promo
+Store=Corner Mart
+ExpirationDate=2026-01-31T00:00:00+03:00
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-001122
+Balance=2899.90
+LinkDate=2022-01-01T08:00:00+03:00
+[END]

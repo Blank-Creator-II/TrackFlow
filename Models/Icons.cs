@@ -9,17 +9,29 @@ using TrackFlow.Utils;
 namespace TrackFlow.Models;
 public enum AppIcon
 {
+    // Sidebar
     Home,
     Expense,
     Planner,
     Tools,
     Settings,
 
+    // Expense
+    Entertainment, // #9B27FF
+    Grocery, // #2ECC71
+    Medicine, // #FF3B30
+    Other, // #7F8C8D
+    Shopping, // #FF2D95
+    Travel, // #00B3FF
+    Utilities, // #FFB000
+
+    // Planner
     AddNote,
     AddReminder,
     Late,
     Todo,
 
+    // Tools
     Calculate,
     CurrencyExchange,
     TimerPause,
@@ -27,11 +39,15 @@ public enum AppIcon
     Timer,
     UnitConvert,
 
+    // Misc
     Add,
     Cancel,
     Check,
     Checked,
     Close,
+    Copy,
+    Export,
+    Reload,
     Delete,
     Search,
     Star,
@@ -47,6 +63,14 @@ public static class IconLibrary
         { AppIcon.Planner, "Sidebar/planner.svg" },
         { AppIcon.Tools, "Sidebar/tools.svg" },
         { AppIcon.Settings, "Sidebar/settings.svg" },
+
+        { AppIcon.Entertainment, "Expenses/entertainment.svg" },
+        { AppIcon.Grocery, "Expenses/grocery.svg" },
+        { AppIcon.Medicine, "Expenses/medicine.svg" },
+        { AppIcon.Other, "Expenses/other.svg" },
+        { AppIcon.Shopping, "Expenses/shopping.svg" },
+        { AppIcon.Travel, "Expenses/travel.svg" },
+        { AppIcon.Utilities, "Expenses/utilities.svg" },
 
         { AppIcon.AddNote, "Planner/add_note.svg" },
         { AppIcon.AddReminder, "Planner/add_reminder.svg" },
@@ -65,7 +89,10 @@ public static class IconLibrary
         { AppIcon.Check, "Misc/check.svg" },
         { AppIcon.Checked, "Misc/checked.svg" },
         { AppIcon.Close, "Misc/close.svg" },
+        { AppIcon.Copy, "Misc/copy.svg" },
         { AppIcon.Delete, "Misc/delete.svg" },
+        { AppIcon.Export, "Misc/export.svg" },
+        { AppIcon.Reload, "Misc/reload.svg" },
         { AppIcon.Search, "Misc/search.svg" },
         { AppIcon.Star, "Misc/star.svg" },
         { AppIcon.Undo, "Misc/undo.svg" },

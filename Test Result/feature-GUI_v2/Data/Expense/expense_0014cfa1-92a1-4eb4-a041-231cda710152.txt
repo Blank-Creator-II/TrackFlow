@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-35
+Amount=7.25
+Date=2026-01-05T08:30:00.0000000+03:00
+Mode=Individual
+Receiver=Morning Coffee
+Category=Other
+Currency=Birr
+
+[COUPON]
+Code=COFFEELOVER
+Description=Buy 5 get 1 free
+Store=CafeCorner
+ExpirationDate=2026-02-05T00:00:00+03:00
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-009988
+Balance=2987.00
+LinkDate=2023-03-03T08:00:00+03:00
+[END]

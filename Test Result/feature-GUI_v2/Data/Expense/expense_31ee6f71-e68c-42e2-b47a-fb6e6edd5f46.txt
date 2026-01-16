@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-9
+Amount=12.75
+Date=2025-06-20T14:55:00.0000000-07:00
+Mode=Individual
+Receiver=Corner Snack Bar
+Category=Grocery
+Currency=USD
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Chase
+AccountType=Checking
+AccountId=CH123450987
+Balance=412.25
+LinkDate=2020-11-11T10:00:00-08:00
+[END]

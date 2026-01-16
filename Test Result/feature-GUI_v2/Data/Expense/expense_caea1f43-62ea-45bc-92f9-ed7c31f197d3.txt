@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-17
+Amount=72.00
+Date=2025-10-10T20:20:20.0000000+01:00
+Mode=Individual
+Receiver=Online Clothes Store
+Category=Shopping
+Currency=EUR
+
+[COUPON]
+Code=FALL25
+Description=25% off select jackets
+Store=Clothify
+ExpirationDate=2025-11-15T23:59:59+01:00
+
+[BANK]
+Name=Barclays
+AccountType=Checking
+AccountId=GB00BARC123456789
+Balance=420.00
+LinkDate=2020-04-04T09:00:00+01:00
+[END]

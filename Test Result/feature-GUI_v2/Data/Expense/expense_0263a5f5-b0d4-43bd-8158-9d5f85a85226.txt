@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-18
+Amount=14.99
+Date=2025-10-12T18:30:00.0000000+03:00
+Mode=Individual
+Receiver=Local Clinic
+Category=Medicine
+Currency=Birr
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-334455
+Balance=3120.00
+LinkDate=2022-11-11T08:00:00+03:00
+[END]

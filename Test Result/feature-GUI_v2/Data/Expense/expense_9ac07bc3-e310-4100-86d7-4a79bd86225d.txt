@@ -1,0 +1,22 @@
+[EXPENSE]
+Id=Expense-55
+Amount=99.99
+Date=2026-01-15T17:45:00.0000000+03:00
+Mode=Individual
+Receiver=Utility - Electricity
+Category=Utilities
+Currency=Birr
+
+[COUPON]
+Code=<null>
+Description=<null>
+Store=<null>
+ExpirationDate=<null>
+
+[BANK]
+Name=Commercial Bank of Ethiopia
+AccountType=Checking
+AccountId=CBE-445566
+Balance=1999.99
+LinkDate=2022-05-05T08:00:00+03:00
+[END]
