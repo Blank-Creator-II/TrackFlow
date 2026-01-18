@@ -28,6 +28,8 @@ public enum AppIcon
     // Planner
     AddNote,
     AddReminder,
+    ArrowBack,
+    ArrowForward,
     Late,
     Todo,
 
@@ -74,6 +76,8 @@ public static class IconLibrary
 
         { AppIcon.AddNote, "Planner/add_note.svg" },
         { AppIcon.AddReminder, "Planner/add_reminder.svg" },
+        { AppIcon.ArrowBack, "Planner/arrow_back.svg" },
+        { AppIcon.ArrowForward, "Planner/arrow_forward.svg" },
         { AppIcon.Late, "Planner/late.svg" },
         { AppIcon.Todo, "Planner/todo.svg" },
 
