@@ -169,15 +169,15 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill };
             cmbCurrency.Items.AddRange(new object[] {
-  "Birr", "Dollar", "Euro", "Pound", "Yen", "Yuan", "Won", "Rupee",
-  "Rand", "Naira", "Peso", "Franc", "Dinar", "Dirham", "Shekel",
-  "Ruble", "Real", "Zloty", "Krona", "Krone", "Baht", "Dong",
-  "Ringgit", "Rupiah", "Taka", "Hryvnia", "Forint", "Cedi",
-  "Shilling", "Pula", "Kwacha", "Metical", "Leu", "Lev",
-  "Kip", "Tugrik", "Manat", "Som", "Lira", "Bolivar",
-  "Sol", "Guarani", "Lempira", "Quetzal", "Balboa",
-  "Tenge", "Dram", "Rial", "Pataca", "Ngultrum"
-});
+                "Birr", "Dollar", "Euro", "Pound", "Yen", "Yuan", "Won", "Rupee",
+                "Rand", "Naira", "Peso", "Franc", "Dinar", "Dirham", "Shekel",
+                "Ruble", "Real", "Zloty", "Krona", "Krone", "Baht", "Dong",
+                "Ringgit", "Rupiah", "Taka", "Hryvnia", "Forint", "Cedi",
+                "Shilling", "Pula", "Kwacha", "Metical", "Leu", "Lev",
+                "Kip", "Tugrik", "Manat", "Som", "Lira", "Bolivar",
+                "Sol", "Guarani", "Lempira", "Quetzal", "Balboa",
+                "Tenge", "Dram", "Rial", "Pataca", "Ngultrum"
+                });
             Table.Controls.Add(cmbCurrency, 1, 3);
 
             // Divider 2
@@ -422,6 +422,13 @@ public partial class ExpensesPage : UserControl
                     return;
                 }
 
+                if (string.IsNullOrWhiteSpace(txtReceiver.Text?.Trim()))
+                {
+                    MessageBox.Show("Please enter the receiver.","Invalid",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                    txtReceiver.Focus();
+                    return;
+                }
+
                 // 2) Bank balance parse (we'll also validate required bank fields below)
                 if (!double.TryParse(txtBankBalance.Text?.Trim(), NumberStyles.Float | NumberStyles.AllowThousands,
                                     CultureInfo.CurrentCulture, out double balance))
@@ -510,8 +517,8 @@ public partial class ExpensesPage : UserControl
                     Amount = amount,
                     Date = DateTime.Now, // main transaction date
                     Mode = cmbMode.SelectedItem?.ToString() ?? "Individual",
-                    Receiver = txtReceiver.Text?.Trim() ?? string.Empty,
-                    Category = cmbCategory.SelectedItem?.ToString() ?? "Others",
+                    Receiver = txtReceiver.Text?.Trim()!,
+                    Category = cmbCategory.SelectedItem?.ToString() ?? "Other",
                     Currency = cmbCurrency.SelectedItem?.ToString() ?? "Dollar",
                     AppliedCoupon = coupon,
                     LinkedBank = new Expense.Bank
@@ -818,7 +825,34 @@ public partial class ExpensesPage : UserControl
     {
         // Safety
         if (maxRecommendations <= 0) maxRecommendations = 3;
-        if (totals == null) totals = new Dictionary<string, double>();
+        if (totals == null || totals.Count <= 3) // I am prety sure there is a better method to this but this is not a corpo project so meh
+        {
+            totals = new Dictionary<string, double>();
+            var _panel = new FlowLayoutPanel
+            {
+                AutoSize = true,
+                FlowDirection = FlowDirection.TopDown,
+                WrapContents = false,
+                Padding = new Padding(6),
+                Dock = DockStyle.Fill
+            };
+
+            var fallback = new MaterialLabel
+            {
+                Text = "No Specific Recommendations\nTry Adding More Expense",
+                FontType = MaterialSkinManager.fontType.H5,
+                AutoSize = false,
+                Width = (int)Math.Round(2.7 * _panel.ClientSize.Width),
+                Height = 0,
+                Margin = new Padding(3, 4, 3, 4),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            _panel.Controls.Add(fallback);
+            _panel.SizeChanged += (s, e) => {fallback.Width = _panel.ClientSize.Width; fallback.Height = _panel.ClientSize.Height;};
+
+            return _panel;
+        }
 
         // canonical category list
         var categories = new[] { "Entertainment", "Grocery", "Medicine", "Other", "Shopping", "Travel", "Utilities" };

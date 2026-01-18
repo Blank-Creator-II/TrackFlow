@@ -23,6 +23,12 @@ public partial class ExpensesPage : UserControl
     // a reference to the recomendation panel
     private Panel? recomendationPanel;
 
+    // the main container of the page
+    private TableLayoutPanel? layout;
+
+    // a flag to check if layout have ever been cleared at runtime
+    private bool layout_cleared = false;
+
     // search debounce timer and cache
     private readonly System.Windows.Forms.Timer _searchDebounceTimer;
     private const int SearchDebounceMs = 300;
@@ -64,7 +70,7 @@ public partial class ExpensesPage : UserControl
     private void InitializeLayout()
     {
         // Main layout:
-        var layout = new TableLayoutPanel()
+        layout = new TableLayoutPanel()
         {
             Dock = DockStyle.Fill,
             ColumnCount = 2,
@@ -136,7 +142,7 @@ public partial class ExpensesPage : UserControl
         {
             foreach (Control c in historyFlow.Controls)
             {
-                c.Width = Math.Max(0, historyFlow.ClientSize.Width - historyFlow.Padding.Horizontal);
+                c.Width = Math.Max(0, historyFlow.ClientSize.Width - 25);
             }
         };
 
@@ -178,6 +184,74 @@ public partial class ExpensesPage : UserControl
         try
         {
             historyFlow.Controls.Clear();
+
+            if (list_of_expenses.Count == 0)
+            {
+                // if there is no saved expense oblitrate every single control in the page and add a simple message
+                layout!.Controls.Clear();
+
+                var _panel = new TableLayoutPanel
+                {
+                    AutoSize = true,
+                    ColumnCount = 1,
+                    RowCount = 2,
+                    Padding = new Padding(6),
+                    Dock = DockStyle.Fill
+                };
+                _panel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f));
+                _panel.RowStyles.Add(new RowStyle(SizeType.Percent, 50f));
+                _panel.RowStyles.Add(new RowStyle(SizeType.Percent, 50f));
+
+                layout.Controls.Add(_panel,0,0);
+                layout.SetColumnSpan(_panel,2);
+                layout.SetRowSpan(_panel,2);
+
+                var message = new MaterialLabel
+                {
+                    Text = "No Saved Expense Data Have Been Found\nTry Adding an Expense",
+                    FontType = MaterialSkinManager.fontType.H5,
+                    AutoSize = false,
+                    Width = _panel.ClientSize.Width,
+                    Height = (int)Math.Round(_panel.ClientSize.Height / 1.8),
+                    Margin = new Padding(4),
+                    TextAlign = ContentAlignment.BottomCenter
+                };
+
+                var add_btn = new MaterialFloatingActionButton
+                {
+                    Icon = IconLibrary.GetBitmap(AppIcon.Add, 24, MainForm.PrimaryDark),
+                    Anchor = AnchorStyles.Top,
+                    Margin = new Padding(4)
+                };
+
+                add_btn.Click += (s, e) =>
+                {
+                    using var addForm = new AddExpense();
+                    var dr = addForm.ShowDialog();
+                    if (dr == DialogResult.OK)
+                    {
+                        Reload(true);
+                    }
+                };
+
+                _panel.Controls.Add(message,0,0);
+                _panel.Controls.Add(add_btn,0,1);
+
+                _panel.SizeChanged += (s, e) => {
+                    message.Width = _panel.ClientSize.Width; 
+                    message.Height = (int)Math.Round(_panel.ClientSize.Height / 1.8);
+                };
+
+                layout_cleared = true; // set the flag to true so when loaded next time it clears the layout
+                return;
+            }
+            else if (layout_cleared) // if the layout have been cleared before clear again for the main layout
+            {
+                this.Controls.Clear(); // destory and receate
+                layout_cleared = false; // if this is not set it will fall into enternal doom of recreation... then the app will crash
+                InitializeLayout(); // gota recreate everything back to see the result
+                return;
+            }
 
             foreach (Expense expense in list_of_expenses)
             {
@@ -303,7 +377,7 @@ public partial class ExpensesPage : UserControl
         topBarLayout.Controls.Add(reload_btn, 2, 0);
         topBarLayout.Controls.Add(add_btn, 3, 0);
         topBarLayout.Controls.Add(divder, 0, 1);
-        topBarLayout.SetColumnSpan(divder, 3);
+        topBarLayout.SetColumnSpan(divder, 4);
 
         // Event hooking:
         // Debounced typing: restart timer on text change, run search only after idle period
@@ -333,6 +407,7 @@ public partial class ExpensesPage : UserControl
         // reload the UI from the expense service
         reload_btn.Click += (s, e) =>
         {
+            _searchBar.ResetText();
             Reload(true);
         };
 
@@ -371,12 +446,33 @@ public partial class ExpensesPage : UserControl
         }
         catch (Exception ex)
         {
-            // fallback to empty result on error
+            // message to empty result on error
             MessageBox.Show($"Search failed: {ex.Message}","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
             results = new List<Expense>();
         }
 
-        Reload(true,true,results);
+        if (results.Count == 0)
+        {
+            historyFlow!.Controls.Clear();
+            var messgae = new MaterialLabel
+            {
+                Text = "No Result For The Searched Value",
+                FontType = MaterialSkinManager.fontType.H5,
+                AutoSize = false,
+                Width = historyFlow!.ClientSize.Width - 26,
+                Height = historyFlow!.ClientSize.Height / 2,
+                Margin = new Padding(4),
+                TextAlign = ContentAlignment.MiddleCenter
+            };
+
+            historyFlow.Controls.Add(messgae);
+
+            historyFlow.SizeChanged += (s, e) => {messgae.Width = historyFlow.ClientSize.Width - 25; messgae.Height = historyFlow.ClientSize.Height;};
+        }
+        else
+        {
+            Reload(true,true,results);
+        }
     }
 
     private Frame CreateExpenseCard(FlowLayoutPanel master, Expense expense)
@@ -390,7 +486,7 @@ public partial class ExpensesPage : UserControl
             SubtitleFontSize = 11f,
             IconSize = new Size(24,24),
             AllowIconUpscale = false,
-            Width = Math.Max(0, master.ClientSize.Width - master.Padding.Horizontal),
+            Width = Math.Max(0, master.ClientSize.Width - 25),
             Margin = new Padding(0, 0, 0, 10),
             NormalColor = MainForm.PrimaryMid,
             HoverColor = MainForm.PrimaryGrey,
@@ -489,7 +585,7 @@ public partial class ExpensesPage : UserControl
 
         foreach (var item in data)
         {
-            // get color hex or fallback to a default (material accent)
+            // get color hex or message to a default (material accent)
             string hex = _categoryColors.TryGetValue(item.Key, out var h) ? h : "#9E9E9E";
             
             // convert hex to System.Windows.Media.Color safely
