@@ -26,7 +26,7 @@ public partial class ExpensesPage : UserControl
 
         // Coupon
         private MaterialTextBox txtCouponCode;
-        private MaterialTextBox2 txtCouponDesc;
+        private MaterialTextBox txtCouponDesc;
         private MaterialTextBox txtCouponStore;
         private TableLayoutPanel dtpCouponExp;
         private MaterialComboBox ExpMonth;
@@ -202,7 +202,7 @@ public partial class ExpensesPage : UserControl
             Table.SetColumnSpan(txtCouponCode, 2);
 
             // Coupon Description (r:6 c:a)
-            txtCouponDesc = new MaterialTextBox2 
+            txtCouponDesc = new MaterialTextBox 
             { 
                 Hint = "Enter Coupon Description",  
                 Margin = new Padding(2), 

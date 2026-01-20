@@ -13,6 +13,7 @@ public static class NoteService
             "[METADATA]",
             $"Id={n.Id.PID}",
             $"Date={n.Date:O}",
+            $"Title={n.Title}",
             "",
             "[NOTE]" // the real note data will be added through loop since we don't know how much it's written manual constraction is impossible
         };
@@ -52,10 +53,6 @@ public static class NoteService
             {
                 break;
             }
-            else if (line == "")
-            {
-                // Skip
-            }
             else
             {
                 if (start_metadata_fetch)
@@ -83,6 +80,7 @@ public static class NoteService
         {
             Id = build_id,
             Date = Convert.ToDateTime(metadata["Date"]),
+            Title = metadata["Title"],
             Data = note_data
         };
 
@@ -151,6 +149,7 @@ public static class NoteService
             // Metadata
             Match(n.Id.PID, 100, 50);
             Match(n.Date.ToString("O"), 90, 45);
+            Match(n.Title,90,45);
 
             // Note content
             foreach (string line in n.Data)

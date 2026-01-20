@@ -28,9 +28,15 @@ public enum AppIcon
     // Planner
     AddNote,
     AddReminder,
+    AddTodo,
     ArrowBack,
     ArrowForward,
+    DotSingle,
+    DotDouble,
     Late,
+    Link,
+    Note,
+    SwitchNote,
     Todo,
 
     // Tools
@@ -76,9 +82,15 @@ public static class IconLibrary
 
         { AppIcon.AddNote, "Planner/add_note.svg" },
         { AppIcon.AddReminder, "Planner/add_reminder.svg" },
+        { AppIcon.AddTodo, "Planner/add_todo.svg" },
         { AppIcon.ArrowBack, "Planner/arrow_back.svg" },
         { AppIcon.ArrowForward, "Planner/arrow_forward.svg" },
+        { AppIcon.DotSingle, "Planner/dot_single.svg" },
+        { AppIcon.DotDouble, "Planner/dot_double.svg" },
         { AppIcon.Late, "Planner/late.svg" },
+        { AppIcon.Link, "Planner/link.svg" },
+        { AppIcon.Note, "Planner/note.svg" },
+        { AppIcon.SwitchNote, "Planner/switch_note.svg" },
         { AppIcon.Todo, "Planner/todo.svg" },
 
         { AppIcon.Calculate, "Tools/calculate.svg" },
@@ -102,9 +114,9 @@ public static class IconLibrary
         { AppIcon.Undo, "Misc/undo.svg" },
     };
 
-    private static readonly Dictionary<(AppIcon, int, Color), Bitmap> Cache = new();
+    private static readonly Dictionary<(AppIcon, int, Color?), Bitmap> Cache = new();
 
-    public static Bitmap GetBitmap(AppIcon icon, int size, Color color)
+    public static Bitmap GetBitmap(AppIcon icon, int size, Color? color = null)
     {
         var key = (icon, size, color);
 

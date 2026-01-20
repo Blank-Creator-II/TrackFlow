@@ -7,6 +7,30 @@ public static class FileHelper
 {
     public static readonly string BASE_DIR = AppContext.BaseDirectory; // This is a relative path to the main path
 
+    public static string ToOneLine(string data)
+    {
+        if (data is null) return string.Empty;
+
+        // escape any existing backslashes so we can restore them later
+        // replace any newline variant with the literal sequence "\n"
+        return data
+            .Replace("\\", "\\\\")              // backslash -> double-backslash
+            .Replace("\r\n", "\\n")            // CRLF -> literal \n
+            .Replace("\r", "\\n")              // CR -> literal \n
+            .Replace("\n", "\\n");             // LF -> literal \n
+    }
+
+    public static string ToMultiLine(string stored)
+    {
+        if (stored is null) return string.Empty;
+
+        // in reverse literal \n -> real newline, then \\ -> \
+        // do newline replacement before un-escaping backslashes
+        return stored
+            .Replace("\\n", Environment.NewLine)
+            .Replace("\\\\", "\\");
+    }
+
     public static void CheckDataDirectory()
     {
         // Ensures that the data directory is always created even if there is nothing stored

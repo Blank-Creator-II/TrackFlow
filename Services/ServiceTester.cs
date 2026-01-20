@@ -267,6 +267,7 @@ class Tester
         {
             Id = IDGenerator.GenID("Note"),
             Date = DateTime.Now,
+            Title = "Note Test By Test Service",
             Data = new List<string>
             {
                 "I really don't know why I am writing real things",

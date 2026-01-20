@@ -35,7 +35,7 @@ public partial class ExpensesPage : UserControl
     private List<Expense> _cachedExpenses = new List<Expense>();
 
     // keep a reference to the search control so timer handler can read it
-    private MaterialTextBox2? _searchBar;
+    private MaterialTextBox? _searchBar;
 
     // summary chart (so we can update it later)
     private LiveCharts.WinForms.PieChart? _summaryChart;
@@ -337,7 +337,7 @@ public partial class ExpensesPage : UserControl
         topBarLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 6f));
 
         // create search bar and keep as field so debounce timer can read it
-        _searchBar = new MaterialTextBox2
+        _searchBar = new MaterialTextBox
         {
             Hint = "Search expenses...",
             Dock = DockStyle.Fill,
