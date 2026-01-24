@@ -14,7 +14,7 @@ public enum AppIcon
     Expense,
     Planner,
     Tools,
-    Settings,
+    Theme,
 
     // Expense
     Entertainment, // #9B27FF
@@ -31,8 +31,10 @@ public enum AppIcon
     AddTodo,
     ArrowBack,
     ArrowForward,
+    Disable,
     DotSingle,
     DotDouble,
+    Enable,
     Late,
     Link,
     Note,
@@ -57,6 +59,7 @@ public enum AppIcon
     Export,
     Reload,
     Delete,
+    Save,
     Search,
     Star,
     Undo
@@ -70,7 +73,7 @@ public static class IconLibrary
         { AppIcon.Expense, "Sidebar/expense.svg" },
         { AppIcon.Planner, "Sidebar/planner.svg" },
         { AppIcon.Tools, "Sidebar/tools.svg" },
-        { AppIcon.Settings, "Sidebar/settings.svg" },
+        { AppIcon.Theme, "Sidebar/theme.svg" },
 
         { AppIcon.Entertainment, "Expenses/entertainment.svg" },
         { AppIcon.Grocery, "Expenses/grocery.svg" },
@@ -85,8 +88,10 @@ public static class IconLibrary
         { AppIcon.AddTodo, "Planner/add_todo.svg" },
         { AppIcon.ArrowBack, "Planner/arrow_back.svg" },
         { AppIcon.ArrowForward, "Planner/arrow_forward.svg" },
+        { AppIcon.Disable, "Planner/disable.svg" },
         { AppIcon.DotSingle, "Planner/dot_single.svg" },
         { AppIcon.DotDouble, "Planner/dot_double.svg" },
+        { AppIcon.Enable, "Planner/enable.svg" },
         { AppIcon.Late, "Planner/late.svg" },
         { AppIcon.Link, "Planner/link.svg" },
         { AppIcon.Note, "Planner/note.svg" },
@@ -109,6 +114,7 @@ public static class IconLibrary
         { AppIcon.Delete, "Misc/delete.svg" },
         { AppIcon.Export, "Misc/export.svg" },
         { AppIcon.Reload, "Misc/reload.svg" },
+        { AppIcon.Save, "Misc/save.svg" },
         { AppIcon.Search, "Misc/search.svg" },
         { AppIcon.Star, "Misc/star.svg" },
         { AppIcon.Undo, "Misc/undo.svg" },

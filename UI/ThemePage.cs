@@ -4,9 +4,9 @@ using MaterialSkin.Controls;
 using TrackFlow.Service;
 
 namespace TrackFlow.Forms;
-public class SettingsPage : UserControl
+public class ThemePage : UserControl
 {
-    public SettingsPage()
+    public ThemePage()
     {
         this.Dock = DockStyle.Fill;
     }

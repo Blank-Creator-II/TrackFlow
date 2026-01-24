@@ -200,6 +200,40 @@ public partial class PlannerPage : UserControl
         Reload_Body(_cacheCollection._cachedNotes!);
     }
 
+    private void Reload(string type)
+    {
+        CreateCacheOnNDay(calendar.SelectedDate,true);
+
+        if (type == "Note") {Reload_Body(_cacheCollection._cachedNotes!);}
+        else if (type == "Reminder") {Reload_Body(_cache_on_N_day_reminders!);}
+        else if (type == "Todo") {Reload_Body(_cache_on_N_day_todos!);}
+        else {Reload(current_body_view!);}
+    
+        calendar.RefreshUI(calendar.SelectedDate);
+        dayList!.Controls.Clear();
+        dayList.Controls.Add(BuildDayList());
+    }
+
+    private void SetFallback()
+    {
+        // a fallback message when there is no saved data
+        holderFlow!.Controls.Clear();
+        var messgae = new MaterialLabel
+        {
+            Text = "No data have been saved\nTry to add a note, todo or reminder",
+            FontType = MaterialSkinManager.fontType.H5,
+            AutoSize = false,
+            Width = holderFlow!.ClientSize.Width - 26,
+            Height = holderFlow!.ClientSize.Height,
+            Margin = new Padding(4),
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+
+        holderFlow.Controls.Add(messgae);
+
+        holderFlow.SizeChanged += (s, e) => {messgae.Width = holderFlow.ClientSize.Width - 25; messgae.Height = holderFlow.ClientSize.Height;};
+    }
+
     private void Reload_Body<T>(List<T> list)
     {
         if (holderFlow == null) return;
@@ -207,15 +241,64 @@ public partial class PlannerPage : UserControl
         holderFlow.SuspendLayout();
         try
         {
+            if (list.Count == 0)
+            {
+                SetFallback();
+                return;
+            }
+
             holderFlow.Controls.Clear();
 
             if (typeof(T) == typeof(Note))
             {
                 current_body_view = "Note";
                 switch_btn!.Enabled = false;
+
                 foreach (var note in list.Cast<Note>())
                 {
-                    holderFlow.Controls.Add(CreateNote(holderFlow,note));
+                    var card = CreateNote(holderFlow,note);
+
+                    // attach right-click context menu for deletion
+                    var ctx = new ContextMenuStrip();
+                    var deleteItem = new ToolStripMenuItem("Delete");
+                    deleteItem.Image = IconLibrary.GetBitmap(AppIcon.Delete,20,MainForm.PrimaryLight);
+                    deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                    deleteItem.BackColor = MainForm.PrimaryMid; // bg color
+                    deleteItem.Paint += (s, e) => 
+                    {
+                        deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                        deleteItem.BackColor = MainForm.PrimaryMid;
+                    };
+                    deleteItem.Click += (s, e) =>
+                    {
+                        // confirm deletion
+                        var res = MessageBox.Show($"Delete Note {note.Id.PID}? This cannot be undone.", "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (res == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                bool ok = NoteService.DeleteNote(note.Id);
+                                if (ok)
+                                {
+                                    Reload("Note");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Failed to delete Note (service returned failure).","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Error deleting Note: {ex.Message}","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            }
+                        }
+                    };
+                    ctx.Items.Add(deleteItem);
+
+                    // Attach context menu to card (card is a Frame that owns its paint/click)
+                    card.ContextMenuStrip = ctx;
+
+                    holderFlow.Controls.Add(card);
                 }
             }
             else if (typeof(T) == typeof(Reminder))
@@ -224,7 +307,83 @@ public partial class PlannerPage : UserControl
                 switch_btn!.Enabled = true;
                 foreach (var reminder in list.Cast<Reminder>())
                 {
-                   holderFlow.Controls.Add(CreateReminder(holderFlow,reminder)); 
+                    var card = CreateReminder(holderFlow,reminder);
+
+                    // attach right-click context menu for deletion
+                    var ctx = new ContextMenuStrip();
+                    var toggleItem = new ToolStripMenuItem(reminder.State ? "Disable" : "Enable");
+                    toggleItem.Image = IconLibrary.GetBitmap(reminder.State ? AppIcon.Disable : AppIcon.Enable,20,MainForm.PrimaryLight);
+                    toggleItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                    toggleItem.BackColor = MainForm.PrimaryMid; // bg color
+                    toggleItem.Paint += (s, e) => 
+                    {
+                        toggleItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                        toggleItem.BackColor = MainForm.PrimaryMid;
+                    };
+                    toggleItem.Click += (s, e) =>
+                    {
+                        reminder.State = !reminder.State;
+                        bool ok = ReminderService.DeleteReminder(reminder.Id);
+                        if (ok)
+                        {
+                            retry:
+                            (bool b, ID i) = ReminderService.SaveReminder(reminder);
+                            if (!b)
+                            {
+                                var m = MessageBox.Show("Failed to recreate Reminder (service returned failure).","Error",MessageBoxButtons.RetryCancel,MessageBoxIcon.Warning);
+                                if (m == DialogResult.Retry)
+                                {
+                                    goto retry;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to update Reminder (service returned failure).","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        }
+                        Reload_Body(list);
+                    };
+
+                    var deleteItem = new ToolStripMenuItem("Delete");
+                    deleteItem.Image = IconLibrary.GetBitmap(AppIcon.Delete,20,MainForm.PrimaryLight);
+                    deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                    deleteItem.BackColor = MainForm.PrimaryMid; // bg color
+                    deleteItem.Paint += (s, e) => 
+                    {
+                        deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                        deleteItem.BackColor = MainForm.PrimaryMid;
+                    };
+                    deleteItem.Click += (s, e) =>
+                    {
+                        // confirm deletion
+                        var res = MessageBox.Show($"Delete Reminder {reminder.Id.PID}? This cannot be undone.", "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (res == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                bool ok = ReminderService.DeleteReminder(reminder.Id);
+                                if (ok)
+                                {
+                                    Reload("Reminder");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Failed to delete Reminder (service returned failure).","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Error deleting Reminder: {ex.Message}","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            }
+                        }
+                    };
+                    ctx.Items.Add(deleteItem);
+                    ctx.Items.Add(toggleItem);
+
+                    // Attach context menu to card (card is a Frame that owns its paint/click)
+                    card.ContextMenuStrip = ctx;
+
+                    holderFlow.Controls.Add(card);
                 }
             }
             else if (typeof(T) == typeof(Todo))
@@ -233,7 +392,49 @@ public partial class PlannerPage : UserControl
                 switch_btn!.Enabled = true;
                 foreach (var todo in list.Cast<Todo>())
                 {
-                    holderFlow.Controls.Add(CreateTodo(holderFlow,todo));
+                    var card = CreateTodo(holderFlow,todo);
+
+                    // attach right-click context menu for deletion
+                    var ctx = new ContextMenuStrip();
+                    var deleteItem = new ToolStripMenuItem("Delete");
+                    deleteItem.Image = IconLibrary.GetBitmap(AppIcon.Delete,20,MainForm.PrimaryLight);
+                    deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                    deleteItem.BackColor = MainForm.PrimaryMid; // bg color
+                    deleteItem.Paint += (s, e) => 
+                    {
+                        deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                        deleteItem.BackColor = MainForm.PrimaryMid;
+                    };
+                    deleteItem.Click += (s, e) =>
+                    {
+                        // confirm deletion
+                        var res = MessageBox.Show($"Delete Todo {todo.Id.PID}? This cannot be undone.", "Confirm delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (res == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                bool ok = TodoService.DeleteTodo(todo.Id);
+                                if (ok)
+                                {
+                                    Reload("Todo");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Failed to delete Todo (service returned failure).","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Error deleting Todo: {ex.Message}","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            }
+                        }
+                    };
+                    ctx.Items.Add(deleteItem);
+
+                    // Attach context menu to card (card is a Frame that owns its paint/click)
+                    card.ContextMenuStrip = ctx;
+
+                    holderFlow.Controls.Add(card);
                 }
             }
         }
@@ -243,8 +444,7 @@ public partial class PlannerPage : UserControl
             holderFlow.Invalidate();
         }
     }
-
-
+    
     private TableLayoutPanel CreateTopBar(Panel master)
     {
         var topBarLayout = new TableLayoutPanel
@@ -266,7 +466,7 @@ public partial class PlannerPage : UserControl
         // create search bar and keep as field so debounce timer can read it
         _searchBar = new MaterialTextBox
         {
-            Hint = "Search expenses...",
+            Hint = "Search Notes...",
             Dock = DockStyle.Fill,
             UseTallSize = false
         };
@@ -340,24 +540,39 @@ public partial class PlannerPage : UserControl
 
         switch_btn.Click += (s, e) =>
         {
+            CreateCacheCollection(true);
             Reload_Body(_cacheCollection._cachedNotes!);
             _searchBar.ResetText();
         };
 
         add_note_btn.Click += (s, e) =>
         {
-
+            using var addnote = new AddNote();
+            var dr = addnote.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                Reload("Note");
+            }
         };
 
         add_reminder_btn.Click += (s, e) =>
         {
-            
+            using var addreminder = new AddReminder();
+            var dr = addreminder.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                Reload("Reminder_");
+            }
         };
 
         add_todo_btn.Click += (s, e) =>
         {
             using var addtodo = new AddTodo(this);
             var dr = addtodo.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                Reload("Todo");
+            }
         };
 
         return topBarLayout;
@@ -452,8 +667,12 @@ public partial class PlannerPage : UserControl
         };
 
         card.Click += (s, e) => {
-            using var viewnote = new ViewNote(note,this);
+            using var viewnote = new ViewNote(note);
             var dr = viewnote.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                Reload("Note");
+            }
         };
 
         return card;
@@ -465,14 +684,15 @@ public partial class PlannerPage : UserControl
         {
             Subtitle = $"{reminder.ReminderDate}" + ((reminder.ReminderNote is not null) ? $"\n{reminder.ReminderNote}" : string.Empty),
             SubtitleFontSize = 14f,
+            SubtitleFontStyle = reminder.State ? FontStyle.Regular : FontStyle.Strikeout,
             VSubtitleAlignment = StringAlignment.Center,
             IconSize = new Size(24,24),
             AllowIconUpscale = false,
             Width = Math.Max(0, master.ClientSize.Width - 25),
             Margin = new Padding(0, 0, 0, 10),
             NormalColor = MainForm.PrimaryMid,
-            HoverColor = MainForm.PrimaryMid,
-            PressedColor = MainForm.PrimaryMid,
+            HoverColor = MainForm.PrimaryGrey,
+            PressedColor = MainForm.PrimaryAsh,
             HoverDelayMs = 100,
             Cursor = Cursors.Hand
         };
@@ -482,7 +702,16 @@ public partial class PlannerPage : UserControl
         if (comapred_value < 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.Red);} // reminder have passed!
         else if (comapred_value == 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.Yellow);} // today is the reminder
         else if (comapred_value > 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.LimeGreen);} // reminder is later date 
-    
+
+        card.Click += (s, e) => {
+            using var viewReminder = new ViewReminder(reminder);
+            var dr = viewReminder.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                Reload("Reminder");
+            }
+        };
+
         return card;
     }
 
@@ -490,9 +719,9 @@ public partial class PlannerPage : UserControl
     {
         var card = new Frame
         {
-            Subtitle = $"{todo.Date}",
-            SubtitleFontSize = 14f,
+            Subtitle = $"{todo.Id.PID}\n\n{todo.Date}",
             VSubtitleAlignment = StringAlignment.Center,
+            SubtitleFontSize = 14,
             IconSize = new Size(24,24),
             AllowIconUpscale = false,
             Icon = IconLibrary.GetBitmap(AppIcon.Todo,24,MainForm.PrimaryLight),
@@ -508,6 +737,10 @@ public partial class PlannerPage : UserControl
         card.Click += (s, e) => {
             using var viewtodo = new ViewTodo(todo,this);
             var dr = viewtodo.ShowDialog();
+            if (dr == DialogResult.OK)
+            {
+                Reload("Todo");
+            }
         };
 
         return card;

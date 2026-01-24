@@ -260,6 +260,14 @@ public partial class ExpensesPage : UserControl
                 // attach right-click context menu for deletion
                 var ctx = new ContextMenuStrip();
                 var deleteItem = new ToolStripMenuItem("Delete");
+                deleteItem.Image = IconLibrary.GetBitmap(AppIcon.Delete,20,MainForm.PrimaryLight);
+                deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                deleteItem.BackColor = MainForm.PrimaryMid; // bg color
+                deleteItem.Paint += (s, e) => 
+                {
+                    deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                    deleteItem.BackColor = MainForm.PrimaryMid;
+                };
                 deleteItem.Click += (s, e) =>
                 {
                     // confirm deletion
