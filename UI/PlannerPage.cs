@@ -86,8 +86,7 @@ public partial class PlannerPage : UserControl
         var Vdivider = new MaterialDivider
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(2, 2, 2, 2),
-            BackColor = MainForm.PrimaryDark
+            Margin = new Padding(2, 2, 2, 2)
         };
         layout.Controls.Add(Vdivider,1,0);
 
@@ -123,8 +122,7 @@ public partial class PlannerPage : UserControl
         var Hdivider = new MaterialDivider
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(2, 2, 2, 2),
-            BackColor = MainForm.PrimaryDark
+            Margin = new Padding(2, 2, 2, 2)
         };
         sidebody.Controls.Add(Hdivider,0,1);
 
@@ -145,8 +143,7 @@ public partial class PlannerPage : UserControl
         var Hdivider = new MaterialDivider
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(2, 2, 2, 2),
-            BackColor = MainForm.PrimaryDark
+            Margin = new Padding(2, 2, 2, 2)
         };
         mainbody.Controls.Add(Hdivider,0,1);
 

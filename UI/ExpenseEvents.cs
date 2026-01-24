@@ -111,8 +111,7 @@ public partial class ExpensesPage : UserControl
             var Hdivider1 = new MaterialDivider
             {
                 Dock = DockStyle.Fill,
-                Margin = new Padding(2),
-                BackColor = MainForm.PrimaryDark
+                Margin = new Padding(2)
             };
             Table.Controls.Add(Hdivider1, 0, 0);
             Table.SetColumnSpan(Hdivider1, 2);
@@ -181,8 +180,7 @@ public partial class ExpensesPage : UserControl
             var Hdivider2 = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             Table.Controls.Add(Hdivider2, 0, 4);
             Table.SetColumnSpan(Hdivider2, 2);
@@ -267,8 +265,8 @@ public partial class ExpensesPage : UserControl
             var Hdivider3 = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark };
+                Margin = new Padding(2)
+            };
             Table.Controls.Add(Hdivider3, 0, 8);
             Table.SetColumnSpan(Hdivider3, 2);
 

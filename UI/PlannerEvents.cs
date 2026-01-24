@@ -69,8 +69,7 @@ public partial class PlannerPage : UserControl
             var Tdivider = new MaterialDivider
             {
                 Dock = DockStyle.Fill,
-                Margin = new Padding(2, 2, 2, 2),
-                BackColor = MainForm.PrimaryDark
+                Margin = new Padding(2, 2, 2, 2)
             };
             header.Controls.Add(Tdivider, 0, 0);
             header.SetColumnSpan(Tdivider, 3);
@@ -112,8 +111,7 @@ public partial class PlannerPage : UserControl
             var Tdivider = new MaterialDivider
             {
                 Dock = DockStyle.Fill,
-                Margin = new Padding(2, 0, 2, 2),
-                BackColor = MainForm.PrimaryDark
+                Margin = new Padding(2, 0, 2, 2)
             };
             days.Controls.Add(Tdivider, 0, 0);
             days.SetColumnSpan(Tdivider, 13);
@@ -127,8 +125,7 @@ public partial class PlannerPage : UserControl
                     days.Controls.Add(new MaterialDivider
                     {
                         Dock = DockStyle.Fill,
-                        Margin = new Padding(2, 2, 2, 2),
-                        BackColor = MainForm.PrimaryDark
+                        Margin = new Padding(2, 2, 2, 2)
                     }, i - 1, 1);
                 }
                 else
@@ -147,8 +144,7 @@ public partial class PlannerPage : UserControl
             var Bdivider = new MaterialDivider
             {
                 Dock = DockStyle.Fill,
-                Margin = new Padding(2, 2, 2, 2),
-                BackColor = MainForm.PrimaryDark
+                Margin = new Padding(2, 2, 2, 2)
             };
             days.Controls.Add(Bdivider, 0, 2);
             days.SetColumnSpan(Bdivider, 13);
@@ -436,8 +432,7 @@ public partial class PlannerPage : UserControl
                 var top_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(2),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(2)
                 };
                 table.Controls.Add(top_divder, 0, 0);
                 table.SetColumnSpan(top_divder, 4);
@@ -445,8 +440,7 @@ public partial class PlannerPage : UserControl
                 var left_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(0),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(0)
                 };
                 table.Controls.Add(left_divder, 0, 1);
 
@@ -493,8 +487,7 @@ public partial class PlannerPage : UserControl
                 var right_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(0),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(0)
                 };
                 table.Controls.Add(right_divder, 2, 1);
 
@@ -559,8 +552,7 @@ public partial class PlannerPage : UserControl
                 var bottom_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(2),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(2)
                 };
                 table.Controls.Add(bottom_divder, 0, 2);
                 table.SetColumnSpan(bottom_divder, 4);
@@ -713,8 +705,7 @@ public partial class PlannerPage : UserControl
             var Vdivider = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Vdivider,1,1);
 
@@ -764,8 +755,7 @@ public partial class PlannerPage : UserControl
             var Hdivider = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Hdivider,0,2);
             main.SetColumnSpan(Hdivider,3);
@@ -783,8 +773,7 @@ public partial class PlannerPage : UserControl
             var Vdivider2 = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Vdivider2,1,3);
 
@@ -856,8 +845,7 @@ public partial class PlannerPage : UserControl
             var Hdivider2 = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Hdivider2,0,4);
             main.SetColumnSpan(Hdivider2,3);
@@ -1085,8 +1073,7 @@ public partial class PlannerPage : UserControl
             var divider = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };            
             main.Controls.Add(divider,0,1);
             main.SetColumnSpan(divider,2);
@@ -1197,8 +1184,7 @@ public partial class PlannerPage : UserControl
             var divider = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };            
             main.Controls.Add(divider,0,1);
             main.SetColumnSpan(divider,2);
@@ -1301,8 +1287,7 @@ public partial class PlannerPage : UserControl
             var Vdivider = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Vdivider,1,1);
 
@@ -1352,8 +1337,7 @@ public partial class PlannerPage : UserControl
             var Hdivider = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Hdivider,0,2);
             main.SetColumnSpan(Hdivider,3);
@@ -1371,8 +1355,7 @@ public partial class PlannerPage : UserControl
             var Vdivider2 = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Vdivider2,1,3);
 
@@ -1445,8 +1428,7 @@ public partial class PlannerPage : UserControl
             var Hdivider2 = new MaterialDivider 
             { 
                 Dock = DockStyle.Fill, 
-                Margin = new Padding(2), 
-                BackColor = MainForm.PrimaryDark 
+                Margin = new Padding(2)
             };
             main.Controls.Add(Hdivider2,0,4);
             main.SetColumnSpan(Hdivider2,3);
@@ -1705,8 +1687,7 @@ public partial class PlannerPage : UserControl
             var header_divder = new MaterialDivider
             {
                 Dock = DockStyle.Fill,
-                Margin = new Padding(2, 0, 2, 2),
-                BackColor = MainForm.PrimaryDark
+                Margin = new Padding(2, 0, 2, 2)
             };
             main.Controls.Add(header_divder, 0, 1);
 
@@ -1765,8 +1746,7 @@ public partial class PlannerPage : UserControl
                 var top_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(2),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(2)
                 };
                 table.Controls.Add(top_divder, 0, 0);
                 table.SetColumnSpan(top_divder, 4);
@@ -1820,8 +1800,7 @@ public partial class PlannerPage : UserControl
                 var right_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(0),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(0)
                 };
                 table.Controls.Add(right_divder, 2, 1);
 
@@ -1885,8 +1864,7 @@ public partial class PlannerPage : UserControl
                 var bottom_divder = new MaterialDivider
                 {
                     Dock = DockStyle.Fill,
-                    Margin = new Padding(2),
-                    BackColor = MainForm.PrimaryDark
+                    Margin = new Padding(2)
                 };
                 table.Controls.Add(bottom_divder, 0, 2);
                 table.SetColumnSpan(bottom_divder, 4);

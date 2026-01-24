@@ -368,8 +368,7 @@ public partial class ExpensesPage : UserControl
         var divder = new MaterialDivider
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(2, 4, 2, 0),
-            BackColor = MainForm.PrimaryDark
+            Margin = new Padding(2, 4, 2, 0)
         };
 
         topBarLayout.Controls.Add(_searchBar, 0, 0);
@@ -548,15 +547,13 @@ public partial class ExpensesPage : UserControl
         var Hdivider = new MaterialDivider
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(2, 2, 2, 2),
-            BackColor = MainForm.PrimaryDark
+            Margin = new Padding(2, 2, 2, 2)
         };
 
         var Vdivider = new MaterialDivider
         {
             Dock = DockStyle.Fill,
-            Margin = new Padding(2, 2, 2, 2),
-            BackColor = MainForm.PrimaryDark
+            Margin = new Padding(2, 2, 2, 2)
         };
 
         recomendationPanel = new Panel { Dock = DockStyle.Fill };
