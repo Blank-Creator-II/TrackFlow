@@ -15,7 +15,7 @@ public partial class PlannerPage : UserControl
     private Panel? dayList;
     private MaterialTextBox? _searchBar;
     private MaterialFloatingActionButton? switch_btn;
-    private string? current_body_view;
+    private string current_body_view = "Note"; // safty for initial call
     private const int SearchDebounceMs = 300;
     private class _cache
     {
