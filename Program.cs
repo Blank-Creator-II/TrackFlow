@@ -20,8 +20,7 @@ static class Program
             {
                 Console.WriteLine("[UI THREAD EXCEPTION]");
                 Console.WriteLine(e.Exception);
-                Console.WriteLine("Press ENTER to exit...");
-                Console.ReadLine();
+                Console.WriteLine("[OUTPUT ----- END]");
                 Environment.Exit(1);
             };
 
@@ -29,8 +28,7 @@ static class Program
             {
                 Console.WriteLine("[NON-UI UNHANDLED EXCEPTION]");
                 Console.WriteLine(e.ExceptionObject);
-                Console.WriteLine("Press ENTER to exit...");
-                Console.ReadLine();
+                Console.WriteLine("[OUTPUT ----- END]");
                 Environment.Exit(1);
             };
         }

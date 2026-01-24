@@ -652,17 +652,6 @@ public partial class ExpensesPage : UserControl
             d[cat] = cur + e.Amount;
         }
 
-        Console.WriteLine("==============================");
-        int count = 1;
-        foreach (string key in d.Keys)
-        {
-            Console.WriteLine($"[{count}]");
-            Console.WriteLine($"{key}: {d[key]}");
-            Console.WriteLine("--------------------------");
-            count++;
-        }
-        Console.WriteLine("==============================");
-
         return d;
     }
 }

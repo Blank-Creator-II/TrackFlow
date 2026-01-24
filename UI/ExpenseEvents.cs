@@ -767,7 +767,7 @@ public partial class ExpensesPage : UserControl
                         var rows = new List<string[]>
                         {
                             new[] {"Field", "Value"},
-                            new[] {"Amount", fmtAmount},
+                            new[] {"Amount", fmtAmount.Replace(",","")},
                             new[] {"Date", fmtDate},
                             new[] {"Mode", expense.Mode ?? "—"},
                             new[] {"Receiver", expense.Receiver ?? "—"},
@@ -786,7 +786,7 @@ public partial class ExpensesPage : UserControl
                             rows.Add(new[] {"Bank Name", expense.LinkedBank.Name ?? "—"});
                             rows.Add(new[] {"Bank Acc-Type", expense.LinkedBank.AccountType ?? "—"});
                             rows.Add(new[] {"Bank Acc-ID", expense.LinkedBank.AccountId ?? "—"});
-                            rows.Add(new[] {"Bank Balance", expense.LinkedBank.Balance.ToString("N2", CultureInfo.CurrentCulture)});
+                            rows.Add(new[] {"Bank Balance", expense.LinkedBank.Balance.ToString("N2", CultureInfo.CurrentCulture).Replace(",","")});
                             rows.Add(new[] {"Bank LinkDate", expense.LinkedBank.LinkDate.ToString("yyyy-MM-dd", CultureInfo.CurrentCulture)});
                         }
 
