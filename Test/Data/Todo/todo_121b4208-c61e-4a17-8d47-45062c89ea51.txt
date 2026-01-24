@@ -1,0 +1,36 @@
+[METADATA]
+Id=Todo-22
+Date=2025-06-07T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix calendar month lag bug
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=finish watching anime: episode 13
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=add unit tests for FileHelper
+State=True
+Link=Reminder-9
+[STOP]
+[END]

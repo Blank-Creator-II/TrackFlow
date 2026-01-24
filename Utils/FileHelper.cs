@@ -39,7 +39,6 @@ public static class FileHelper
         dir["Note"] = Path.Combine(BASE_DIR,"Data","Note");
         dir["Reminder"] = Path.Combine(BASE_DIR,"Data","Reminder");
         dir["Todo"] = Path.Combine(BASE_DIR,"Data","Todo");
-        dir["Theme"] = Path.Combine(BASE_DIR,"Data","Theme");
 
         if (!Directory.Exists(dir["Expense"])){Directory.CreateDirectory(dir["Expense"]);}
 
@@ -48,8 +47,6 @@ public static class FileHelper
         if (!Directory.Exists(dir["Reminder"])){Directory.CreateDirectory(dir["Reminder"]);}
 
         if (!Directory.Exists(dir["Todo"])){Directory.CreateDirectory(dir["Todo"]);}
-
-        if (!Directory.Exists(dir["Theme"])){Directory.CreateDirectory(dir["Theme"]);}
     }
 
     public static string[] ReadFile(string path)

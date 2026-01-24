@@ -303,7 +303,7 @@ public partial class PlannerPage : UserControl
             }
             else if (_.DateHolder.Date == DateTime.Today)
             {
-                _.NormalColor = MainForm.PrimaryAccent;
+                _.NormalColor = ColorTranslator.FromHtml("#0076a4"); // darker highlight for calendar
                 _.TitleColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
                 _.SubtitleColor = ControlPaint.Light(_.TitleColor);
             }

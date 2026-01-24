@@ -1,0 +1,8 @@
+[METADATA]
+Id=Note-4
+Date=2025-10-13T12:00:00+03:00
+Title=Grocery list
+
+[NOTE]
+Vegetables:\n- 2x tomatoes\n- 1x cucumber\n- 1x lettuce\nPantry:\n- rice 2kg\n- canned beans 4
+[END]

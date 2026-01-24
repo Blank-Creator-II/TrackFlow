@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-10
+Date=2025-03-12T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=read next chapter of 'Omniscient Reader's Viewpoint'
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=True
+Link=Reminder-22
+[STOP]
+[LINE]
+Data=add tooltip for MaterialButton icons
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=optimize SVG to bitmap loader
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=rework ID generator class tests
+State=False
+Link=Reminder-21
+[STOP]
+[LINE]
+Data=work on Romaji sync for LRC (fugashi + pykakasi)
+State=False
+Link=Reminder-13
+[STOP]
+[LINE]
+Data=try different LiveCharts implementations
+State=False
+Link=<null>
+[STOP]
+[END]

@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-43
+Date=2025-11-04T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=catch up on streams
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=schedule grocery: milk, eggs, rice
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix calendar month lag bug
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write blog post about switching to Nushell
+State=True
+Link=Reminder-6
+[STOP]
+[LINE]
+Data=document data folder structure
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix MaterialSkin drawer icon alignment
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=Reminder-23
+[STOP]
+[END]

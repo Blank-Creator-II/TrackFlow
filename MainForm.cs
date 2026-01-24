@@ -2,6 +2,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using TrackFlow.Utils;
 using TrackFlow.Models;
+using System.IO;
 
 namespace TrackFlow.Forms;
 public class MainForm : MaterialForm // inherents from MaterialSkin Framework
@@ -37,6 +38,7 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
     // it's better if we use "this" so I am going with that when editing main window controls
     private void InitializeWindow()
     {
+        this.Icon = new Icon(Path.Combine(FileHelper.BASE_DIR,"Assets","App.ico"));
         this.Text = "TrackFlow"; // the app's title
         this.Height = 720;
         this.Width = 1280;
@@ -64,22 +66,13 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         };
 
         // each page will be created in the UI/ folder this is just initalizing and hooking
-        var homePage = new TabPage("Home");
-        homePage.Controls.Add(new HomePage()); // the tab will call the class HomePage from the UI/ folder
         var expensePage = new TabPage("Expenses");
         expensePage.Controls.Add(new ExpensesPage()); // the tab will call the class ExpensesPage from the UI/ folder
         var plannerPage = new TabPage("Planner");
         plannerPage.Controls.Add(new PlannerPage()); // the tab will call the class PlannerPage from the UI/ folder
-        var toolsPage = new TabPage("Tools");
-        toolsPage.Controls.Add(new ToolsPage()); // the tab will call the class ToolsPage from the UI/ folder
-        var themePage = new TabPage("Themes");
-        themePage.Controls.Add(new ThemePage()); // the tab will call the class themePage from the UI/ folder
 
-        sidebar.TabPages.Add(homePage);
         sidebar.TabPages.Add(expensePage);
         sidebar.TabPages.Add(plannerPage);
-        sidebar.TabPages.Add(toolsPage);
-        sidebar.TabPages.Add(themePage);
         
         this.Controls.Add(sidebar);
         this.DrawerTabControl = sidebar;
@@ -89,18 +82,11 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         
         // we attach our icons to the tab controler
         sidebar.ImageList = IconLibrary.CreateImageList(
-            [   AppIcon.Home,
-                AppIcon.Expense,
-                AppIcon.Planner,
-                AppIcon.Tools,
-                AppIcon.Theme],
+            [AppIcon.Expense,AppIcon.Planner,],
             24, // the size of the icon
             PrimaryAccent // the color of the icon
         );
-        sidebar.TabPages[0].ImageKey = AppIcon.Home.ToString(); // First tab
-        sidebar.TabPages[1].ImageKey = AppIcon.Expense.ToString(); // Second tab
-        sidebar.TabPages[2].ImageKey = AppIcon.Planner.ToString(); // Third tab
-        sidebar.TabPages[3].ImageKey = AppIcon.Tools.ToString(); // Forth tab
-        sidebar.TabPages[4].ImageKey = AppIcon.Theme.ToString(); // Fifth tab
+        sidebar.TabPages[0].ImageKey = AppIcon.Expense.ToString(); // first tab
+        sidebar.TabPages[1].ImageKey = AppIcon.Planner.ToString(); // second tab
     }
 }

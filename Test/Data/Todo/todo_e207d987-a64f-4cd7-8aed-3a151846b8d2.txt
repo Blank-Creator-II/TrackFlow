@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-31
+Date=2025-08-07T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=rework ID generator class tests
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=finish watching anime: episode 21
+State=True
+Link=Reminder-13
+[STOP]
+[LINE]
+Data=clean workspace and desk
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix MaterialSkin drawer icon alignment
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=try different LiveCharts implementations
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=buy groceries: bread, cheese, tomatoes, lettuce
+State=False
+Link=<null>
+[STOP]
+[END]

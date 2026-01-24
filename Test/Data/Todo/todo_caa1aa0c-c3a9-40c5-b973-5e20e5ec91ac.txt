@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-23
+Date=2025-06-12T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=write blog post about switching to Nushell
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check if Marine is still no 1
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=sketch character concept for manga
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=triage reported bug from tester
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=pay electricity bill
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=review scholarship application draft
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy replacement mousepad
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=research coupon APIs for discounts
+State=True
+Link=<null>
+[STOP]
+[END]

@@ -1,0 +1,26 @@
+[METADATA]
+Id=Todo-12
+Date=2025-03-30T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=buy groceries: bread, cheese, tomatoes, lettuce
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write README for quirky music player
+State=False
+Link=<null>
+[STOP]
+[END]

@@ -1,0 +1,36 @@
+[METADATA]
+Id=Todo-30
+Date=2025-07-30T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=prepare slides for coding camp application
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=call little brother
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=rework ID generator class tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=research coupon APIs for discounts
+State=False
+Link=Reminder-15
+[STOP]
+[END]

@@ -1,0 +1,8 @@
+[REMINDER]
+Id=Reminder-8
+SavedDate=2026-01-24T00:00:00.0000000-08:00
+ReminderDate=2026-01-22T02:03:00.0000000
+State=False
+ReminderNote=Finish the app
+Link=<null>
+[END]

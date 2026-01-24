@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-36
+Date=2025-09-13T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=try different LiveCharts implementations
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=run services tester and save logs
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=<null>
+[STOP]
+[END]

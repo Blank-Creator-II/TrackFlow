@@ -1,0 +1,8 @@
+[METADATA]
+Id=Note-3
+Date=2025-10-10T12:00:00+03:00
+Title=Astrophysics study plan
+
+[NOTE]
+Topics to read:\n- Schwarzschild radius\n- Kerr metric\n- Black hole thermodynamics\nSchedule: 2 chapters/week
+[END]

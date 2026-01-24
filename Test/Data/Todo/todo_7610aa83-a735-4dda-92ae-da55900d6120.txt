@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-44
+Date=2025-11-07T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=read next chapter of 'Omniscient Reader's Viewpoint'
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=improve Frame control text wrapping
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=rework ID generator class tests
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=add tooltip for MaterialButton icons
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=schedule meeting with group for project
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy groceries: 2x chips, 4x milk, 5x chicken breast
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=triage reported bug from tester
+State=False
+Link=<null>
+[STOP]
+[END]

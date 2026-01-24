@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-50
+Date=2025-12-20T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=prepare dinner: rice and vegetables
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=call little brother
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check if Marine is still no 1
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy replacement mousepad
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[END]

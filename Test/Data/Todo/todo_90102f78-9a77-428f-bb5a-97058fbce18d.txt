@@ -1,0 +1,36 @@
+[METADATA]
+Id=Todo-4
+Date=2025-01-30T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=buy groceries: 3x apples, 2x bananas, 1x yogurt
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=fix calendar month lag bug
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=sketch character concept for manga
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=prepare slides for coding camp application
+State=False
+Link=Reminder-21
+[STOP]
+[LINE]
+Data=read next chapter of 'Omniscient Reader's Viewpoint'
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=True
+Link=Reminder-13
+[STOP]
+[END]

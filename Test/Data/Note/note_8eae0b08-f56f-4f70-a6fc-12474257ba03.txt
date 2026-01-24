@@ -1,0 +1,8 @@
+[METADATA]
+Id=Note-1
+Date=2025-10-04T12:00:00+03:00
+Title=Music list
+
+[NOTE]
+some song list I want to check on spotify:\nHoushou Marine Discography\nNujabes' Luv(sic) Hexalogy Album\nFrank Ocean x American Boy remix
+[END]

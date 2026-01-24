@@ -1,9 +1,0 @@
-[METADATA]
-Id=Note-5
-Date=2026-01-09T19:06:47.2775672-08:00
-
-[NOTE]
-I really don't know why I am writing real things
-but the backend works
-and that makes me happy
-[END]

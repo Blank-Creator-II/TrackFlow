@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-17
+Date=2025-04-30T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=write blog post about switching to Nushell
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=practice physics derivation on black holes notes
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=sketch character concept for manga
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check bank link for expense splitting
+State=False
+Link=<null>
+[STOP]
+[END]

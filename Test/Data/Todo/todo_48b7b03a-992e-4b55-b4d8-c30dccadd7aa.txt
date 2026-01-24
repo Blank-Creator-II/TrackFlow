@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-48
+Date=2025-12-03T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=call little brother
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy groceries: bread, cheese, tomatoes, lettuce
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix calendar month lag bug
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice physics derivation on black holes notes
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=update app version and changelog
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=experiment with Nushell prompt theme
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=refactor Electron app to embed local server
+State=False
+Link=<null>
+[STOP]
+[END]

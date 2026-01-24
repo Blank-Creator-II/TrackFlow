@@ -1,0 +1,8 @@
+[METADATA]
+Id=Note-2
+Date=2025-10-07T12:00:00+03:00
+Title=Check Note service and frontend
+
+[NOTE]
+This is a test to check if the note writing and reading service works.\nalso if it is hooked properly with the frontend.\n\nBy the looks of it it works perfectly!\nEven newlines and stuff are saved correctly  \n\n\nLets Go !!!  \\(* o *)/
+[END]

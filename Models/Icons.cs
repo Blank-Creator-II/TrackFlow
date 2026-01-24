@@ -41,14 +41,6 @@ public enum AppIcon
     SwitchNote,
     Todo,
 
-    // Tools
-    Calculate,
-    CurrencyExchange,
-    TimerPause,
-    TimerPlay,
-    Timer,
-    UnitConvert,
-
     // Misc
     Add,
     Cancel,
@@ -97,13 +89,6 @@ public static class IconLibrary
         { AppIcon.Note, "Planner/note.svg" },
         { AppIcon.SwitchNote, "Planner/switch_note.svg" },
         { AppIcon.Todo, "Planner/todo.svg" },
-
-        { AppIcon.Calculate, "Tools/calculate.svg" },
-        { AppIcon.CurrencyExchange, "Tools/currency_exchange.svg" },
-        { AppIcon.TimerPause, "Tools/timer_pause.svg" },
-        { AppIcon.TimerPlay, "Tools/timer_play.svg" },
-        { AppIcon.Timer, "Tools/timer.svg" },
-        { AppIcon.UnitConvert, "Tools/unit_convert.svg" },
 
         { AppIcon.Add, "Misc/add.svg" },
         { AppIcon.Cancel, "Misc/cancel.svg" },

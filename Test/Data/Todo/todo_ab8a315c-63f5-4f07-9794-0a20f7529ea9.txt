@@ -1,0 +1,26 @@
+[METADATA]
+Id=Todo-3
+Date=2025-01-28T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=update app version and changelog
+State=False
+Link=Reminder-10
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=rework ID generator class tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice physics derivation on black holes notes
+State=False
+Link=Reminder-22
+[STOP]
+[END]

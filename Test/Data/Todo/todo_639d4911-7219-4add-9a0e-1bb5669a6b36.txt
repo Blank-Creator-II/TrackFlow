@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-9
+Date=2025-03-06T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=update app version and changelog
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=plan monthly budget and categories
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=add unit tests for FileHelper
+State=False
+Link=Reminder-18
+[STOP]
+[LINE]
+Data=research coupon APIs for discounts
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=True
+Link=Reminder-21
+[STOP]
+[LINE]
+Data=clean workspace and desk
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=True
+Link=<null>
+[STOP]
+[END]

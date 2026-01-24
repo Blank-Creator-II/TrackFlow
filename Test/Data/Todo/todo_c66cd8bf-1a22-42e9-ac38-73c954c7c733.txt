@@ -1,0 +1,26 @@
+[METADATA]
+Id=Todo-18
+Date=2025-05-13T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=buy groceries: 2x chips, 4x milk, 5x chicken breast
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=document data folder structure
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=pay electricity bill
+State=False
+Link=Reminder-15
+[STOP]
+[LINE]
+Data=read next chapter of 'Omniscient Reader's Viewpoint'
+State=False
+Link=<null>
+[STOP]
+[END]

@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-28
+Date=2025-07-21T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=pay electricity bill
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check bank link for expense splitting
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=schedule meeting with group for project
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write README for quirky music player
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=test currency converter edge cases
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=write blog post about switching to Nushell
+State=True
+Link=Reminder-8
+[STOP]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=False
+Link=<null>
+[STOP]
+[END]

@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-5
+Date=2025-02-07T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=fix calendar month lag bug
+State=False
+Link=Reminder-30
+[STOP]
+[LINE]
+Data=schedule grocery: milk, eggs, rice
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy replacement mousepad
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy fast food
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=prepare dinner: rice and vegetables
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check if Marine is still no 1
+State=False
+Link=Reminder-24
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=clean workspace and desk
+State=False
+Link=<null>
+[STOP]
+[END]

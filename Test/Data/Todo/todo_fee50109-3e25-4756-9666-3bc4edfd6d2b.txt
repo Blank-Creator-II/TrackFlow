@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-21
+Date=2025-05-29T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=test Inno Setup installer build
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=call little brother
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=finish watching anime: episode 14
+State=False
+Link=Reminder-28
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=backup project repo and push to GitHub
+State=True
+Link=<null>
+[STOP]
+[END]

@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-32
+Date=2025-08-15T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=experiment with Nushell prompt theme
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=catch up on streams
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=prepare dinner: rice and vegetables
+State=False
+Link=Reminder-5
+[STOP]
+[LINE]
+Data=check if Marine is still no 1
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice C++ on Codeblocks: pointer drills
+State=False
+Link=<null>
+[STOP]
+[END]

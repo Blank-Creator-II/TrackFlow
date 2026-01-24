@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-35
+Date=2025-09-03T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=add tooltip for MaterialButton icons
+State=False
+Link=Reminder-17
+[STOP]
+[LINE]
+Data=sketch character concept for manga
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=pay electricity bill
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=study astro-ph recent preprints
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=document data folder structure
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=refactor Electron app to embed local server
+State=True
+Link=<null>
+[STOP]
+[END]

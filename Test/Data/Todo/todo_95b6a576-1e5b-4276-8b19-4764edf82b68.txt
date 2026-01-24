@@ -1,0 +1,36 @@
+[METADATA]
+Id=Todo-16
+Date=2025-04-27T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=work on Romaji sync for LRC (fugashi + pykakasi)
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=review scholarship application draft
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=catch up on streams
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=study astro-ph recent preprints
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=play Cyberpunk 2077 for 1 hour
+State=False
+Link=<null>
+[STOP]
+[END]

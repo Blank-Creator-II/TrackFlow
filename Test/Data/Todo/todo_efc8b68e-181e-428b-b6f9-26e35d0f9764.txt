@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-38
+Date=2025-09-26T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=study astro-ph recent preprints
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=test currency converter edge cases
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check bank link for expense splitting
+State=True
+Link=Reminder-7
+[STOP]
+[LINE]
+Data=add CSV export for expenses
+State=False
+Link=Reminder-18
+[STOP]
+[LINE]
+Data=review scholarship application draft
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=pay electricity bill
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=backup project repo and push to GitHub
+State=False
+Link=<null>
+[STOP]
+[END]

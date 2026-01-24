@@ -46,6 +46,7 @@ static class Program
             }
             else
             {
+                Application.SetHighDpiMode(HighDpiMode.PerMonitorV2);
                 ApplicationConfiguration.Initialize();
                 Application.Run(new MainForm());
             }
@@ -56,8 +57,7 @@ static class Program
             {
                 Console.WriteLine("[STARTUP FAILURE]");
                 Console.WriteLine(ex);
-                Console.WriteLine("Press ENTER to exit...");
-                Console.ReadLine();
+                Console.WriteLine("[OUTPUT ----- END]");
                 Environment.Exit(1);
             }
             throw;

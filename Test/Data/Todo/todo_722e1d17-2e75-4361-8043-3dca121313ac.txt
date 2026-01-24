@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-29
+Date=2025-07-28T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=catch up on streams
+State=False
+Link=Reminder-27
+[STOP]
+[LINE]
+Data=call little brother
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=backup project repo and push to GitHub
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=rework ID generator class tests
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=False
+Link=<null>
+[STOP]
+[END]

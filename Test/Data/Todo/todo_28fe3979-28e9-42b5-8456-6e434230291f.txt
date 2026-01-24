@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-34
+Date=2025-09-01T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=sketch character concept for manga
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=plan monthly budget and categories
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=prepare dinner: rice and vegetables
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=schedule grocery: milk, eggs, rice
+State=False
+Link=<null>
+[STOP]
+[END]

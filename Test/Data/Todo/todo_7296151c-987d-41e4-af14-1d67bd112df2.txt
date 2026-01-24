@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-8
+Date=2025-03-04T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=listen to Ado's new release
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=triage reported bug from tester
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy replacement mousepad
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=add tooltip for MaterialButton icons
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=finish watching anime: episode 8
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice physics derivation on black holes notes
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=study astro-ph recent preprints
+State=False
+Link=Reminder-17
+[STOP]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[END]

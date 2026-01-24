@@ -1,0 +1,36 @@
+[METADATA]
+Id=Todo-52
+Date=2026-01-05T07:00:00.0000000-08:00
+
+[TODO]
+[LINE]
+Data=rework ID generator class tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=check if Marine is still no 1
+State=False
+Link=Reminder-4
+[STOP]
+[LINE]
+Data=run services tester and save logs
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=catch up on streams
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=document data folder structure
+State=True
+Link=Reminder-26
+[STOP]
+[END]

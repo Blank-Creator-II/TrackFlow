@@ -1,0 +1,26 @@
+[METADATA]
+Id=Todo-1
+Date=2025-01-13T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=finish watching anime: episode 8
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=read next chapter of 'Omniscient Reader's Viewpoint'
+State=False
+Link=Reminder-14
+[STOP]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=True
+Link=Reminder-7
+[STOP]
+[END]

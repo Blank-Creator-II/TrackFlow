@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-15
+Date=2025-04-18T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=Reminder-21
+[STOP]
+[LINE]
+Data=research coupon APIs for discounts
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy replacement mousepad
+State=True
+Link=Reminder-20
+[STOP]
+[LINE]
+Data=update Planner UI: add delete context menu
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=write blog post about switching to Nushell
+State=True
+Link=<null>
+[STOP]
+[END]

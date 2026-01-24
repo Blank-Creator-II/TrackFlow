@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-25
+Date=2025-06-27T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=check bank link for expense splitting
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=listen to Ado's new release
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=play Cyberpunk 2077 for 1 hour
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=optimize SVG to bitmap loader
+State=False
+Link=Reminder-3
+[STOP]
+[LINE]
+Data=pay electricity bill
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix MaterialSkin drawer icon alignment
+State=False
+Link=<null>
+[STOP]
+[END]

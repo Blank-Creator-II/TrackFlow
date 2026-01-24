@@ -1,0 +1,31 @@
+[METADATA]
+Id=Todo-26
+Date=2025-07-02T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=schedule grocery: milk, eggs, rice
+State=True
+Link=Reminder-16
+[STOP]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=fix calendar month lag bug
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=add unit tests for FileHelper
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=refactor Electron app to embed local server
+State=False
+Link=<null>
+[STOP]
+[END]

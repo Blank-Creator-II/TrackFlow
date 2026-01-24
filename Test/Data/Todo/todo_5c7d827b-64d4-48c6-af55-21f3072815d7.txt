@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-13
+Date=2025-04-08T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=play Cyberpunk 2077 for 1 hour
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=pay electricity bill
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=plan monthly budget and categories
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=update app version and changelog
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=check bank link for expense splitting
+State=True
+Link=Reminder-16
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=add tooltip for MaterialButton icons
+State=False
+Link=Reminder-17
+[STOP]
+[END]

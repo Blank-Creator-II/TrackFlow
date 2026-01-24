@@ -1,0 +1,36 @@
+[METADATA]
+Id=Todo-33
+Date=2025-08-23T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=prepare dinner: rice and vegetables
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=study astro-ph recent preprints
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=write README for quirky music player
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=triage reported bug from tester
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=update app version and changelog
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=practice physics derivation on black holes notes
+State=False
+Link=<null>
+[STOP]
+[END]

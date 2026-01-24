@@ -1,0 +1,8 @@
+[METADATA]
+Id=Note-6
+Date=2025-10-19T12:00:00+03:00
+Title=Bug notes: Reminder sync
+
+[NOTE]
+Observed: reminders created on mobile not showing in desktop.\nSteps to reproduce:\n1. Create reminder on mobile\n2. Sync\n3. Check desktop\nExpected: appears in same date
+[END]

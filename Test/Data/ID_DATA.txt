@@ -1,0 +1,4 @@
+Expense=70
+Todo=70
+Note=70
+Reminder=70

@@ -1,0 +1,8 @@
+[METADATA]
+Id=Note-8
+Date=2025-10-25T12:00:00+03:00
+Title=Meeting notes - Team Sync
+
+[NOTE]
+Attendees: Nahom, Tedy, Adoni\nTopic:\n- progress update\n- blockers\nAction items:\n- fix caching bug\n- add unit tests
+[END]

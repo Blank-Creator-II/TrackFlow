@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-42
+Date=2025-10-26T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=practice volleyball (spikes and serves)
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=try different LiveCharts implementations
+State=False
+Link=Reminder-8
+[STOP]
+[LINE]
+Data=run services tester and save logs
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=buy fast food
+State=True
+Link=Reminder-15
+[STOP]
+[LINE]
+Data=write unit converter edge-case tests
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=sketch character concept for manga
+State=False
+Link=Reminder-10
+[STOP]
+[LINE]
+Data=optimize SVG to bitmap loader
+State=False
+Link=<null>
+[STOP]
+[END]

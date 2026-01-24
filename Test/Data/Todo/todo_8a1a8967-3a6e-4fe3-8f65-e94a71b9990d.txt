@@ -1,0 +1,41 @@
+[METADATA]
+Id=Todo-6
+Date=2025-02-16T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=study astro-ph recent preprints
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=fix calendar month lag bug
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=work on Romaji sync for LRC (fugashi + pykakasi)
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=improve Frame control text wrapping
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=add tooltip for MaterialButton icons
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy groceries: 2x chips, 4x milk, 5x chicken breast
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy fast food
+State=True
+Link=<null>
+[STOP]
+[END]

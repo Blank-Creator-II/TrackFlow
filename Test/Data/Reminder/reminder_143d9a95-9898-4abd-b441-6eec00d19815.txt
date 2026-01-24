@@ -1,0 +1,8 @@
+[REMINDER]
+Id=Reminder-10
+SavedDate=2026-01-24T00:00:00.0000000-08:00
+ReminderDate=2026-01-24T13:41:00.0000000
+State=False
+ReminderNote=finish planner page
+Link=<null>
+[END]

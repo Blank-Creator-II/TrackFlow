@@ -1,0 +1,46 @@
+[METADATA]
+Id=Todo-47
+Date=2025-11-29T18:00:00.000000+03:00
+
+[TODO]
+[LINE]
+Data=listen to Ado's new release
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=draw 2 practice manga panels
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=rework ID generator class tests
+State=True
+Link=<null>
+[STOP]
+[LINE]
+Data=translate notes to Romaji for LRC sync
+State=False
+Link=Reminder-10
+[STOP]
+[LINE]
+Data=call little brother
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=buy fast food
+State=False
+Link=Reminder-21
+[STOP]
+[LINE]
+Data=add unit tests for FileHelper
+State=False
+Link=<null>
+[STOP]
+[LINE]
+Data=add CSV export for expenses
+State=False
+Link=Reminder-18
+[STOP]
+[END]
