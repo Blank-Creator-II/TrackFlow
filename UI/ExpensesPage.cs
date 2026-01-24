@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.Reflection;
-using System.Windows.Forms;
 using MaterialSkin;
 using MaterialSkin.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
-using LiveCharts.WinForms;
-using TrackFlow.Utils;
 using TrackFlow.Service;
 using TrackFlow.Models;
-using System.Net;
 
 namespace TrackFlow.Forms;
 public partial class ExpensesPage : UserControl

@@ -1,5 +1,3 @@
-using System;
-
 namespace TrackFlow.Models;
 public class Note
 {

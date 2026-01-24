@@ -1,8 +1,6 @@
-using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Drawing.Text;
-using System.Windows.Forms;
+
 /*
 Since MaterialSkin is a pain in the butt when manually setting colors
 I have created a simple Panel called Frame that is the same as Panel
