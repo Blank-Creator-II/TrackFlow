@@ -13,15 +13,12 @@ public static class NoteService
             "[METADATA]",
             $"Id={n.Id.PID}",
             $"Date={n.Date:O}",
+            $"Title={n.Title}",
             "",
-            "[NOTE]" // the real note data will be added through loop since we don't know how much it's written manual constraction is impossible
+            "[NOTE]",
+            n.Data, // each line of written note will be added after the [NOTE] marker
+            "[END]" // after all the lines of the note is added a closer tag [END] is used to help when reconstracting from data
         };
-
-        foreach (string line in n.Data)
-        {
-            note_data.Add(line); // each line of written note will be added after the [NOTE] marker
-        }
-        note_data.Add("[END]"); // after all the lines of the note is added a closer tag [END] s used to help when reconstracting fro data
 
         string note_data_location = Path.Combine(FileHelper.BASE_DIR,"Data","Note",$"note_{Guid.NewGuid()}.txt"); // creates a sanitized unique data file to store at just like expense and others
         return (FileHelper.WriteFile(note_data_location,note_data),n.Id); // returns bool usefull for GUI nothing else
@@ -34,7 +31,7 @@ public static class NoteService
         bool start_note_fetch = false;
 
         Dictionary<string, string> metadata = new Dictionary<string, string>();
-        List<string> note_data = new List<string>();
+        string note_data = "";
 
         foreach (string line in raw_note_data)
         {
@@ -52,10 +49,6 @@ public static class NoteService
             {
                 break;
             }
-            else if (line == "")
-            {
-                // Skip
-            }
             else
             {
                 if (start_metadata_fetch)
@@ -67,7 +60,7 @@ public static class NoteService
                 }
                 else if (start_note_fetch)
                 {
-                    note_data.Add(line);
+                    note_data += line;
                 }
             }
         }
@@ -83,6 +76,7 @@ public static class NoteService
         {
             Id = build_id,
             Date = Convert.ToDateTime(metadata["Date"]),
+            Title = metadata["Title"],
             Data = note_data
         };
 
@@ -151,12 +145,8 @@ public static class NoteService
             // Metadata
             Match(n.Id.PID, 100, 50);
             Match(n.Date.ToString("O"), 90, 45);
-
-            // Note content
-            foreach (string line in n.Data)
-            {
-                Match(line, 40, 20);
-            }
+            Match(n.Title,90,45);
+            Match(n.Data, 40, 20);
 
             if (score > 0)
                 rankedResults.Add((n, score));

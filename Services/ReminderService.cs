@@ -16,6 +16,7 @@ public static class ReminderService // this is basically the easiest out of the 
             $"ReminderDate={r.ReminderDate:O}",
             $"State={r.State}",
             $"ReminderNote={r.ReminderNote ?? "<null>"}", // if the variable is null hard code <null> so it can be reconstacted later as null
+            $"Link={((r.Link is not null) ? r.Link.PID : "<null>")}",
             $"[END]"
         };
 
@@ -63,6 +64,17 @@ public static class ReminderService // this is basically the easiest out of the 
             State = Convert.ToBoolean(reminderData["State"]),
             ReminderNote = reminderData["ReminderNote"]
         };
+
+        if (reminderData["Link"] is not null) 
+        {
+            string[] _parts = reminderData["Link"]!.Split("-",2);
+            var link_id = new ID
+            {
+                Type = _parts[0],
+                Value = Convert.ToInt32(_parts[1])
+            };
+            reminder.Link = link_id;
+        }
 
         return reminder;
     }

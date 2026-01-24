@@ -20,7 +20,7 @@ public static class TodoService
         foreach (Todo.SingleLine line in t.Data)
         {
             todo_data.Add("[LINE]");
-            todo_data.Add($"Data={line.Data}");
+            todo_data.Add($"Data={FileHelper.ToOneLine(line.Data)}");
             todo_data.Add($"State={Convert.ToString(line.State)}");
             if (line.Link is not null) // checks if the line is null since it's an optional feature it might br null
             {
@@ -107,7 +107,7 @@ public static class TodoService
 
                         var singleline = new Todo.SingleLine
                         {
-                            Data = line_data["Data"]!,
+                            Data = FileHelper.ToMultiLine(line_data["Data"]!),
                             State = Convert.ToBoolean(line_data["State"])
                         };
                         if (linked_todo)
