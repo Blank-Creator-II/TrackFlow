@@ -14,7 +14,8 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
     public static Color PrimaryAsh = ColorTranslator.FromHtml("#726f6f"); // Secondary++ surfaces, some buttons, sliders
     public static Color PrimaryLight = ColorTranslator.FromHtml("#BDBDBD"); // Cards, raised surfaces, panels
     public static Color PrimaryAccent = ColorTranslator.FromHtml("#87CEEB"); // Action highlights, checkboxes, selected items, FABs
-    
+    public static bool PrimaryWhiteShade = true; // text colors
+
     public MainForm() // a constactor called when the app launches it sets up some needed stuff before the app opens
     {
         skinManager = MaterialSkinManager.Instance; // creates skin manager instance to use for the app
@@ -25,7 +26,7 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
             PrimaryMid, 
             PrimaryLight,
             PrimaryAccent,
-            TextShade.WHITE
+            PrimaryWhiteShade ? TextShade.WHITE : TextShade.BLACK
         );
 
         InitializeWindow(); // calls the actual function that draws or creats the app itself
@@ -37,8 +38,9 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
     private void InitializeWindow()
     {
         this.Text = "TrackFlow"; // the app's title
-        this.Height = 700;
-        this.Width = 1250;
+        this.Height = 720;
+        this.Width = 1280;
+        MinimumSize = new Size(720, 1280);
         this.StartPosition = FormStartPosition.CenterScreen; // makes the app launch in the center of the screen
 
         this.Sizable = true; // the app will be resizable
@@ -70,14 +72,14 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         plannerPage.Controls.Add(new PlannerPage()); // the tab will call the class PlannerPage from the UI/ folder
         var toolsPage = new TabPage("Tools");
         toolsPage.Controls.Add(new ToolsPage()); // the tab will call the class ToolsPage from the UI/ folder
-        var settingsPage = new TabPage("Settings");
-        settingsPage.Controls.Add(new SettingsPage()); // the tab will call the class SettingsPage from the UI/ folder
+        var themePage = new TabPage("Themes");
+        themePage.Controls.Add(new ThemePage()); // the tab will call the class themePage from the UI/ folder
 
         sidebar.TabPages.Add(homePage);
         sidebar.TabPages.Add(expensePage);
         sidebar.TabPages.Add(plannerPage);
         sidebar.TabPages.Add(toolsPage);
-        sidebar.TabPages.Add(settingsPage);
+        sidebar.TabPages.Add(themePage);
         
         this.Controls.Add(sidebar);
         this.DrawerTabControl = sidebar;
@@ -91,7 +93,7 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
                 AppIcon.Expense,
                 AppIcon.Planner,
                 AppIcon.Tools,
-                AppIcon.Settings],
+                AppIcon.Theme],
             24, // the size of the icon
             PrimaryAccent // the color of the icon
         );
@@ -99,6 +101,6 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         sidebar.TabPages[1].ImageKey = AppIcon.Expense.ToString(); // Second tab
         sidebar.TabPages[2].ImageKey = AppIcon.Planner.ToString(); // Third tab
         sidebar.TabPages[3].ImageKey = AppIcon.Tools.ToString(); // Forth tab
-        sidebar.TabPages[4].ImageKey = AppIcon.Settings.ToString(); // Fifth tab
+        sidebar.TabPages[4].ImageKey = AppIcon.Theme.ToString(); // Fifth tab
     }
 }

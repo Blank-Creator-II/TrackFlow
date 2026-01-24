@@ -52,19 +52,29 @@ public class Frame : Panel
     private string _subtitle = string.Empty;
     private Image? _icon;
     private Size _iconSize = new Size(28, 28);
+    private int _iconMargin = 12;
     private bool _userSetIconSize = false;
     private bool _allowIconUpscale = false;
     private Padding _contentPadding = new Padding(12);
 
     // fonts (the user can set full Font objects or just sizes)
-    private Font? _titleFont;         // owned by this control (disposed)
-    private Font? _subtitleFont;      // owned by this control (disposed)
+    private Font? _titleFont; // owned by this control (disposed)
+    private Font? _subtitleFont; // owned by this control (disposed)
     private string _titleFontFamily = SystemFonts.DefaultFont.FontFamily.Name;
     private float _titleFontSize = 11f;
     private FontStyle _titleFontStyle = FontStyle.Bold;
     private string _subtitleFontFamily = SystemFonts.DefaultFont.FontFamily.Name;
     private float _subtitleFontSize = 9f;
     private FontStyle _subtitleFontStyle = FontStyle.Regular;
+    private Color _titleColor = ControlPaint.Light(SystemColors.Control);
+    private Color _subtitleColor = ControlPaint.Light(SystemColors.Control);
+    private StringAlignment _htitleAlignment = StringAlignment.Near;
+    private StringAlignment _hsubtitleAlignment = StringAlignment.Near;
+    private StringAlignment _vtitleAlignment = StringAlignment.Near;
+    private StringAlignment _vsubtitleAlignment = StringAlignment.Near;
+
+    // a date holder only used for calendars
+    private DateTime _date;
 
     public Frame()
     {
@@ -102,6 +112,14 @@ public class Frame : Panel
         }
     }
 
+    // ---- date properties ----
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public DateTime DateHolder
+    {
+        get => _date;
+        set { if (_date == value) return; _date = value; Invalidate(); }
+    }
     // ---- color properties ----
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -159,6 +177,38 @@ public class Frame : Panel
 
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public StringAlignment HTitleAlignment
+    {
+        get => _htitleAlignment;
+        set { _htitleAlignment = value; Invalidate(); }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public StringAlignment HSubtitleAlignment
+    {
+        get => _hsubtitleAlignment;
+        set { _hsubtitleAlignment = value; Invalidate(); }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public StringAlignment VTitleAlignment
+    {
+        get => _vtitleAlignment;
+        set { _vtitleAlignment = value; Invalidate(); }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public StringAlignment VSubtitleAlignment
+    {
+        get => _vsubtitleAlignment;
+        set { _vsubtitleAlignment = value; Invalidate(); }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public Image? Icon
     {
         get => _icon;
@@ -187,6 +237,14 @@ public class Frame : Panel
             _iconSize = value;
             Invalidate();
         }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public int IconMargin
+    {
+        get => _iconMargin;
+        set { _iconMargin = value; Invalidate(); }
     }
 
     [Browsable(false)]
@@ -281,6 +339,22 @@ public class Frame : Panel
             _subtitleFont = value;
             Invalidate();
         }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public Color TitleColor
+    {
+        get => _titleColor;
+        set { _titleColor = value; Invalidate(); }
+    }
+
+    [Browsable(false)]
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public Color SubtitleColor
+    {
+        get => _subtitleColor;
+        set { _subtitleColor = value; Invalidate(); }
     }
 
     // convenience for painting
@@ -401,7 +475,7 @@ public class Frame : Panel
         int iconAreaWidth = 0;
         if (_icon != null)
         {
-            iconAreaWidth = _iconSize.Width + 12; // small gap after icon
+            iconAreaWidth = _iconSize.Width + _iconMargin; // small gap after icon
         }
 
         var textArea = new Rectangle(
@@ -480,8 +554,8 @@ public class Frame : Panel
         }
 
         // pick brushes for text
-        using var titleBrush = new SolidBrush(ForeColor.IsEmpty ? Color.White : ForeColor);
-        using var subtitleBrush = new SolidBrush(ControlPaint.Light(titleBrush.Color));
+        using var titleBrush = new SolidBrush(_titleColor);
+        using var subtitleBrush = new SolidBrush(_subtitleColor);
 
         // draw title (single line, ellipsize)
         if (!string.IsNullOrEmpty(_title) && _titleFont != null)
@@ -489,8 +563,8 @@ public class Frame : Panel
             var titleFormat = new StringFormat(StringFormatFlags.NoWrap)
             {
                 Trimming = StringTrimming.EllipsisCharacter,
-                Alignment = StringAlignment.Near,
-                LineAlignment = StringAlignment.Near
+                Alignment = _htitleAlignment,
+                LineAlignment = _vtitleAlignment
             };
 
             var titleSizeF = g.MeasureString(_title, _titleFont, new SizeF(textArea.Width, float.MaxValue), titleFormat);
@@ -510,8 +584,8 @@ public class Frame : Panel
                     using var subtitleFormat = new StringFormat
                     {
                         Trimming = StringTrimming.EllipsisCharacter,
-                        Alignment = StringAlignment.Near,
-                        LineAlignment = StringAlignment.Near
+                        Alignment = _hsubtitleAlignment,
+                        LineAlignment = _vsubtitleAlignment
                     };
                     g.DrawString(_subtitle, _subtitleFont, subtitleBrush, subtitleRect, subtitleFormat);
                 }
@@ -526,8 +600,8 @@ public class Frame : Panel
                 using var subtitleFormat = new StringFormat
                 {
                     Trimming = StringTrimming.EllipsisCharacter,
-                    Alignment = StringAlignment.Near,
-                    LineAlignment = StringAlignment.Near
+                    Alignment = _hsubtitleAlignment,
+                    LineAlignment = _vsubtitleAlignment
                 };
                 g.DrawString(_subtitle, _subtitleFont, subtitleBrush, subtitleRect, subtitleFormat);
             }

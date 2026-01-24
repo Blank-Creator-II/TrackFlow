@@ -267,12 +267,12 @@ class Tester
         {
             Id = IDGenerator.GenID("Note"),
             Date = DateTime.Now,
-            Data = new List<string>
-            {
-                "I really don't know why I am writing real things",
-                "but the backend works",
-                "and that makes me happy"
-            }
+            Title = "Note Test By Test Service",
+            Data = FileHelper.ToOneLine( 
+                "I really don't know why I am writing real things\n" +
+                "but the backend works\n" +
+                "and that makes me happy")
+            
         };
 
         var saved = NoteService.SaveNote(note);

@@ -35,7 +35,7 @@ public partial class ExpensesPage : UserControl
     private List<Expense> _cachedExpenses = new List<Expense>();
 
     // keep a reference to the search control so timer handler can read it
-    private MaterialTextBox2? _searchBar;
+    private MaterialTextBox? _searchBar;
 
     // summary chart (so we can update it later)
     private LiveCharts.WinForms.PieChart? _summaryChart;
@@ -260,6 +260,14 @@ public partial class ExpensesPage : UserControl
                 // attach right-click context menu for deletion
                 var ctx = new ContextMenuStrip();
                 var deleteItem = new ToolStripMenuItem("Delete");
+                deleteItem.Image = IconLibrary.GetBitmap(AppIcon.Delete,20,MainForm.PrimaryLight);
+                deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                deleteItem.BackColor = MainForm.PrimaryMid; // bg color
+                deleteItem.Paint += (s, e) => 
+                {
+                    deleteItem.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                    deleteItem.BackColor = MainForm.PrimaryMid;
+                };
                 deleteItem.Click += (s, e) =>
                 {
                     // confirm deletion
@@ -337,7 +345,7 @@ public partial class ExpensesPage : UserControl
         topBarLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 6f));
 
         // create search bar and keep as field so debounce timer can read it
-        _searchBar = new MaterialTextBox2
+        _searchBar = new MaterialTextBox
         {
             Hint = "Search expenses...",
             Dock = DockStyle.Fill,

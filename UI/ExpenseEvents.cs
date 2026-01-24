@@ -26,7 +26,7 @@ public partial class ExpensesPage : UserControl
 
         // Coupon
         private MaterialTextBox txtCouponCode;
-        private MaterialTextBox2 txtCouponDesc;
+        private MaterialTextBox txtCouponDesc;
         private MaterialTextBox txtCouponStore;
         private TableLayoutPanel dtpCouponExp;
         private MaterialComboBox ExpMonth;
@@ -54,6 +54,8 @@ public partial class ExpensesPage : UserControl
             Text = "Add Expense";
             Size = new Size(700, 670);
             MinimumSize = new Size(700, 670);
+            MaximumSize = new Size(700, 670);
+            MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
 
             // Use a plain scrollable panel that fills the form
@@ -202,7 +204,7 @@ public partial class ExpensesPage : UserControl
             Table.SetColumnSpan(txtCouponCode, 2);
 
             // Coupon Description (r:6 c:a)
-            txtCouponDesc = new MaterialTextBox2 
+            txtCouponDesc = new MaterialTextBox 
             { 
                 Hint = "Enter Coupon Description",  
                 Margin = new Padding(2), 
@@ -243,7 +245,7 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill 
             };
-            ExpMonth.Items.AddRange(new object[] { 1,2,3,4,5,6,7,8,9,10,11,12 });
+            ExpMonth.Items.AddRange(Enumerable.Range(1, 12).Cast<object>().ToArray());
             dtpCouponExp.Controls.Add(ExpMonth,0,0);
 
             ExpDay = new MaterialComboBox 
@@ -253,8 +255,7 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill 
             };
-            ExpDay.Items.AddRange(new object[] { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
-                                        16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 });
+            ExpDay.Items.AddRange(Enumerable.Range(1, 31).Cast<object>().ToArray());
             dtpCouponExp.Controls.Add(ExpDay,1,0);
 
             ExpYear = new MaterialComboBox 
@@ -264,11 +265,7 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill 
             };
-            ExpYear.Items.AddRange(new object[] { 90,91,92,93,94,95,96,97,98,99,20,21,22,23,24,25,
-                                                   26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,
-                                                   42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,67,
-                                                   68,69,60,61,62,63,64,65,66,67,68,69,70,71,72,73,
-                                                   74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89});
+            ExpYear.Items.AddRange(Enumerable.Range(0, 100).Cast<object>().ToArray());
             dtpCouponExp.Controls.Add(ExpYear,2,0);
 
             // Divider 3
@@ -342,7 +339,7 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill 
             };
-            LinkMonth.Items.AddRange(new object[] { 1,2,3,4,5,6,7,8,9,10,11,12 });
+            LinkMonth.Items.AddRange(Enumerable.Range(1, 12).Cast<object>().ToArray());
             dtpBankLinkDate.Controls.Add(LinkMonth,0,0);
 
             LinkDay = new MaterialComboBox 
@@ -352,8 +349,7 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill 
             };
-            LinkDay.Items.AddRange(new object[] { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,
-                                        16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31 });
+            LinkDay.Items.AddRange(Enumerable.Range(1, 31).Cast<object>().ToArray());
             dtpBankLinkDate.Controls.Add(LinkDay,1,0);
 
             LinkYear = new MaterialComboBox 
@@ -363,16 +359,13 @@ public partial class ExpensesPage : UserControl
                 Margin = new Padding(2), 
                 Dock = DockStyle.Fill 
             };
-            LinkYear.Items.AddRange(new object[] { 90,91,92,93,94,95,96,97,98,99,20,21,22,23,24,25,
-                                                   26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,
-                                                   42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,67,
-                                                   68,69,60,61,62,63,64,65,66,67,68,69,70,71,72,73,
-                                                   74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89});
+            LinkYear.Items.AddRange(Enumerable.Range(0, 100).Cast<object>().ToArray());
             dtpBankLinkDate.Controls.Add(LinkYear,2,0);
 
             // Save button (r:11 c:1)
             btnSave = new MaterialButton 
             {
+                Icon = IconLibrary.GetBitmap(AppIcon.Save,24,MainForm.PrimaryLight),
                 Text = "Save Expense",
                 Margin = new Padding(2,2,2,13),
                 Dock = DockStyle.Fill,
@@ -393,10 +386,7 @@ public partial class ExpensesPage : UserControl
                 !int.TryParse(yearCb.SelectedItem.ToString(), out int year))
                 return false;
 
-            // Map two-digit years to a reasonable century:
-            // 90-99 => 1990-1999, 0-89 => 2000-2089
-            if (year >= 90 && year <= 99) year += 1900;
-            else if (year >= 0 && year <= 89 && year < 100) year += 2000;
+            if (year >= 0 && year < 100) year += 2000;
 
             try
             {
@@ -535,7 +525,7 @@ public partial class ExpensesPage : UserControl
                 (bool ok, ID savedId) = ExpenseService.SaveExpense(expense);
                 if (ok)
                 {
-                    MessageBox.Show("Expense saved successfully!","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    //MessageBox.Show("Expense saved successfully!","Info",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     // close this form
                     this.DialogResult = DialogResult.OK;
                     this.Close();
@@ -563,6 +553,8 @@ public partial class ExpensesPage : UserControl
             Text = "View Expense";
             Size = new Size(700, 670);
             MinimumSize = new Size(700, 670);
+            MaximumSize = new Size(700, 670);
+            MaximizeBox = false;
             StartPosition = FormStartPosition.CenterScreen;
 
             // container
@@ -660,6 +652,14 @@ public partial class ExpensesPage : UserControl
                 // Context menu + double-click to copy value
                 var ctx = new ContextMenuStrip();
                 var copy = new ToolStripMenuItem("Copy value");
+                copy.Image = IconLibrary.GetBitmap(AppIcon.Copy,20,MainForm.PrimaryLight);
+                copy.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black; // text color
+                copy.BackColor = MainForm.PrimaryMid; // bg color
+                copy.Paint += (s, e) => 
+                {
+                    copy.ForeColor = MainForm.PrimaryWhiteShade ? Color.White : Color.Black;
+                    copy.BackColor = MainForm.PrimaryMid;
+                };
                 copy.Click += (s, e) =>
                 {
                     try { Clipboard.SetText(val.Text); }
