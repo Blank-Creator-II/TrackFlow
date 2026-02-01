@@ -318,10 +318,12 @@ public partial class PlannerPage : UserControl
                     {
                         reminder.State = !reminder.State;
                         bool ok = ReminderService.DeleteReminder(reminder.Id);
+                        ReminderService.DeleteScheduledReminder(reminder.Id);
                         if (ok)
                         {
                             retry:
                             (bool b, ID i) = ReminderService.SaveReminder(reminder);
+                            ReminderService.ScheduleReminders(new List<Reminder>{reminder});
                             if (!b)
                             {
                                 var m = MessageBox.Show("Failed to recreate Reminder (service returned failure).","Error",MessageBoxButtons.RetryCancel,MessageBoxIcon.Warning);
@@ -355,14 +357,15 @@ public partial class PlannerPage : UserControl
                         {
                             try
                             {
-                                bool ok = ReminderService.DeleteReminder(reminder.Id);
-                                if (ok)
+                                bool ok1 = ReminderService.DeleteReminder(reminder.Id);
+                                bool ok2 = ReminderService.DeleteScheduledReminder(reminder.Id);
+                                if (ok1 && ok2)
                                 {
                                     Reload("Reminder");
                                 }
                                 else
                                 {
-                                    MessageBox.Show("Failed to delete Reminder (service returned failure).","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                    MessageBox.Show($"Failed to delete Reminder (service returned failure [Service 1:{(ok1 ? "Successful" : "failed")}] [Service 2:{(ok2 ? "Successful" : "failed")}]).","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                                 }
                             }
                             catch (Exception ex)
@@ -556,6 +559,8 @@ public partial class PlannerPage : UserControl
             if (dr == DialogResult.OK)
             {
                 Reload("Reminder_");
+                var reminders = ReminderService.LoadReminder();
+                ReminderService.ScheduleReminders(reminders);
             }
         };
 
@@ -691,10 +696,10 @@ public partial class PlannerPage : UserControl
             Cursor = Cursors.Hand
         };
 
-        int comapred_value = DateTime.Compare(reminder.ReminderDate,DateTime.Today);
+        int comapred_value = DateTime.Compare(reminder.ReminderDate,DateTime.Now);
 
         if (comapred_value < 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.Red);} // reminder have passed!
-        else if (comapred_value == 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.Yellow);} // today is the reminder
+        else if (comapred_value == 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.Yellow);} // now is the reminder
         else if (comapred_value > 0){card.Icon = IconLibrary.GetBitmap(AppIcon.Late,24,Color.LimeGreen);} // reminder is later date 
 
         card.Click += (s, e) => {
@@ -703,6 +708,8 @@ public partial class PlannerPage : UserControl
             if (dr == DialogResult.OK)
             {
                 Reload("Reminder");
+                var r = ReminderService.LoadReminder();
+                ReminderService.ScheduleReminders(r);
             }
         };
 

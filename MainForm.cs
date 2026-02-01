@@ -2,6 +2,7 @@ using MaterialSkin;
 using MaterialSkin.Controls;
 using TrackFlow.Utils;
 using TrackFlow.Models;
+using TrackFlow.Service;
 using System.IO;
 
 namespace TrackFlow.Forms;
@@ -88,5 +89,14 @@ public class MainForm : MaterialForm // inherents from MaterialSkin Framework
         );
         sidebar.TabPages[0].ImageKey = AppIcon.Expense.ToString(); // first tab
         sidebar.TabPages[1].ImageKey = AppIcon.Planner.ToString(); // second tab
+
+        // after everything has initalized update and create schedule reminders
+        InitializeReminders();
+    }
+
+    private void InitializeReminders()
+    {
+        var reminders = ReminderService.LoadReminder();
+        ReminderService.ScheduleReminders(reminders);
     }
 }

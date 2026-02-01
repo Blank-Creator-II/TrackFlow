@@ -1,0 +1,11 @@
+<Project>
+  <!-- This new file separates the build folders obj/ and bin/ into OS based -->
+  <PropertyGroup>
+    <!-- Ensure Configuration is never empty -->
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+
+    <!-- OS isolation ONLY (SDK will add Configuration/TFM) -->
+    <BaseIntermediateOutputPath>obj-$(OS)\</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin-$(OS)\</BaseOutputPath>
+  </PropertyGroup>
+</Project>

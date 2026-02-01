@@ -155,4 +155,32 @@ public static class ReminderService // this is basically the easiest out of the 
             .Select(r => r.reminder)
             .ToList();
     }
+
+    public static void ScheduleReminders(List<Reminder> reminders)
+    {
+        foreach (Reminder reminder in reminders)
+        {
+            if (reminder.State && DateTime.Compare(reminder.ReminderDate,DateTime.Now) > 0) // if the reminder is not dismised schedule it to Win Tasks
+            {
+                TaskScheduleHelper.CreateOrUpdateTask(
+                    taskName: $"TrackFlow_{reminder.Id.PID}",
+                    executablePath: Path.Combine(FileHelper.BASE_DIR,"Notifier","TrackFlow.Notifier.exe"),
+                    arguments: $"\"{reminder.ReminderNote}\"",
+                    trigger: new Microsoft.Win32.TaskScheduler.TimeTrigger
+                    {
+                        StartBoundary = reminder.ReminderDate
+                    }
+                );
+            }
+            else
+            {
+                DeleteScheduledReminder(reminder.Id); // delete disimised tasks if it exist in Win Tasks
+            }
+        }
+    }
+
+    public static bool DeleteScheduledReminder(ID reminder_id)
+    {
+        return TaskScheduleHelper.DeleteTask($"TrackFlow_{reminder_id.PID}");
+    }
 }

@@ -1,12 +1,20 @@
 using TrackFlow.Forms;
 using TrackFlow.Service;
 using TrackFlow.Utils;
+using System.Runtime.InteropServices;
 
 static class Program
 {
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode)] // import the dll for stampind proocess ID, we need it for notifcation
+    private static extern int SetCurrentProcessExplicitAppUserModelID(string appID);
+
     [STAThread]
     static void Main(string[] args)
     {
+        // we set the appId to this. Note this appId is set in start menu and stuff using Inno Setup
+        // therefore a build that doesn't put this app's shortcut into stat menu might not have a notification support!
+        SetCurrentProcessExplicitAppUserModelID("BLANK.TrackFlow");
+        
         bool debug = args != null && Array.Exists(args, a => a == "--debug");
         bool testService = args != null && Array.Exists(args, a => a == "--test-service");
         FileHelper.CheckDataDirectory();
